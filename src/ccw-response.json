@@ -1,0 +1,135 @@
+{
+  "mandatory_words": [
+    "plant",
+    "based"
+  ],
+  "million_perms_processed": 4.707377,
+  "ought_you_continue_get_requests": true,
+  "resultcount": 3,
+  "results": [
+    {
+      "grid": [
+        [
+          "1ac",
+          "BASED"
+        ],
+        [
+          "4ac",
+          "PLANT"
+        ],
+        [
+          "5ac",
+          [
+            "DEMUR"
+          ]
+        ],
+        [
+          "1do",
+          [
+            "biped"
+          ]
+        ],
+        [
+          "2do",
+          [
+            "SWARM"
+          ]
+        ],
+        [
+          "3do",
+          [
+            "deter"
+          ]
+        ]
+      ],
+      "summary": [
+        "BSD",
+        "PAT",
+        "DMR"
+      ]
+    },
+    {
+      "grid": [
+        [
+          "1ac",
+          "BASED"
+        ],
+        [
+          "4ac",
+          "PLANT"
+        ],
+        [
+          "5ac",
+          [
+            "DREAD"
+          ]
+        ],
+        [
+          "1do",
+          [
+            "biped"
+          ]
+        ],
+        [
+          "2do",
+          [
+            "STALE"
+          ]
+        ],
+        [
+          "3do",
+          [
+            "dated",
+            "doted"
+          ]
+        ]
+      ],
+      "summary": [
+        "BSD",
+        "PAT",
+        "DED"
+      ]
+    },
+    {
+      "grid": [
+        [
+          "1ac",
+          "BASED"
+        ],
+        [
+          "4ac",
+          "PLANT"
+        ],
+        [
+          "5ac",
+          [
+            "DREAM"
+          ]
+        ],
+        [
+          "1do",
+          [
+            "biped"
+          ]
+        ],
+        [
+          "2do",
+          [
+            "STALE"
+          ]
+        ],
+        [
+          "3do",
+          [
+            "datum"
+          ]
+        ]
+      ],
+      "summary": [
+        "BSD",
+        "PAT",
+        "DEM"
+      ]
+    }
+  ]
+}

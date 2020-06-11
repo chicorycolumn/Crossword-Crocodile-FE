@@ -1,0 +1,23 @@
+.navbar {
+  background-color: blue;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  position: fixed;
+  width: 100%;
+}
+
+.title {
+  font-weight: bold;
+  font-size: 36px;
+  color: white;
+  margin: 0px;
+}
+
+.button-holder {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  border: black dotted 2pt;
+  width: 300px;
+}

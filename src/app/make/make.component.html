@@ -1,0 +1,83 @@
+<div class="main">
+  <div class="grid">
+    <div class="box box1">
+      <div class="tag">required</div>
+      <p>First, choose a shape for your crossword.</p>
+      <div class="shapeHolder">
+        <div class="imageAndText">
+          <img class="shapeImage" src="../../assets/eg1.png" />
+          <p>5 x 5-letter words</p>
+        </div>
+
+        <div class="imageAndText">
+          <img class="shapeImage" src="../../assets/eg2.png" />
+          <p>7 x 5-letter words <br />3 x 7-letter words</p>
+        </div>
+
+        <div class="imageAndText">
+          <img class="shapeImage" src="../../assets/eg3.png" />
+          <p>
+            7 x 5-letter words <br />3 x 7-letter words<br />Ł x ß-letter words
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="box box2">
+      <div class="tag">optional</div>
+      <p>
+        Any mandatory words? Say if you only want grids that include SANTA and
+        CLAUS.
+        <br />
+        <br />
+        Just type your words below, separated by a space (and capitalisation is
+        ignored). Best to put no more than three, as it may take too long time
+        to produce grids for you.
+      </p>
+      <textarea
+        class="inputBox inputBoxMand"
+        placeholder="eg Santa claus"
+      ></textarea>
+      <button>Detect words by space between</button>
+    </div>
+
+    <div class="box box3">
+      <div class="tag">optional</div>
+      <p>
+        Any desirable but non-mandatory words? Perhaps a large bank of words
+        that you've already come up with clues for.
+        <br />
+        <br />
+        Paste them below, then select how many must appear in any grids we
+        produce for you. Again, it's best when this number isn't set higher than
+        three or so.
+      </p>
+      <textarea class="inputBox inputBoxDesi" placeholder="eg"></textarea>
+      <div class="desiButtonHolder">
+        <button class="desiButton">Detect words by speechmarks</button>
+        <button class="desiButton">Detect words by space between</button>
+      </div>
+
+      <div class="includeAtLeast_box">
+        <p class="includeAtLeast_text">
+          Include at least
+        </p>
+
+        <textarea
+          class="threshInputBox"
+          placeholder="0"
+          maxlength="2"
+        ></textarea>
+        <p class="includeAtLeast_text">
+          of these words
+        </p>
+      </div>
+    </div>
+
+    <div class="box box4">
+      <div class="resultBox"></div>
+
+      <button class="goButton">Go!</button>
+    </div>
+  </div>
+</div>
