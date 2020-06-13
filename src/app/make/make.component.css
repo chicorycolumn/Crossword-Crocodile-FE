@@ -36,7 +36,26 @@
 }
 
 .shapeImage {
-  height: 50px;
+  height: 75px;
+  filter: brightness(5%) invert(100%);
+  z-index: 0;
+}
+
+.shapeRadio {
+  position: relative;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* IMAGE STYLES */
+.shapeRadio + img {
+  cursor: pointer;
+}
+
+/* CHECKED STYLES */
+.shapeRadio:checked + img {
+  filter: none;
 }
 
 p {
@@ -85,17 +104,76 @@ p {
   text-align: center;
 }
 
-.resultBox {
-  background-color: white;
-  /* width: 400px; */
-  height: 175px;
-}
-
 .goButton {
   width: 120px;
   background-color: lightgreen;
 }
 
+.inputBoxMand {
+  width: 150px;
+}
+
+.inputBoxForb {
+  width: 150px;
+}
+
+.insideBoxTwo {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.boxTitle {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 0;
+}
+
 .resultBox {
+  background-color: white;
   margin: 15px 0px 15px 0px;
+  height: 225px;
+  display: flex;
+  flex-direction: row;
+}
+
+.resultLeft {
+  background-color: lightcyan;
+  width: auto;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 21px;
+  letter-spacing: 5pt;
+  padding-left: 20pt;
+  padding-right: 15pt;
+
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.ngForCoordArr {
+  background-color: lightgoldenrodyellow;
+  width: 100%;
+  text-align: left;
+  font-size: 12pt;
+  overflow: auto;
+  word-break: break-all;
+}
+
+.hor {
+  display: flex;
+  flex-direction: row;
+}
+
+.coordName {
+  width: 25%;
+  min-width: 85px;
+  text-align: left;
+  margin-left: 5%;
+}
+
+.coordWords {
+  width: 70%;
+  text-align: left;
 }

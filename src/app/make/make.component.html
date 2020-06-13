@@ -1,83 +1,160 @@
 <div class="main">
   <div class="grid">
-    <div class="box box1">
-      <div class="tag">required</div>
-      <p>First, choose a shape for your crossword.</p>
-      <div class="shapeHolder">
-        <div class="imageAndText">
-          <img class="shapeImage" src="../../assets/eg1.png" />
-          <p>5 x 5-letter words</p>
+    <form [formGroup]="makeCrosswordForm" (ngSubmit)="onSubmit()">
+      <div class="box box1">
+        <div class="tag">required</div>
+        <p class="boxTitle">Choose Shape</p>
+        <br />
+        <br />
+        <form formGroupName="shape">
+          <div class="shapeHolder">
+            <div class="imageAndText">
+              <label>
+                <input
+                  checked
+                  class="shapeRadio"
+                  type="radio"
+                  value="5x5"
+                  formControlName="shapeName"
+                />
+                <img class="shapeImage" src="../../assets/Crossword 5x5.png" />
+                <p class="shapeText">Six 5-letter words</p>
+              </label>
+            </div>
+            <div class="imageAndText">
+              <label>
+                <input
+                  class="shapeRadio"
+                  type="radio"
+                  value="7x5"
+                  formControlName="shapeName"
+                />
+
+                <img class="shapeImage" src="../../assets/Crossword 7x5.png" />
+                <p class="shapeText">
+                  Three 7-letter words<br />Four 5-letter words
+                </p>
+              </label>
+            </div>
+            <div class="imageAndText">
+              <label>
+                <input
+                  class="shapeRadio"
+                  type="radio"
+                  value="9x5"
+                  formControlName="shapeName"
+                />
+                <img class="shapeImage" src="../../assets/Crossword 9x5.png" />
+                <p class="shapeText">
+                  Three 9-letter words<br />Five 5-letter words
+                </p>
+              </label>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div class="box box2">
+        <div class="tag">optional</div>
+        <p class="boxTitle">Mandatory or Forbidden Words</p>
+        <div class="insideBoxTwo">
+          <label>
+            <p>
+              Each grid must include:
+            </p>
+            <textarea
+              class="inputBox inputBoxMand"
+              placeholder="eg Santa claus"
+              formControlName="mand"
+            ></textarea>
+          </label>
+          <label>
+            <p>
+              All grids must exclude:
+            </p>
+            <textarea
+              class="inputBox inputBoxForb"
+              formControlName="forb"
+              placeholder="eg miffs fiats"
+            ></textarea>
+          </label>
+        </div>
+        <br />
+        Please separate your words with a space, capitalisation is ignored.
+        <br />
+        <br />
+        Tip: It's best to put no more than about three mandatory words.
+      </div>
+
+      <div class="box box3">
+        <div class="tag">optional</div>
+        <p class="boxTitle">Desirable Words</p>
+        <p>
+          Perhaps a large bank of words you've already come up with clues for.
+          <br />
+          <br />
+          Tip: It's best when this number isn't set higher than around three.
+        </p>
+        <textarea
+          formControlName="desi"
+          class="inputBox inputBoxDesi"
+          placeholder='eg "PARTS" strap over bits. "RESET" Changed trees eg parts reset'
+        ></textarea>
+        <div class="desiButtonHolder">
+          <input
+            checked
+            type="radio"
+            name="desiDetect"
+            id="space"
+            value="space"
+          />
+          <label for="space"> Detect words by space</label>
+          <input type="radio" name="desiDetect" id="marks" value="marks" />
+          <label for="marks"> Detect words by speechmarks</label>
         </div>
 
-        <div class="imageAndText">
-          <img class="shapeImage" src="../../assets/eg2.png" />
-          <p>7 x 5-letter words <br />3 x 7-letter words</p>
-        </div>
+        <div class="includeAtLeast_box">
+          <p class="includeAtLeast_text">
+            Include at least
+          </p>
 
-        <div class="imageAndText">
-          <img class="shapeImage" src="../../assets/eg3.png" />
-          <p>
-            7 x 5-letter words <br />3 x 7-letter words<br />Ł x ß-letter words
+          <textarea
+            class="threshInputBox"
+            placeholder="0"
+            maxlength="2"
+          ></textarea>
+          <p class="includeAtLeast_text">
+            of these words
           </p>
         </div>
       </div>
-    </div>
-
-    <div class="box box2">
-      <div class="tag">optional</div>
-      <p>
-        Any mandatory words? Say if you only want grids that include SANTA and
-        CLAUS.
-        <br />
-        <br />
-        Just type your words below, separated by a space (and capitalisation is
-        ignored). Best to put no more than three, as it may take too long time
-        to produce grids for you.
-      </p>
-      <textarea
-        class="inputBox inputBoxMand"
-        placeholder="eg Santa claus"
-      ></textarea>
-      <button>Detect words by space between</button>
-    </div>
-
-    <div class="box box3">
-      <div class="tag">optional</div>
-      <p>
-        Any desirable but non-mandatory words? Perhaps a large bank of words
-        that you've already come up with clues for.
-        <br />
-        <br />
-        Paste them below, then select how many must appear in any grids we
-        produce for you. Again, it's best when this number isn't set higher than
-        three or so.
-      </p>
-      <textarea class="inputBox inputBoxDesi" placeholder="eg"></textarea>
-      <div class="desiButtonHolder">
-        <button class="desiButton">Detect words by speechmarks</button>
-        <button class="desiButton">Detect words by space between</button>
-      </div>
-
-      <div class="includeAtLeast_box">
-        <p class="includeAtLeast_text">
-          Include at least
-        </p>
-
-        <textarea
-          class="threshInputBox"
-          placeholder="0"
-          maxlength="2"
-        ></textarea>
-        <p class="includeAtLeast_text">
-          of these words
-        </p>
-      </div>
-    </div>
+      <button type="submit" class="goButton">Go!</button>
+    </form>
 
     <div class="box box4">
-      <div class="resultBox"></div>
-
-      <button class="goButton">Go!</button>
+      <div class="resultBox">
+        <div class="resultLeft">
+          <p class="gridRender">
+            WAWAWAWAM
+            <br />
+            A A A A A
+            <br />
+            WAWAWAWAM
+            <br />
+            A A A A A
+            <br />
+            WAWAWAWAM
+          </p>
+        </div>
+        <div class="ngForCoordArr">
+          <ng-container *ngFor="let coordArr of results">
+            <div class="hor">
+              <p class="coordName">{{ coordArr[0] }}</p>
+              <p class="coordWords">{{ coordArr[1] }}</p>
+            </div>
+          </ng-container>
+        </div>
+      </div>
     </div>
   </div>
 </div>
