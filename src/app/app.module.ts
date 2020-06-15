@@ -7,6 +7,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { MakeModule } from './make/make.module';
 import { LearnModule } from './learn/learn.module';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [AppComponent, NavbarComponent],
@@ -16,6 +17,7 @@ import { LearnModule } from './learn/learn.module';
     MakeModule,
     LearnModule,
     ReactiveFormsModule,
+    SharedModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

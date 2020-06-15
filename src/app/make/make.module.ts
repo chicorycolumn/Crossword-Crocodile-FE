@@ -4,9 +4,16 @@ import { CommonModule } from '@angular/common';
 import { Router, ActivatedRoute, Params } from '@angular/router'; // if use url parameters.
 import { MakeComponent } from './make.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
-  imports: [MakeRoutingModule, FormsModule, ReactiveFormsModule, CommonModule],
+  imports: [
+    MakeRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
+    CommonModule,
+    SharedModule,
+  ],
   declarations: [MakeComponent],
   exports: [MakeComponent],
 })

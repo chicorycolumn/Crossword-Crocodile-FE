@@ -1,6 +1,10 @@
 <div class="main">
   <div class="grid">
-    <form [formGroup]="makeCrosswordForm" (ngSubmit)="onSubmit()">
+    <form
+      *ngIf="!onlyShowResultBox"
+      [formGroup]="makeCrosswordForm"
+      (ngSubmit)="onSubmit()"
+    >
       <div class="box box1">
         <div class="tag">required</div>
         <p class="boxTitle">Choose Shape</p>
@@ -11,7 +15,6 @@
             <div class="imageAndText">
               <label>
                 <input
-                  checked
                   class="shapeRadio"
                   type="radio"
                   value="5x5"
@@ -98,19 +101,30 @@
         <textarea
           formControlName="desi"
           class="inputBox inputBoxDesi"
-          placeholder='eg "PARTS" strap over bits. "RESET" Changed trees eg parts reset'
+          placeholder="{{ desiPlaceholderText }}"
         ></textarea>
         <div class="desiButtonHolder">
-          <input
-            checked
-            type="radio"
-            name="desiDetect"
-            id="space"
-            value="space"
-          />
-          <label for="space"> Detect words by space</label>
-          <input type="radio" name="desiDetect" id="marks" value="marks" />
-          <label for="marks"> Detect words by speechmarks</label>
+          <div>
+            <input
+              checked
+              type="radio"
+              formControlName="desiSeparator"
+              id="space"
+              value=" "
+              (click)="updateDesiPlaceholderText('space')"
+            />
+            <label for="space"> Detect words by space</label>
+          </div>
+          <div>
+            <input
+              type="radio"
+              formControlName="desiSeparator"
+              id="marks"
+              value='"'
+              (click)="updateDesiPlaceholderText('marks')"
+            />
+            <label for="marks"> Detect words by speechmarks</label>
+          </div>
         </div>
 
         <div class="includeAtLeast_box">
@@ -122,39 +136,73 @@
             class="threshInputBox"
             placeholder="0"
             maxlength="2"
+            formControlName="desiThreshold"
           ></textarea>
           <p class="includeAtLeast_text">
             of these words
           </p>
         </div>
       </div>
-      <button type="submit" class="goButton">Go!</button>
-    </form>
 
-    <div class="box box4">
-      <div class="resultBox">
-        <div class="resultLeft">
-          <p class="gridRender">
-            WAWAWAWAM
-            <br />
-            A A A A A
-            <br />
-            WAWAWAWAM
-            <br />
-            A A A A A
-            <br />
-            WAWAWAWAM
-          </p>
-        </div>
-        <div class="ngForCoordArr">
-          <ng-container *ngFor="let coordArr of results">
-            <div class="hor">
-              <p class="coordName">{{ coordArr[0] }}</p>
-              <p class="coordWords">{{ coordArr[1] }}</p>
+      <div class="box box4">
+        <div class="resultBox">
+          <div class="resultLeftie">
+            <div *ngIf="results.length" class="resultLeftieInner1">
+              <div
+                *ngFor="let coordArr of results[resultsIndex].grid"
+                class="resultLeftieInner2"
+              >
+                <div class="hor">
+                  <p class="coordName">{{ coordArr[0] | formatCoord }}</p>
+                  <p class="coordWords">{{ coordArr[1] | spaceArray }}</p>
+                </div>
+              </div>
             </div>
-          </ng-container>
+          </div>
+          <div class="resultRightie">
+            <button
+              class="startStopButton"
+              [class.started]="startButtonActive"
+              type="button"
+              (click)="startStop()"
+              (click)="startButtonActive && onSubmit()"
+            >
+              {{ startButtonActive ? "STOP" : "MAKE GRIDS" }}
+            </button>
+
+            <p *ngIf="results.length" class="gridRender">
+              {{ results[resultsIndex].summary[0] }}
+              <br />
+              <br />
+              {{ results[resultsIndex].summary[1] }}
+              <br />
+              <br />
+              {{ results[resultsIndex].summary[2] }}
+            </p>
+
+            <div *ngIf="results.length" class="indexDisplay">
+              {{ resultsIndex + 1 }} of {{ results.length }}
+            </div>
+          </div>
+
+          <div class="resultScroll">
+            <button
+              type="button"
+              class="scrollButton scrollUp"
+              (click)="changeResultsIndex('up')"
+            >
+              ↑
+            </button>
+            <button
+              type="button"
+              class="scrollButton scrollDown"
+              (click)="changeResultsIndex('down')"
+            >
+              ↓
+            </button>
+          </div>
         </div>
       </div>
-    </div>
+    </form>
   </div>
 </div>

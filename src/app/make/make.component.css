@@ -137,22 +137,47 @@ p {
   flex-direction: row;
 }
 
-.resultLeft {
+.resultRightie {
   background-color: lightcyan;
-  width: auto;
-  font-family: "Courier New", Courier, monospace;
-  font-size: 21px;
-  letter-spacing: 5pt;
-  padding-left: 20pt;
-  padding-right: 15pt;
-
+  width: 175px;
+  min-width: 125px;
   text-align: center;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
 }
 
-.ngForCoordArr {
+.gridRender {
+  font-family: "Courier New", Courier, monospace;
+  font-size: 16px;
+  letter-spacing: 8.5pt;
+  line-height: 9pt;
+  padding-left: 10pt;
+  padding-right: 5pt;
+  /* margin-top: 25pt; */
+}
+
+.indexDisplay {
+  color: darkblue;
+  font-size: 12pt;
+  background-color: lightblue;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.startStopButton {
+  width: 100%;
+  height: 40px;
+  background-color: palegreen;
+}
+
+.started {
+  background-color: palevioletred;
+}
+
+.resultLeftie {
   background-color: lightgoldenrodyellow;
   width: 100%;
   text-align: left;
@@ -161,19 +186,51 @@ p {
   word-break: break-all;
 }
 
+.resultLeftieInner1 {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
 .hor {
   display: flex;
   flex-direction: row;
+  margin-top: 5px;
 }
 
 .coordName {
-  width: 25%;
-  min-width: 85px;
+  width: 80px;
+  /* border: blue solid 0.5pt; */
   text-align: left;
+  margin: 0;
+  margin-right: 5%;
   margin-left: 5%;
 }
 
 .coordWords {
+  /* border: orangered solid 0.5pt; */
   width: 70%;
   text-align: left;
+  margin: 0;
+  white-space: pre-wrap;
+  word-break: keep-all;
+}
+
+.resultScroll {
+  height: 100%;
+  width: 40px;
+  background-color: blueviolet;
+}
+
+.scrollButton {
+  height: 50%;
+  width: 100%;
+  font-size: 14pt;
+}
+
+.desiButtonHolder {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
 }

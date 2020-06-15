@@ -7,49 +7,178 @@ import { FormBuilder, Validators } from '@angular/forms';
   styleUrls: ['./make.component.css'],
 })
 export class MakeComponent implements OnInit {
-  fruit = 'APPLES!!!';
+  sayHello() {
+    console.log('hello lionel');
+  }
+
+  onlyShowResultBox = false; // dev switch
 
   makeCrosswordForm = this.fb.group({
+    shape: this.fb.group({
+      shapeName: ['5x5'],
+    }),
     mand: [''],
     forb: [''],
     desi: [''],
-    shape: this.fb.group({
-      shapeName: [''],
-    }),
+    desiSeparator: [' '],
+    desiThreshold: [''],
   });
   constructor(private fb: FormBuilder) {}
 
   onSubmit() {
-    console.dir(this.makeCrosswordForm.value);
+    console.log('onSubmit fxn');
+    // console.dir(this.makeCrosswordForm.value);
+    console.log(`ooo${this.makeCrosswordForm.value.desiSeparator}ooo`);
   }
 
+  startButtonActive = false;
+
+  updateDesiPlaceholderText(sepName) {
+    // console.log(this.makeCrosswordForm.controls.desiSeparator.value);
+
+    const ref = {
+      space: 'eg spoke azure',
+      marks: 'eg "SPOKE" part of a wheel. "azure" - Shade of blue.',
+    };
+
+    this.desiPlaceholderText = ref[sepName];
+
+    // this.desiPlaceholderText =
+    //   this.makeCrosswordForm.controls.desiSeparator.value === ' '
+    //     ? 'spaaace'
+    //     : 'marrrks';
+  }
+
+  desiPlaceholderText = 'eg parts reset';
+
+  justStop() {
+    this.startButtonActive = false;
+  }
+
+  startStop() {
+    if (this.startButtonActive) {
+      //tell server to stop
+    } else {
+      //format words and send to server
+    }
+    this.startButtonActive = !this.startButtonActive;
+  }
+
+  changeResultsIndex(direction) {
+    if (direction === 'up' && this.resultsIndex > 0) {
+      this.resultsIndex--;
+    } else if (
+      direction === 'down' &&
+      this.resultsIndex < this.results.length - 1
+    ) {
+      this.resultsIndex++;
+    }
+  }
+
+  resultsIndex = 0;
   results = [
-    ['1ac', 'BASED'],
-    ['4ac', 'PLANT'],
-    ['5ac', ['DEMUR']],
-    [
-      '11 down',
-      [
-        'biped',
-        'biped',
-        'biped',
-        'biped',
-        'biped',
-        'biped',
-        'biped',
-        'biped',
-        'biped',
-        'biped',
-        'biped',
-        'biped',
-        'biped',
+    {
+      grid: [
+        ['1ac', 'BASED'],
+        ['4ac', 'PLANT'],
+        ['5ac', ['DEMUR']],
+        ['1do', ['biped']],
+        ['2do', ['SWARM']],
+        ['3do', ['deter']],
       ],
-    ],
-    ['2do', ['SWARM']],
-    ['3do', ['deter', 'deter', 'deter', 'deter', 'deter', 'deter', 'deter']],
+      summary: ['BSD', 'PAT', 'DMR'],
+    },
+    {
+      grid: [
+        ['1ac', 'BASED'],
+        ['4ac', 'PLANT'],
+        ['5ac', ['DREAD']],
+        ['1do', ['biped']],
+        ['2do', ['STALE']],
+        ['3do', ['dated', 'doted']],
+      ],
+      summary: ['BSD', 'PAT', 'DED'],
+    },
+    {
+      grid: [
+        ['1ac', 'BASED'],
+        ['4ac', 'PLANT'],
+        ['5ac', ['DREAM']],
+        ['1do', ['biped']],
+        ['2do', ['STALE']],
+        ['3do', ['datum']],
+      ],
+      summary: ['BSD', 'PAT', 'DEM'],
+    },
+    {
+      grid: [
+        ['1ac', 'BASED'],
+        ['4ac', 'PLANT'],
+        ['5ac', ['DEMUR']],
+        ['1do', ['biped']],
+        ['2do', ['SWARM']],
+        ['3do', ['deter']],
+      ],
+      summary: ['BSD', 'PAT', 'DMR'],
+    },
+    {
+      grid: [
+        ['1ac', 'BASED'],
+        ['4ac', 'PLANT'],
+        ['5ac', ['DREAD']],
+        ['1do', ['biped']],
+        ['2do', ['STALE']],
+        ['3do', ['dated', 'doted']],
+      ],
+      summary: ['BSD', 'PAT', 'DED'],
+    },
+    {
+      grid: [
+        ['1ac', 'BASED'],
+        ['4ac', 'PLANT'],
+        ['5ac', ['DREAM']],
+        ['1do', ['biped']],
+        ['2do', ['STALE']],
+        ['3do', ['datum']],
+      ],
+      summary: ['BSD', 'PAT', 'DEM'],
+    },
+    {
+      grid: [
+        ['1ac', 'BASED'],
+        ['4ac', 'PLANT'],
+        ['5ac', ['DEMUR']],
+        ['1do', ['biped']],
+        ['2do', ['SWARM']],
+        ['3do', ['deter']],
+      ],
+      summary: ['BSD', 'PAT', 'DMR'],
+    },
+    {
+      grid: [
+        ['1ac', 'BASED'],
+        ['4ac', 'PLANT'],
+        ['5ac', ['DREAD']],
+        ['1do', ['biped']],
+        ['2do', ['STALE']],
+        ['3do', ['dated', 'doted']],
+      ],
+      summary: ['BSD', 'PAT', 'DED'],
+    },
+    {
+      grid: [
+        ['1ac', 'BASED'],
+        ['4ac', 'PLANT'],
+        ['5ac', ['DREAM']],
+        ['1do', ['biped']],
+        ['2do', ['STALE']],
+        ['3do', ['datum']],
+      ],
+      summary: ['BSD', 'PAT', 'DEM'],
+    },
   ];
 
-  heroes = ['Windstorm', 'Bombasto', 'Magneta', 'Tornado'];
-
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.startButtonActive = false;
+  }
 }
