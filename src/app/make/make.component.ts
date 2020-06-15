@@ -82,11 +82,25 @@ export class MakeComponent implements OnInit {
         ['1ac', 'BASED'],
         ['4ac', 'PLANT'],
         ['5ac', ['DEMUR']],
-        ['1do', ['biped']],
+        [
+          '1do',
+          [
+            'aiped',
+            'biped',
+            'ciped',
+            'diped',
+            'eiped',
+            'fiped',
+            'giped',
+            'hiped',
+            'iyped',
+            'jiped',
+          ],
+        ],
         ['2do', ['SWARM']],
         ['3do', ['deter']],
       ],
-      summary: ['BSD', 'PAT', 'DMR'],
+      summary: ['BSDEE', 'PATEE', 'DMREE'],
     },
     {
       grid: [
@@ -180,5 +194,17 @@ export class MakeComponent implements OnInit {
 
   ngOnInit(): void {
     this.startButtonActive = false;
+  }
+
+  formChanged() {
+    if (this.startButtonActive) {
+      this.justStop();
+    }
+  }
+
+  onChanges(): void {
+    this.makeCrosswordForm.valueChanges.subscribe((val) => {
+      console.log(val);
+    });
   }
 }

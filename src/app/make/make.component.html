@@ -1,208 +1,213 @@
 <div class="main">
-  <div class="grid">
-    <form
-      *ngIf="!onlyShowResultBox"
-      [formGroup]="makeCrosswordForm"
-      (ngSubmit)="onSubmit()"
-    >
-      <div class="box box1">
-        <div class="tag">required</div>
-        <p class="boxTitle">Choose Shape</p>
-        <br />
-        <br />
-        <form formGroupName="shape">
-          <div class="shapeHolder">
-            <div class="imageAndText">
-              <label>
-                <input
-                  class="shapeRadio"
-                  type="radio"
-                  value="5x5"
-                  formControlName="shapeName"
-                />
-                <img class="shapeImage" src="../../assets/Crossword 5x5.png" />
-                <p class="shapeText">Six 5-letter words</p>
-              </label>
-            </div>
-            <div class="imageAndText">
-              <label>
-                <input
-                  class="shapeRadio"
-                  type="radio"
-                  value="7x5"
-                  formControlName="shapeName"
-                />
-
-                <img class="shapeImage" src="../../assets/Crossword 7x5.png" />
-                <p class="shapeText">
-                  Three 7-letter words<br />Four 5-letter words
-                </p>
-              </label>
-            </div>
-            <div class="imageAndText">
-              <label>
-                <input
-                  class="shapeRadio"
-                  type="radio"
-                  value="9x5"
-                  formControlName="shapeName"
-                />
-                <img class="shapeImage" src="../../assets/Crossword 9x5.png" />
-                <p class="shapeText">
-                  Three 9-letter words<br />Five 5-letter words
-                </p>
-              </label>
-            </div>
+  <form class="grid" [formGroup]="makeCrosswordForm" (ngSubmit)="onSubmit()">
+    <div *ngIf="!onlyShowResultBox" class="box box1">
+      <div class="tag">required</div>
+      <p class="boxTitle">Grid Shape</p>
+      <br />
+      <br />
+      <form formGroupName="shape">
+        <div class="shapeHolder">
+          <div class="imageAndText">
+            <label>
+              <input
+                class="shapeRadio"
+                type="radio"
+                value="5x5"
+                formControlName="shapeName"
+                (click)="formChanged()"
+              />
+              <img class="shapeImage" src="../../assets/Crossword 5x5.png" />
+              <p class="shapeText">Six 5-letter words</p>
+            </label>
           </div>
-        </form>
-      </div>
+          <div class="imageAndText">
+            <label>
+              <input
+                class="shapeRadio"
+                type="radio"
+                value="7x5"
+                formControlName="shapeName"
+                (click)="formChanged()"
+              />
 
-      <div class="box box2">
-        <div class="tag">optional</div>
-        <p class="boxTitle">Mandatory or Forbidden Words</p>
-        <div class="insideBoxTwo">
-          <label>
-            <p>
-              Each grid must include:
-            </p>
-            <textarea
-              class="inputBox inputBoxMand"
-              placeholder="eg Santa claus"
-              formControlName="mand"
-            ></textarea>
-          </label>
-          <label>
-            <p>
-              All grids must exclude:
-            </p>
-            <textarea
-              class="inputBox inputBoxForb"
-              formControlName="forb"
-              placeholder="eg miffs fiats"
-            ></textarea>
-          </label>
-        </div>
-        <br />
-        Please separate your words with a space, capitalisation is ignored.
-        <br />
-        <br />
-        Tip: It's best to put no more than about three mandatory words.
-      </div>
-
-      <div class="box box3">
-        <div class="tag">optional</div>
-        <p class="boxTitle">Desirable Words</p>
-        <p>
-          Perhaps a large bank of words you've already come up with clues for.
-          <br />
-          <br />
-          Tip: It's best when this number isn't set higher than around three.
-        </p>
-        <textarea
-          formControlName="desi"
-          class="inputBox inputBoxDesi"
-          placeholder="{{ desiPlaceholderText }}"
-        ></textarea>
-        <div class="desiButtonHolder">
-          <div>
-            <input
-              checked
-              type="radio"
-              formControlName="desiSeparator"
-              id="space"
-              value=" "
-              (click)="updateDesiPlaceholderText('space')"
-            />
-            <label for="space"> Detect words by space</label>
+              <img class="shapeImage" src="../../assets/Crossword 7x5.png" />
+              <p class="shapeText">
+                Three 7-letter words<br />Four 5-letter words
+              </p>
+            </label>
           </div>
-          <div>
-            <input
-              type="radio"
-              formControlName="desiSeparator"
-              id="marks"
-              value='"'
-              (click)="updateDesiPlaceholderText('marks')"
-            />
-            <label for="marks"> Detect words by speechmarks</label>
+          <div class="imageAndText">
+            <label>
+              <input
+                class="shapeRadio"
+                type="radio"
+                value="9x5"
+                formControlName="shapeName"
+                (click)="formChanged()"
+              />
+              <img class="shapeImage" src="../../assets/Crossword 9x5.png" />
+              <p class="shapeText">
+                Three 9-letter words<br />Five 5-letter words
+              </p>
+            </label>
           </div>
         </div>
+      </form>
+    </div>
 
-        <div class="includeAtLeast_box">
-          <p class="includeAtLeast_text">
-            Include at least
+    <div *ngIf="!onlyShowResultBox" class="box box2">
+      <div class="tag">optional</div>
+      <p class="boxTitle">Mandatory or Forbidden Words</p>
+      <div class="insideBoxTwo">
+        <label>
+          <p>
+            Each grid must include:
           </p>
-
           <textarea
-            class="threshInputBox"
-            placeholder="0"
-            maxlength="2"
-            formControlName="desiThreshold"
+            class="inputBox inputBoxMand"
+            placeholder="eg Santa claus"
+            formControlName="mand"
+            (keypress)="formChanged()"
           ></textarea>
-          <p class="includeAtLeast_text">
-            of these words
+        </label>
+        <label>
+          <p>
+            Each grid must exclude:
           </p>
+          <textarea
+            class="inputBox inputBoxForb"
+            formControlName="forb"
+            placeholder="eg miffs fiats"
+            (keypress)="formChanged()"
+          ></textarea>
+        </label>
+      </div>
+      <br />
+      Separate your words with a space, capitalisation is ignored.
+      <br />
+      <br />
+      Tip: Best results with no more than three mandatory words.
+    </div>
+
+    <div *ngIf="!onlyShowResultBox" class="box box3">
+      <div class="tag">optional</div>
+      <p class="boxTitle">Desirable Words</p>
+      <p>
+        Say, a large bank of words you've already made clues for.
+        <br />
+        <br />
+        Tip: Best results when minimum isn't set higher than three.
+      </p>
+      <textarea
+        formControlName="desi"
+        class="inputBox inputBoxDesi"
+        placeholder="{{ desiPlaceholderText }}"
+        (keypress)="formChanged()"
+      ></textarea>
+      <div class="desiButtonHolder">
+        <div>
+          <input
+            checked
+            type="radio"
+            formControlName="desiSeparator"
+            id="space"
+            value=" "
+            (click)="updateDesiPlaceholderText('space')"
+            (click)="formChanged()"
+          />
+          <label for="space" class="desiDetectLabel">
+            Detect words by space</label
+          >
+        </div>
+        <div>
+          <input
+            type="radio"
+            formControlName="desiSeparator"
+            id="marks"
+            value='"'
+            (click)="updateDesiPlaceholderText('marks')"
+            (click)="formChanged()"
+          />
+          <label for="marks" class="desiDetectLabel">
+            Detect words by speechmarks</label
+          >
         </div>
       </div>
 
-      <div class="box box4">
-        <div class="resultBox">
-          <div class="resultLeftie">
-            <div *ngIf="results.length" class="resultLeftieInner1">
-              <div
-                *ngFor="let coordArr of results[resultsIndex].grid"
-                class="resultLeftieInner2"
-              >
-                <div class="hor">
-                  <p class="coordName">{{ coordArr[0] | formatCoord }}</p>
-                  <p class="coordWords">{{ coordArr[1] | spaceArray }}</p>
-                </div>
-              </div>
+      <div class="includeAtLeast_box">
+        <p class="includeAtLeast_text">
+          Include at least
+        </p>
+
+        <textarea
+          class="threshInputBox"
+          placeholder="0"
+          maxlength="2"
+          formControlName="desiThreshold"
+          (keypress)="formChanged()"
+        ></textarea>
+        <p class="includeAtLeast_text">
+          of these words
+        </p>
+      </div>
+    </div>
+
+    <div class="box box4">
+      <div class="resultLeftie">
+        <div *ngIf="results.length" class="resultLeftieInner1">
+          <div
+            *ngFor="let coordArr of results[resultsIndex].grid"
+            class="resultLeftieInner2"
+          >
+            <div class="hor">
+              <p class="coordName">{{ coordArr[0] | formatCoord }}</p>
+              <p class="coordWords">{{ coordArr[1] | spaceArray }}</p>
             </div>
-          </div>
-          <div class="resultRightie">
-            <button
-              class="startStopButton"
-              [class.started]="startButtonActive"
-              type="button"
-              (click)="startStop()"
-              (click)="startButtonActive && onSubmit()"
-            >
-              {{ startButtonActive ? "STOP" : "MAKE GRIDS" }}
-            </button>
-
-            <p *ngIf="results.length" class="gridRender">
-              {{ results[resultsIndex].summary[0] }}
-              <br />
-              <br />
-              {{ results[resultsIndex].summary[1] }}
-              <br />
-              <br />
-              {{ results[resultsIndex].summary[2] }}
-            </p>
-
-            <div *ngIf="results.length" class="indexDisplay">
-              {{ resultsIndex + 1 }} of {{ results.length }}
-            </div>
-          </div>
-
-          <div class="resultScroll">
-            <button
-              type="button"
-              class="scrollButton scrollUp"
-              (click)="changeResultsIndex('up')"
-            >
-              ↑
-            </button>
-            <button
-              type="button"
-              class="scrollButton scrollDown"
-              (click)="changeResultsIndex('down')"
-            >
-              ↓
-            </button>
           </div>
         </div>
       </div>
-    </form>
-  </div>
+      <div class="resultRightie">
+        <button
+          class="startStopButton"
+          [class.started]="startButtonActive"
+          type="button"
+          (click)="startStop()"
+          (click)="startButtonActive && onSubmit()"
+        >
+          {{ startButtonActive ? "STOP" : "MAKE GRIDS" }}
+        </button>
+
+        <p *ngIf="results.length" class="gridRender">
+          {{ results[resultsIndex].summary[0] }}
+          <br />
+          <br />
+          {{ results[resultsIndex].summary[1] }}
+          <br />
+          <br />
+          {{ results[resultsIndex].summary[2] }}
+        </p>
+
+        <div *ngIf="results.length" class="indexDisplay">
+          {{ resultsIndex + 1 }} of {{ results.length }}
+        </div>
+      </div>
+
+      <div class="resultScroll">
+        <button
+          type="button"
+          class="scrollButton scrollUp"
+          (click)="changeResultsIndex('up')"
+        >
+          ↑
+        </button>
+        <button
+          type="button"
+          class="scrollButton scrollDown"
+          (click)="changeResultsIndex('down')"
+        >
+          ↓
+        </button>
+      </div>
+    </div>
+  </form>
 </div>

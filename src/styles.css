@@ -1,5 +1,31 @@
 body {
-  background-color: cyan;
   margin: 0;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
+
+  /* height: 110%; */
+  /* margin-top: 0px; */
+}
+
+.background {
+  background-image: url(./assets/water-tile2.png);
+  background-size: 250px;
+  /* background-image: url(../images/tile-starsBW.png); */
+  /* background-size: 500px; */
+  background-repeat: repeat;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  z-index: -2;
+}
+
+.shroud {
+  z-index: -1;
+  background-color: rgba(158, 255, 109, 0.65);
+  height: 100%;
+  width: 100%;
+  position: fixed;
+}
+
+.content {
+  position: relative;
 }

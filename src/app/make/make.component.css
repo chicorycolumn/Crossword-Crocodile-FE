@@ -3,14 +3,15 @@
   margin: 0 auto;
   width: 95%;
   padding-top: 50px;
-  background-color: aquamarine;
+  /* background-color: aquamarine; */
   padding-right: 20px;
   padding-left: 20px;
 }
 
 .grid {
   border: brown dotted 2pt;
-  width: auto;
+  width: 100%;
+  display: flex;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -19,14 +20,20 @@
 
 .box {
   height: 250px;
-  width: 550px;
   min-height: 200px;
-  min-width: 400px;
+  /* width: 20px; */
+  min-width: 425px;
+  max-width: 425px;
   border: black solid 1pt;
   margin-top: 50px;
   margin-right: 0;
   text-align: center;
   padding: 0px 50px 0px 50px;
+  background-color: rgba(238, 255, 230, 1);
+}
+
+.shapeText {
+  font-size: 9pt;
 }
 
 .shapeHolder {
@@ -129,18 +136,15 @@ p {
   margin: 0;
 }
 
-.resultBox {
-  background-color: white;
-  margin: 15px 0px 15px 0px;
-  height: 225px;
+.box4 {
+  /* box-shadow: black 0px 0px 15px; */
   display: flex;
   flex-direction: row;
 }
 
 .resultRightie {
   background-color: lightcyan;
-  width: 175px;
-  min-width: 125px;
+  width: 120px;
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -152,8 +156,8 @@ p {
   font-size: 16px;
   letter-spacing: 8.5pt;
   line-height: 9pt;
-  padding-left: 10pt;
-  padding-right: 5pt;
+  padding-left: 7.5pt;
+  padding-right: 0pt;
   /* margin-top: 25pt; */
 }
 
@@ -184,6 +188,7 @@ p {
   font-size: 12pt;
   overflow: auto;
   word-break: break-all;
+  /* border: fuchsia solid 0.5pt; */
 }
 
 .resultLeftieInner1 {
@@ -191,26 +196,28 @@ p {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
+  /* border: greenyellow dotted 0.5pt; */
 }
 
 .hor {
   display: flex;
   flex-direction: row;
   margin-top: 5px;
+  /* border: grey solid 0.5pt; */
 }
 
 .coordName {
-  width: 80px;
+  width: 90px;
   /* border: blue solid 0.5pt; */
   text-align: left;
   margin: 0;
-  margin-right: 5%;
-  margin-left: 5%;
+  margin-right: 2%;
+  margin-left: 3%;
 }
 
 .coordWords {
   /* border: orangered solid 0.5pt; */
-  width: 70%;
+  width: 100%;
   text-align: left;
   margin: 0;
   white-space: pre-wrap;
@@ -220,7 +227,6 @@ p {
 .resultScroll {
   height: 100%;
   width: 40px;
-  background-color: blueviolet;
 }
 
 .scrollButton {
@@ -233,4 +239,8 @@ p {
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
+}
+
+.desiDetectLabel {
+  font-size: 11pt;
 }
