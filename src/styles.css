@@ -1,3 +1,10 @@
+:root {
+  --green-shad: rgba(21, 107, 0, 0.5);
+  --light-shad: rgba(21, 107, 0, 1);
+  --light-shad-coords: 0px 2px 5px;
+  --standard-panel-colour: rgba(238, 255, 230, 0.5);
+}
+
 body {
   margin: 0;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -15,12 +22,13 @@ body {
   position: fixed;
   height: 100%;
   width: 100%;
-  z-index: -2;
+  z-index: -1;
+  opacity: 0.1;
 }
 
 .shroud {
-  z-index: -1;
-  background-color: rgba(158, 255, 109, 0.65);
+  z-index: -2;
+  background-color: rgba(158, 255, 109);
   height: 100%;
   width: 100%;
   position: fixed;
@@ -28,4 +36,36 @@ body {
 
 .content {
   position: relative;
+}
+
+.crocBorder1 {
+  height: 100px;
+  /* color: rgba(158, 255, 109); */
+  width: 555px;
+  margin-left: -80px;
+  margin-top: -55px;
+  height: 150px;
+  opacity: 1;
+  /* z-index: 5; */
+  /* background-color: blue; */
+}
+
+.crocSepRight {
+  height: 40px;
+  z-index: 3;
+  margin-top: -400px;
+  margin-left: 425px;
+  margin-bottom: -100px;
+}
+
+.crocSepLeft {
+  height: 40px;
+  z-index: 3;
+  margin-top: -400px;
+  margin-left: -510px;
+  margin-bottom: -100px;
+}
+
+.upMargin {
+  margin-bottom: -90px;
 }

@@ -79,6 +79,125 @@ export class MakeComponent implements OnInit {
   results = [
     {
       grid: [
+        [
+          '1ac',
+          [
+            'aiped',
+            'biped',
+            'ciped',
+            'diped',
+            'eiped',
+            'fiped',
+            'giped',
+            'hiped',
+            'iyped',
+            'jiped',
+          ],
+        ],
+        [
+          '4ac',
+          [
+            'aiped',
+            'biped',
+            'ciped',
+            'diped',
+            'eiped',
+            'fiped',
+            'giped',
+            'hiped',
+            'iyped',
+            'jiped',
+          ],
+        ],
+        [
+          '5ac',
+          [
+            'aiped',
+            'biped',
+            'ciped',
+            'diped',
+            'eiped',
+            'fiped',
+            'giped',
+            'hiped',
+            'iyped',
+            'jiped',
+          ],
+        ],
+        [
+          '0do',
+          [
+            'deter',
+            'diped',
+            'eiped',
+            'fiped',
+            'giped',
+            'hiped',
+            'iyped',
+            'jiped',
+          ],
+        ],
+        [
+          '0do',
+          [
+            'deter',
+            'diped',
+            'eiped',
+            'fiped',
+            'giped',
+            'hiped',
+            'iyped',
+            'jiped',
+          ],
+        ],
+        [
+          '1do',
+          [
+            'aiped',
+            'biped',
+            'ciped',
+            'diped',
+            'eiped',
+            'fiped',
+            'giped',
+            'hiped',
+            'iyped',
+            'jiped',
+          ],
+        ],
+        [
+          '2do',
+          [
+            'aiped',
+            'biped',
+            'ciped',
+            'diped',
+            'eiped',
+            'fiped',
+            'giped',
+            'hiped',
+            'iyped',
+            'jiped',
+          ],
+        ],
+        [
+          '3do',
+          [
+            'deter',
+            'diped',
+            'eiped',
+            'fiped',
+            'giped',
+            'hiped',
+            'iyped',
+            'jiped',
+          ],
+        ],
+      ],
+      summary: ['BSDEE', 'PATEE', 'DMREE'],
+    },
+    {
+      grid: [
         ['1ac', 'BASED'],
         ['4ac', 'PLANT'],
         ['5ac', ['DEMUR']],
@@ -102,6 +221,55 @@ export class MakeComponent implements OnInit {
       ],
       summary: ['BSDEE', 'PATEE', 'DMREE'],
     },
+    {
+      grid: [
+        ['1ac', 'BASED'],
+        ['4ac', 'PLANT'],
+        ['5ac', ['DREAD']],
+        ['1do', ['biped']],
+        ['2do', ['STALE']],
+        ['3do', ['dated', 'doted']],
+      ],
+      summary: ['BSD', 'PAT', 'DED'],
+    },
+    {
+      grid: [
+        ['1ac', 'BASED'],
+        ['4ac', 'PLANT'],
+        ['5ac', ['DEMUR']],
+        [
+          '1do',
+          [
+            'aiped',
+            'biped',
+            'ciped',
+            'diped',
+            'eiped',
+            'fiped',
+            'giped',
+            'hiped',
+            'iyped',
+            'jiped',
+          ],
+        ],
+        ['2do', ['SWARM']],
+        [
+          '3do',
+          [
+            'deter',
+            'diped',
+            'eiped',
+            'fiped',
+            'giped',
+            'hiped',
+            'iyped',
+            'jiped',
+          ],
+        ],
+      ],
+      summary: ['BSDEE', 'PATEE', 'DMREE'],
+    },
+
     {
       grid: [
         ['1ac', 'BASED'],
@@ -194,6 +362,7 @@ export class MakeComponent implements OnInit {
 
   ngOnInit(): void {
     this.startButtonActive = false;
+    setTimeout(this.checkIfFlexWrap, 0);
   }
 
   formChanged() {
@@ -201,6 +370,30 @@ export class MakeComponent implements OnInit {
       this.justStop();
     }
   }
+
+  onResize(e) {
+    this.checkIfFlexWrap();
+  }
+
+  checkIfFlexWrap() {
+    // let boxes = { box1: {}, box2: {}, box3: {}, box4: {} };
+    // Object.keys(boxes).forEach(
+    //   (key) => (boxes[key] = document.getElementById(key))
+    // );
+
+    let boxes = {
+      box1: document.getElementById('box1'),
+      box2: document.getElementById('box2'),
+    };
+
+    if (boxes['box1'].offsetTop < boxes['box2'].offsetTop) {
+      this.gridLayout = 'one column';
+    } else {
+      this.gridLayout = 'two rows';
+    }
+  }
+
+  gridLayout = 'two rows';
 
   onChanges(): void {
     this.makeCrosswordForm.valueChanges.subscribe((val) => {

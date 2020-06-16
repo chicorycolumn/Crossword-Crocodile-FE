@@ -1,8 +1,15 @@
-<div class="main">
+<div class="main" (window:resize)="onResize($event)">
+  <!-- <button class="centralButton">MAKE GRIDS</button> -->
+
+  <!-- <div class="centralButtonOval">
+    <img class="centralButton" src="../../assets/croc-button4.png" />
+  </div> -->
+
   <form class="grid" [formGroup]="makeCrosswordForm" (ngSubmit)="onSubmit()">
-    <div *ngIf="!onlyShowResultBox" class="box box1">
-      <div class="tag">required</div>
-      <p class="boxTitle">Grid Shape</p>
+    <div *ngIf="!onlyShowResultBox" class="box box1" id="box1">
+      <div class="tag hiddenTag">required</div>
+      <p class="boxTitle boxTitleA">Grid Shape</p>
+      <img class="crocSepLeft upMargin" src="../../assets/croc-silh-g-m.png" />
       <br />
       <br />
       <form formGroupName="shape">
@@ -53,11 +60,15 @@
           </div>
         </div>
       </form>
+      <!-- <img class="crocBorder1" src="../../assets/croc-silh-3.png" /> -->
     </div>
 
-    <div *ngIf="!onlyShowResultBox" class="box box2">
+    <div *ngIf="!onlyShowResultBox" class="box box2" id="box2">
       <div class="tag">optional</div>
-      <p class="boxTitle">Mandatory or Forbidden Words</p>
+      <p class="boxTitle boxTitleB">
+        Mandatory or Forbidden Words
+      </p>
+      <img class="crocSepRight" src="../../assets/croc-silh-g.png" />
       <div class="insideBoxTwo">
         <label>
           <p>
@@ -85,18 +96,17 @@
       <br />
       Separate your words with a space, capitalisation is ignored.
       <br />
-      <br />
-      Tip: Best results with no more than three mandatory words.
+      Best results with no more than three mandatory words.
     </div>
 
-    <div *ngIf="!onlyShowResultBox" class="box box3">
+    <div *ngIf="!onlyShowResultBox" class="box box3" id="box3">
       <div class="tag">optional</div>
-      <p class="boxTitle">Desirable Words</p>
+      <p class="boxTitle boxTitleC">Desirable Words</p>
+      <img class="crocSepLeft" src="../../assets/croc-silh-g-m.png" />
       <p>
         Say, a large bank of words you've already made clues for.
         <br />
-        <br />
-        Tip: Best results when minimum isn't set higher than three.
+        Best results when minimum isn't set higher than three.
       </p>
       <textarea
         formControlName="desi"
@@ -107,6 +117,7 @@
       <div class="desiButtonHolder">
         <div>
           <input
+            class="desiButton"
             checked
             type="radio"
             formControlName="desiSeparator"
@@ -121,6 +132,7 @@
         </div>
         <div>
           <input
+            class="desiButton"
             type="radio"
             formControlName="desiSeparator"
             id="marks"
@@ -152,17 +164,12 @@
       </div>
     </div>
 
-    <div class="box box4">
+    <div class="box box4" id="box4">
       <div class="resultLeftie">
         <div *ngIf="results.length" class="resultLeftieInner1">
-          <div
-            *ngFor="let coordArr of results[resultsIndex].grid"
-            class="resultLeftieInner2"
-          >
-            <div class="hor">
-              <p class="coordName">{{ coordArr[0] | formatCoord }}</p>
-              <p class="coordWords">{{ coordArr[1] | spaceArray }}</p>
-            </div>
+          <div *ngFor="let coordArr of results[resultsIndex].grid" class="hor">
+            <p class="coordName">{{ coordArr[0] | formatCoord }}</p>
+            <p class="coordWords">{{ coordArr[1] | spaceArray }}</p>
           </div>
         </div>
       </div>
@@ -198,14 +205,14 @@
           class="scrollButton scrollUp"
           (click)="changeResultsIndex('up')"
         >
-          ↑
+          ▲
         </button>
         <button
           type="button"
           class="scrollButton scrollDown"
           (click)="changeResultsIndex('down')"
         >
-          ↓
+          ▼
         </button>
       </div>
     </div>
