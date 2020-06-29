@@ -6,6 +6,8 @@ import { MakeComponent } from './make.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 
+import { SocketioService } from '../services/socketio.service';
+
 @NgModule({
   imports: [
     MakeRoutingModule,
@@ -15,6 +17,7 @@ import { SharedModule } from '../shared/shared.module';
     SharedModule,
   ],
   declarations: [MakeComponent],
+  providers: [SocketioService],
   exports: [MakeComponent],
 })
 export class MakeModule {}

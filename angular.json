@@ -19,7 +19,11 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "aot": true,
-            "assets": ["src/assets/cfavicon.ico", "src/assets"],
+            "assets": [
+              "src/assets/cfavicon.ico",
+              "src/assets",
+              "src/_redirects"
+            ],
             "styles": ["src/styles.css"],
             "scripts": []
           },
@@ -78,7 +82,11 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
-            "assets": ["src/assets/cfavicon.ico", "src/assets"],
+            "assets": [
+              "src/assets/cfavicon.ico",
+              "src/assets",
+              "src/_redirects"
+            ],
             "styles": ["src/styles.css"],
             "scripts": []
           }

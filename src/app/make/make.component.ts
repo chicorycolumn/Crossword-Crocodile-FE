@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 
+import { SocketioService } from '../services/socketio.service';
+
 @Component({
   selector: 'app-make',
   templateUrl: './make.component.html',
@@ -23,7 +25,10 @@ export class MakeComponent implements OnInit {
     desiSeparator: [' '],
     desiThreshold: [''],
   });
-  constructor(private fb: FormBuilder) {}
+  constructor(
+    private fb: FormBuilder,
+    private socketService: SocketioService
+  ) {}
 
   onSubmit() {
     console.log('onSubmit fxn');
@@ -363,6 +368,23 @@ export class MakeComponent implements OnInit {
   ngOnInit(): void {
     this.startButtonActive = false;
     setTimeout(this.checkIfFlexWrap, 0);
+    this.socketService.setupSocketConnection();
+  }
+
+  emit() {
+    this.socketService.emit();
+  }
+  emitOther() {
+    this.socketService.emitOther();
+  }
+  message() {
+    this.socketService.message();
+  }
+  stop() {
+    this.socketService.stop();
+  }
+  verifyOff() {
+    this.socketService.verifyOff();
   }
 
   formChanged() {

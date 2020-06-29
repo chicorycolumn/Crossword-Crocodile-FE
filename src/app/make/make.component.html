@@ -4,7 +4,13 @@
   <!-- <div class="centralButtonOval">
     <img class="centralButton" src="../../assets/croc-button4.png" />
   </div> -->
-
+  <div>
+    <button (click)="emit()">Emit</button>
+    <button (click)="emitOther()">Emit Other</button>
+    <button (click)="message()">Message</button>
+    <button (click)="stop()">Stop</button>
+    <button (click)="verifyOff()">Verify off</button>
+  </div>
   <form class="grid" [formGroup]="makeCrosswordForm" (ngSubmit)="onSubmit()">
     <div *ngIf="!onlyShowResultBox" class="box box1" id="box1">
       <div class="tag hiddenTag">required</div>
