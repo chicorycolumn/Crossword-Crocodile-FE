@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 
 import { SocketioService } from '../services/socketio.service';
+import * as Util from '../shared/utils';
+
+let deactivateSocket = true; // dev switch
+let onlyShowResultBox = false; // dev switch
 
 @Component({
   selector: 'app-make',
@@ -10,20 +14,21 @@ import { SocketioService } from '../services/socketio.service';
 })
 export class MakeComponent implements OnInit {
   sayHello() {
-    console.log('hello lionel');
+    console.log('hello from make.components.ts');
   }
 
-  onlyShowResultBox = false; // dev switch
+  onlyShowResultBox = onlyShowResultBox;
+  startButtonActive = false;
 
   makeCrosswordForm = this.fb.group({
     shape: this.fb.group({
-      shapeName: ['5x5'],
+      shapeName: '5x5',
     }),
-    mand: [''],
-    forb: [''],
+    mandatory_words: [''],
+    banned_words: [''],
     desi: [''],
     desiSeparator: [' '],
-    desiThreshold: [''],
+    threshold: [''],
   });
   constructor(
     private fb: FormBuilder,
@@ -31,36 +36,27 @@ export class MakeComponent implements OnInit {
   ) {}
 
   onSubmit() {
-    console.log('onSubmit fxn');
-    // console.dir(this.makeCrosswordForm.value);
-    console.log(`ooo${this.makeCrosswordForm.value.desiSeparator}ooo`);
+    console.log('ONSUBMIT fxn in make.comp.ts is no longer used.');
   }
 
-  startButtonActive = false;
-
   updateDesiPlaceholderText(sepName) {
-    // console.log(this.makeCrosswordForm.controls.desiSeparator.value);
-
     const ref = {
       space: 'eg spoke azure',
       marks: 'eg "SPOKE" part of a wheel. "azure" - Shade of blue.',
     };
 
     this.desiPlaceholderText = ref[sepName];
-
-    // this.desiPlaceholderText =
-    //   this.makeCrosswordForm.controls.desiSeparator.value === ' '
-    //     ? 'spaaace'
-    //     : 'marrrks';
   }
 
-  desiPlaceholderText = 'eg parts reset';
+  desiPlaceholderText = 'eg spoke azure';
 
   justStop() {
     this.startButtonActive = false;
   }
 
   startStop() {
+    console.log('STARTSTOP fxn in make.comp.ts');
+
     if (this.startButtonActive) {
       //tell server to stop
     } else {
@@ -368,11 +364,71 @@ export class MakeComponent implements OnInit {
   ngOnInit(): void {
     this.startButtonActive = false;
     setTimeout(this.checkIfFlexWrap, 0);
-    this.socketService.setupSocketConnection();
+    if (!deactivateSocket) {
+      this.socketService.setupSocketConnection();
+    }
   }
 
-  emit() {
-    this.socketService.emit();
+  failedValidation(code) {
+    console.log('FAILED validation', code);
+  }
+
+  socketEmit() {
+    console.log('SOCKETEMIT fxn in make.comp.ts');
+
+    let form = this.makeCrosswordForm.value;
+    let gridSpecs = {};
+
+    gridSpecs['desirable_words_unfiltered'] = Util.makeDesiList(form);
+    gridSpecs['threshold'] = form['threshold'] || 0;
+    let dimensions = form.shape.shapeName
+      .split('x')
+      .map((num) => parseInt(num));
+
+    if (!gridSpecs['desirable_words_unfiltered']) {
+      this.failedValidation('desi-quot');
+      return;
+    } else if (
+      gridSpecs['desirable_words_unfiltered'].length < gridSpecs['threshold']
+    ) {
+      this.failedValidation('desi-thre');
+      return;
+    } else if (
+      gridSpecs['desirable_words_unfiltered'].some(
+        (word) => !dimensions.includes(word.length)
+      )
+    ) {
+      this.failedValidation('desi-leng');
+      return;
+    }
+
+    gridSpecs['mandatory_words'] = Util.normalizeArray(
+      form['mandatory_words'].split(' ').filter((str) => str.length)
+    );
+
+    if (
+      gridSpecs['mandatory_words'].some(
+        (word) => !dimensions.includes(word.length)
+      )
+    ) {
+      this.failedValidation('mand-leng');
+      return;
+    }
+
+    gridSpecs['grid_width'] = Util.findModalLength(
+      gridSpecs['mandatory_words']
+    );
+    dimensions.splice(dimensions.indexOf(gridSpecs['grid_width']), 1);
+    gridSpecs['grid_height'] = dimensions[0];
+
+    gridSpecs['banned_words'] = Util.normalizeArray(
+      form['banned_words'].split(' ').filter((str) => str.length)
+    );
+
+    console.log('passed the validation in SOCKETEMIT fxn');
+    this.startButtonActive = true;
+    console.log(gridSpecs);
+    // this.socketService.emit();
   }
   emitOther() {
     this.socketService.emitOther();
@@ -380,8 +436,12 @@ export class MakeComponent implements OnInit {
   message() {
     this.socketService.message();
   }
-  stop() {
-    this.socketService.stop();
+  socketStop() {
+    console.log('STOP fxn in make.comp.ts');
+    // this.socketService.stop();
+    setTimeout(() => {
+      this.startButtonActive = false;
+    }, 0);
   }
   verifyOff() {
     this.socketService.verifyOff();
@@ -398,11 +458,6 @@ export class MakeComponent implements OnInit {
   }
 
   checkIfFlexWrap() {
-    // let boxes = { box1: {}, box2: {}, box3: {}, box4: {} };
-    // Object.keys(boxes).forEach(
-    //   (key) => (boxes[key] = document.getElementById(key))
-    // );
-
     let boxes = {
       box1: document.getElementById('box1'),
       box2: document.getElementById('box2'),
@@ -417,9 +472,10 @@ export class MakeComponent implements OnInit {
 
   gridLayout = 'two rows';
 
-  onChanges(): void {
-    this.makeCrosswordForm.valueChanges.subscribe((val) => {
-      console.log(val);
-    });
-  }
+  // onChanges(): void {
+  //   console.log('on changes');
+  //   this.makeCrosswordForm.valueChanges.subscribe((val) => {
+  //     console.log('ON CHANGES', val);
+  //   });
+  // }
 }

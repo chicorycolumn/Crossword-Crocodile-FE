@@ -4,10 +4,10 @@
     <img class="centralButton" src="../../assets/croc-button4.png" />
   </div> -->
   <div>
-    <button (click)="emit()">Emit</button>
+    <button (click)="socketEmit()">Emit</button>
     <button (click)="emitOther()">Emit Other</button>
     <button (click)="message()">Message</button>
-    <button (click)="stop()">Stop</button>
+    <button (click)="socketStop()">Stop</button>
     <button (click)="verifyOff()">Verify off</button>
   </div>
   <form class="grid" [formGroup]="makeCrosswordForm" (ngSubmit)="onSubmit()">
@@ -82,7 +82,7 @@
           <textarea
             class="inputBox inputBoxMand"
             placeholder="eg Santa claus"
-            formControlName="mand"
+            formControlName="mandatory_words"
             (keypress)="formChanged()"
           ></textarea>
         </label>
@@ -92,7 +92,7 @@
           </p>
           <textarea
             class="inputBox inputBoxForb"
-            formControlName="forb"
+            formControlName="banned_words"
             placeholder="eg miffs fiats"
             (keypress)="formChanged()"
           ></textarea>
@@ -101,7 +101,9 @@
       <br />
       Separate your words with a space, capitalisation is ignored.
       <br />
-      Best results with no more than three mandatory words.
+      TIP: Best results with no more than three mandatory words.
+      <br />
+      TIP: Your mandatory words should all be the same length.
     </div>
 
     <div *ngIf="!onlyShowResultBox" class="box box3" id="box3">
@@ -160,7 +162,7 @@
           class="threshInputBox"
           placeholder="0"
           maxlength="2"
-          formControlName="desiThreshold"
+          formControlName="threshold"
           (keypress)="formChanged()"
         ></textarea>
         <p class="includeAtLeast_text">
@@ -183,8 +185,8 @@
           class="startStopButton"
           [class.started]="startButtonActive"
           type="button"
-          (click)="startStop()"
-          (click)="startButtonActive && onSubmit()"
+          (click)="startButtonActive && socketStop()"
+          (click)="!startButtonActive && socketEmit()"
         >
           {{ startButtonActive ? "STOP" : "MAKE GRIDS" }}
         </button>
