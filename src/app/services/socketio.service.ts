@@ -8,7 +8,7 @@ export class SocketioService {
   socket;
 
   constructor() {}
-  setupSocketConnection() {
+  setupSocketConnection(startButtonActive, results) {
     let shouldEndpointBeHeroku = true;
 
     this.socket = socketIOClient(
@@ -23,26 +23,23 @@ export class SocketioService {
     });
 
     this.socket.on('message', (data) => {
+      //screw Change this to specific "terminated" event?
       console.log('server sent ', data, Date.now() / 1000 - 1593360000);
+      if (startButtonActive.value) {
+        startButtonActive.value = false;
+      }
     });
 
     this.socket.on('produced grid', (data) => {
-      console.log(data, Date.now() / 1000 - 1593360000);
+      results.push(data['result']);
+      // console.log(data['mandatory_words']);
+      // console.log(results);
     });
   }
 
-  emit() {
+  emitGridSpecs(data) {
     console.log('gonna emit', Date.now() / 1000 - 1593360000);
-
-    this.socket.emit('grid specs', {
-      timestamp: Date.now(),
-      grid_width: 5,
-      grid_height: 5,
-      mandatory_words: ['holly'],
-      banned_words: [],
-      desirable_words_unfiltered: ['holds'],
-      threshold: 1,
-    });
+    this.socket.emit('grid specs', data);
   }
 
   emitOther() {

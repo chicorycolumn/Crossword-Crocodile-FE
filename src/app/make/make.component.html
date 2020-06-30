@@ -3,14 +3,10 @@
   <!-- <div class="centralButtonOval">
     <img class="centralButton" src="../../assets/croc-button4.png" />
   </div> -->
-  <div>
-    <button (click)="socketEmit()">Emit</button>
-    <button (click)="emitOther()">Emit Other</button>
-    <button (click)="message()">Message</button>
-    <button (click)="socketStop()">Stop</button>
-    <button (click)="verifyOff()">Verify off</button>
-  </div>
-  <form class="grid" [formGroup]="makeCrosswordForm" (ngSubmit)="onSubmit()">
+  <button (click)="devEvent()" style="position: fixed; z-index: 5;">
+    DEV BUTTON
+  </button>
+  <form class="grid" [formGroup]="makeCrosswordForm" (ngSubmit)="devEvent()">
     <div *ngIf="!onlyShowResultBox" class="box box1" id="box1">
       <div class="tag hiddenTag">required</div>
       <p class="boxTitle boxTitleA">Grid Shape</p>
@@ -183,12 +179,12 @@
       <div class="resultRightie">
         <button
           class="startStopButton"
-          [class.started]="startButtonActive"
+          [class.started]="startButtonActive.value"
           type="button"
-          (click)="startButtonActive && socketStop()"
-          (click)="!startButtonActive && socketEmit()"
+          (click)="startButtonActive.value && socketStop()"
+          (click)="!startButtonActive.value && socketEmit()"
         >
-          {{ startButtonActive ? "STOP" : "MAKE GRIDS" }}
+          {{ startButtonActive.value ? "STOP" : "MAKE GRIDS" }}
         </button>
 
         <p *ngIf="results.length" class="gridRender">
@@ -201,8 +197,8 @@
           {{ results[resultsIndex].summary[2] }}
         </p>
 
-        <div *ngIf="results.length" class="indexDisplay">
-          {{ resultsIndex + 1 }} of {{ results.length }}
+        <div class="indexDisplay">
+          {{ results.length ? resultsIndex + 1 + " of " + results.length : "" }}
         </div>
       </div>
 
