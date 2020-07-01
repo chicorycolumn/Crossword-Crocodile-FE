@@ -7,7 +7,7 @@ import * as Util from '../shared/utils';
 let deactivateSocket = 1; // dev switch
 let onlyShowResultBox = 0; // dev switch
 let padWithExampleResults = 0; // dev switch
-let timeOfBuild = 1921; // dev note
+let timeOfBuild = 2049; // dev note
 
 @Component({
   selector: 'app-make',
@@ -31,6 +31,11 @@ export class MakeComponent implements OnInit {
       text:
         'Your mandatory words must be the same length as the grid specifications.',
     },
+    MandExce: {
+      show: false,
+      text:
+        "You've entered more mandatory words than there are words in the grid!",
+    },
     DesiLeng: {
       show: false,
       text:
@@ -38,8 +43,7 @@ export class MakeComponent implements OnInit {
     },
     DesiThre: {
       show: false,
-      text:
-        'Your required number of desired words has been set higher than the number of desired words.',
+      text: 'Your required number of desired words has been set too high.',
     },
     DesiQuot: {
       show: false,
@@ -79,6 +83,8 @@ export class MakeComponent implements OnInit {
       );
     }
   }
+
+  fruit = 'apple';
 
   exitErrorBubble(key) {
     this.helpDisplay[key].show = false;
@@ -131,28 +137,25 @@ export class MakeComponent implements OnInit {
         this.helpDisplay[key].show = false;
       }
     });
+
     let form = this.makeCrosswordForm.value;
     let gridSpecs = {};
     console.log(111);
+
+    //
+    console.log(form['mandatory_words']);
+    form['mandatory_words'] = 'woo yeah howie';
+    console.log(form['mandatory_words']);
+    return;
+    //
+
     gridSpecs['desirable_words_unfiltered'] = Util.makeDesiList(form);
     gridSpecs['threshold'] = parseInt(form['threshold']) || 0;
     let dimensions = form.shape.shapeName
       .split('x')
       .map((num) => parseInt(num));
     console.log(222);
-    gridSpecs['mandatory_words'] = Util.normalizeArray(
-      form['mandatory_words'].split(' ').filter((str) => str.length)
-    );
 
-    if (
-      gridSpecs['mandatory_words'].some(
-        (word) => !dimensions.includes(word.length)
-      )
-    ) {
-      this.failedValidation('MandLeng');
-      return;
-    }
-    console.log(333);
     if (!gridSpecs['desirable_words_unfiltered']) {
       this.failedValidation('DesiQuot');
       return;
@@ -169,6 +172,34 @@ export class MakeComponent implements OnInit {
       this.failedValidation('DesiLeng');
       return;
     }
+
+    if (
+      parseInt(gridSpecs['threshold']) &&
+      parseInt(gridSpecs['threshold']) ===
+        parseInt(gridSpecs['desirable_words_unfiltered'].length)
+    ) {
+      gridSpecs['desirable_words_unfiltered'].forEach((desiWord) => {
+        form['mandatory_words'] += ` ${desiWord}`;
+      });
+      gridSpecs['desirable_words_unfiltered'] = [];
+      form['desirable_words_unfiltered'] = '';
+    }
+
+    console.log(333);
+
+    gridSpecs['mandatory_words'] = Util.normalizeArray(
+      form['mandatory_words'].split(' ').filter((str) => str.length)
+    );
+
+    if (
+      gridSpecs['mandatory_words'].some(
+        (word) => !dimensions.includes(word.length)
+      )
+    ) {
+      this.failedValidation('MandLeng');
+      return;
+    }
+
     console.log(444);
     gridSpecs['grid_width'] =
       Util.findModalLength(gridSpecs['mandatory_words']) ||
@@ -179,6 +210,11 @@ export class MakeComponent implements OnInit {
     gridSpecs['banned_words'] = Util.normalizeArray(
       form['banned_words'].split(' ').filter((str) => str.length)
     );
+
+    // if (gridSpecs["grid_width"] !== gridSpecs["grid_height"]){
+
+    // }
+
     console.log(666);
     this.startButtonActive.value = true;
     gridSpecs['time'] = Date.now() / 1000;

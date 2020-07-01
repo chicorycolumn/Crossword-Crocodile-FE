@@ -170,10 +170,10 @@ p {
   margin-bottom: -5px;
 }
 .boxTitleB {
-  margin-bottom: -15px;
+  margin-bottom: 0px;
 }
 .boxTitleC {
-  margin-bottom: -15px;
+  margin-bottom: 0ypx;
   /* font-style: italic; */
 }
 
@@ -397,7 +397,7 @@ p {
   border-radius: 0px 0px 25px 0px;
 }
 
-.boxLayer1 {
+.boxLayerA {
   /* border: orange solid 0.5pt; */
   position: relative;
   top: 0px;
@@ -410,7 +410,7 @@ p {
   z-index: -1;
 }
 
-.boxLayer3 {
+.boxLayerC {
   position: relative;
   top: -416px;
   width: 440px;
@@ -453,7 +453,7 @@ p {
   margin: 10px 20px 10px 20px;
 }
 
-.boxLayer2 {
+.boxLayerB {
   position: relative;
   top: -208px;
   width: 440px;
@@ -468,7 +468,7 @@ p {
 }
 
 .crocSepL {
-  margin-left: -510px;
+  margin-left: -512px;
 }
 
 .crocSepR {

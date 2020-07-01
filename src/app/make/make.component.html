@@ -31,67 +31,73 @@
   <form class="grid" [formGroup]="makeCrosswordForm" (ngSubmit)="devEvent()">
     <div *ngIf="!onlyShowResultBox" class="box box1" id="box1">
       <div class="tag hiddenTag">required</div>
-      <p class="boxTitle boxTitleA">Grid Shape</p>
-      <img
-        class="crocSep crocSepL upMargin"
-        src="../../assets/croc-silh-g-m.png"
-      />
-      <br />
-      <br />2
-      <form formGroupName="shape">
-        <div class="shapeHolder">
-          <div class="imageAndText">
-            <label>
-              <input
-                class="shapeRadio"
-                type="radio"
-                value="5x5"
-                formControlName="shapeName"
-                (click)="formChanged()"
-              />
-              <img class="shapeImage" src="../../assets/Crossword 5x5.png" />
-              <p class="shapeText">Six 5-letter words</p>
-            </label>
-          </div>
-          <div class="imageAndText">
-            <label>
-              <input
-                class="shapeRadio"
-                type="radio"
-                value="7x5"
-                formControlName="shapeName"
-                (click)="formChanged()"
-              />
 
-              <img class="shapeImage" src="../../assets/Crossword 7x5.png" />
-              <p class="shapeText">
-                Three 7-letter words<br />Four 5-letter words
-              </p>
-            </label>
+      <div class="boxLayerA" [class.veiled]="false">
+        <p class="boxTitle boxTitleA">Grid Shape</p>
+
+        <br />
+        <br />
+        <form formGroupName="shape">
+          <div class="shapeHolder">
+            <div class="imageAndText">
+              <label>
+                <input
+                  class="shapeRadio"
+                  type="radio"
+                  value="5x5"
+                  formControlName="shapeName"
+                  (click)="formChanged()"
+                />
+                <img class="shapeImage" src="../../assets/Crossword 5x5.png" />
+                <p class="shapeText">Six 5-letter words</p>
+              </label>
+            </div>
+            <div class="imageAndText">
+              <label>
+                <input
+                  class="shapeRadio"
+                  type="radio"
+                  value="7x5"
+                  formControlName="shapeName"
+                  (click)="formChanged()"
+                />
+
+                <img class="shapeImage" src="../../assets/Crossword 7x5.png" />
+                <p class="shapeText">
+                  Three 7-letter words<br />Four 5-letter words
+                </p>
+              </label>
+            </div>
+            <div class="imageAndText">
+              <label>
+                <input
+                  class="shapeRadio"
+                  type="radio"
+                  value="9x5"
+                  formControlName="shapeName"
+                  (click)="formChanged()"
+                />
+                <img class="shapeImage" src="../../assets/Crossword 9x5.png" />
+                <p class="shapeText">
+                  Three 9-letter words<br />Five 5-letter words
+                </p>
+              </label>
+            </div>
           </div>
-          <div class="imageAndText">
-            <label>
-              <input
-                class="shapeRadio"
-                type="radio"
-                value="9x5"
-                formControlName="shapeName"
-                (click)="formChanged()"
-              />
-              <img class="shapeImage" src="../../assets/Crossword 9x5.png" />
-              <p class="shapeText">
-                Three 9-letter words<br />Five 5-letter words
-              </p>
-            </label>
-          </div>
-        </div>
-      </form>
+        </form>
+      </div>
+
+      <div class="boxLayerB">
+        <img class="crocSep crocSepL" src="../../assets/croc-silh-g-m.png" />
+      </div>
+
+      <div class="boxLayerC" *ngIf="false"></div>
     </div>
 
     <div *ngIf="!onlyShowResultBox" class="box box2" id="box2">
       <div class="tag">optional</div>
 
-      <div class="boxLayer1" [class.veiled]="helpDisplay.MandLeng.show">
+      <div class="boxLayerA" [class.veiled]="helpDisplay.MandLeng.show">
         <p class="boxTitle boxTitleB">
           Mandatory or Forbidden Words
         </p>
@@ -107,6 +113,7 @@
               formControlName="mandatory_words"
               (keypress)="formChanged()"
             ></textarea>
+            <!-- value="makeCrosswordForm.value['mandatory_words']" -->
           </label>
           <label>
             <p>
@@ -123,19 +130,18 @@
         <br />
         Separate your words with a space, capitalisation is ignored.
         <br />
-        TIP: Best results with no more than three mandatory words.
         <br />
-        TIP: Your mandatory words should all be the same length.
+        Best results with no more than three mandatory words.
       </div>
 
-      <div class="boxLayer2">
+      <div class="boxLayerB">
         <img
           class="crocSep crocSepR flipHorizontal"
           src="../../assets/croc-silh-g-m.png"
         />
       </div>
 
-      <div class="boxLayer3" *ngIf="helpDisplay.MandLeng.show">
+      <div class="boxLayerC" *ngIf="helpDisplay.MandLeng.show">
         <img
           class="speechBubble flipHorizontal"
           src="../../assets/speech_bubble3.png"
@@ -152,7 +158,7 @@
       <div class="tag">optional</div>
 
       <div
-        class="boxLayer1"
+        class="boxLayerA"
         [class.veiled]="
           helpDisplay.DesiLeng.show ||
           helpDisplay.DesiThre.show ||
@@ -222,12 +228,12 @@
         </div>
       </div>
 
-      <div class="boxLayer2">
+      <div class="boxLayerB">
         <img class="crocSep crocSepL" src="../../assets/croc-silh-g-m.png" />
       </div>
 
       <div
-        class="boxLayer3"
+        class="boxLayerC"
         *ngIf="
           helpDisplay.DesiLeng.show ||
           helpDisplay.DesiThre.show ||
