@@ -397,23 +397,22 @@ p {
   border-radius: 0px 0px 25px 0px;
 }
 
-.box2inner {
+.boxLayer1 {
   /* border: orange solid 0.5pt; */
   position: relative;
   top: 0px;
   width: 440px;
   height: 208px;
-  z-index: 0;
+  z-index: 4;
 }
 
 .veiled {
   z-index: -1;
 }
 
-.speechBubbleHolder {
-  /* background-color: var(--standard-panel-colour-aux); */
+.boxLayer3 {
   position: relative;
-  top: -208px;
+  top: -416px;
   width: 440px;
   height: 208px;
 }
@@ -422,55 +421,64 @@ p {
   height: 150px;
   width: 410px;
   margin-top: 15px;
+}
+
+.flipHorizontal {
   -moz-transform: scale(-1, 1);
   -o-transform: scale(-1, 1);
   -webkit-transform: scale(-1, 1);
   transform: scale(-1, 1);
 }
 
+.speechBubbleTextbox:hover {
+  color: red;
+}
+
 .speechBubbleTextbox {
+  /* border: black solid 1pt; */
   position: relative;
-  /* border: red solid 0.5pt; */
-  top: -140px;
+  top: -155px;
   overflow: hidden;
-  width: 200px;
-  height: 118px;
+  width: 250px;
+  height: 145px;
   margin-left: auto;
   margin-right: auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  border-radius: 55px;
 }
 
 .speechBubbleText {
-  margin: 10px;
-  margin-top: 10px;
+  margin: 10px 20px 10px 20px;
 }
 
-.crocBorder1 {
-  border: red solid 5pt;
-}
-
-.crocSepHolder {
+.boxLayer2 {
   position: relative;
-  top: -416px;
+  top: -208px;
   width: 440px;
   height: 208px;
 }
 
-.crocSepRight {
+.crocSep {
   height: 40px;
   z-index: 3;
-  /* margin-top: -600px;
-  margin-left: 425px;
-  margin-bottom: 0px;
-  position: relative; */
+  margin-top: 80px;
+  position: relative;
 }
 
-.crocSepLeft {
+.crocSepL {
+  margin-left: -510px;
+}
+
+.crocSepR {
+  margin-left: 425px;
+}
+
+/* .crocSepLeft {
   height: 40px;
   z-index: 3;
   margin-top: -400px;
   margin-left: -510px;
   margin-bottom: -100px;
-}
+} */

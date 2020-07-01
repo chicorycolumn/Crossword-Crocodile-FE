@@ -4,10 +4,10 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { SocketioService } from '../services/socketio.service';
 import * as Util from '../shared/utils';
 
-let deactivateSocket = 0; // dev switch
+let deactivateSocket = 1; // dev switch
 let onlyShowResultBox = 0; // dev switch
 let padWithExampleResults = 0; // dev switch
-let timeOfBuild = 949; // dev note
+let timeOfBuild = 1921; // dev note
 
 @Component({
   selector: 'app-make',
@@ -16,6 +16,7 @@ let timeOfBuild = 949; // dev note
 })
 export class MakeComponent implements OnInit {
   onlyShowResultBox = onlyShowResultBox;
+  deactivateSocket = deactivateSocket;
   timeOfBuild = timeOfBuild;
   startButtonActive = { value: false };
   serverIsIndeedWorking = { value: false };
@@ -25,16 +26,26 @@ export class MakeComponent implements OnInit {
   results = padWithExampleResults ? Util.results : [];
   socketIsReady = { value: false };
   helpDisplay = {
-    box1: false,
-    box2: true,
-    box3: false,
-    MandLeng:
-      'Your mandatory words must be the same length as the grid specifications.',
-    DesiLeng:
-      'Your mandatory words must be the same length as the grid specifications.',
-    DesiThre:
-      'Your required number of desired words has been set higher than the number of desired words.',
-    DesiQuot: `You've selected to separate desired words by speechmarks, but I can't find any in the box. Remember, use the doublequote character. (")`,
+    MandLeng: {
+      show: false,
+      text:
+        'Your mandatory words must be the same length as the grid specifications.',
+    },
+    DesiLeng: {
+      show: false,
+      text:
+        'Your desired words must be the same length as the grid specifications.',
+    },
+    DesiThre: {
+      show: false,
+      text:
+        'Your required number of desired words has been set higher than the number of desired words.',
+    },
+    DesiQuot: {
+      show: false,
+      text: `You've selected to separate desired words by speechmarks, but I can't find any in the box. Remember, use the doublequote character. (")`,
+    },
+    current: null,
   };
 
   makeCrosswordForm = this.fb.group({
@@ -67,6 +78,11 @@ export class MakeComponent implements OnInit {
         this.socketIsReady
       );
     }
+  }
+
+  exitErrorBubble(key) {
+    this.helpDisplay[key].show = false;
+    // this.helpDisplay.current = null;
   }
 
   devEvent() {
@@ -105,18 +121,16 @@ export class MakeComponent implements OnInit {
   }
 
   failedValidation(code) {
-    if (code == 'MandLeng') {
-      console.log('FAIL', code);
-    } else if (code == 'DesiThre') {
-      console.log('FAIL', code);
-    } else if (code == 'DesiLeng') {
-      console.log('FAIL', code);
-    } else if (code == 'DesiQuot') {
-      console.log('FAIL', code);
-    }
+    this.helpDisplay[code].show = true;
+    this.helpDisplay.current = code;
   }
 
   socketEmit() {
+    Object.keys(this.helpDisplay).forEach((key) => {
+      if (key !== 'current') {
+        this.helpDisplay[key].show = false;
+      }
+    });
     let form = this.makeCrosswordForm.value;
     let gridSpecs = {};
     console.log(111);
@@ -174,7 +188,7 @@ export class MakeComponent implements OnInit {
     console.log(777);
     this.wipeResultState();
     console.log(888);
-    this.socketService.emitGridSpecs(gridSpecs);
+    !this.deactivateSocket && this.socketService.emitGridSpecs(gridSpecs);
   }
 
   wipeResultState() {
@@ -191,13 +205,13 @@ export class MakeComponent implements OnInit {
 
   socketStop() {
     console.log('STOP fxn in make.comp.ts');
-    this.socketService.stop();
+    !this.deactivateSocket && this.socketService.stop();
     setTimeout(() => {
       this.startButtonActive.value = false;
       this.serverIsIndeedWorking.value = false;
     }, 0);
     setTimeout(() => {
-      this.socketService.stop();
+      !this.deactivateSocket && this.socketService.stop();
     }, 10);
   }
 

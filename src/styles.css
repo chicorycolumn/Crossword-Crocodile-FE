@@ -3,15 +3,11 @@
   --light-shad: rgba(21, 107, 0, 1);
   --light-shad-coords: 0px 2px 5px;
   --standard-panel-colour: rgba(238, 255, 230, 0.5);
-  --standard-panel-colour-aux: rgba(238, 255, 230, 0.75);
 }
 
 body {
   margin: 0;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
-
-  /* height: 110%; */
-  /* margin-top: 0px; */
 }
 
 .background {
@@ -37,34 +33,6 @@ body {
 
 .content {
   position: relative;
-}
-
-.crocBorder1 {
-  height: 100px;
-  /* color: rgba(158, 255, 109); */
-  width: 555px;
-  margin-left: -80px;
-  margin-top: -55px;
-  height: 150px;
-  opacity: 1;
-  /* z-index: 5; */
-  /* background-color: blue; */
-}
-
-.crocSepRight {
-  height: 40px;
-  z-index: 3;
-  margin-top: -400px;
-  margin-left: 425px;
-  margin-bottom: -100px;
-}
-
-.crocSepLeft {
-  height: 40px;
-  z-index: 3;
-  margin-top: -400px;
-  margin-left: -510px;
-  margin-bottom: -100px;
 }
 
 .upMargin {

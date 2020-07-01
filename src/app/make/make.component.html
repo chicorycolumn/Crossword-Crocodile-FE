@@ -32,9 +32,12 @@
     <div *ngIf="!onlyShowResultBox" class="box box1" id="box1">
       <div class="tag hiddenTag">required</div>
       <p class="boxTitle boxTitleA">Grid Shape</p>
-      <img class="crocSepLeft upMargin" src="../../assets/croc-silh-g-m.png" />
+      <img
+        class="crocSep crocSepL upMargin"
+        src="../../assets/croc-silh-g-m.png"
+      />
       <br />
-      <br />
+      <br />2
       <form formGroupName="shape">
         <div class="shapeHolder">
           <div class="imageAndText">
@@ -83,13 +86,12 @@
           </div>
         </div>
       </form>
-      <!-- <img class="crocBorder1" src="../../assets/croc-silh-3.png" /> -->
     </div>
 
     <div *ngIf="!onlyShowResultBox" class="box box2" id="box2">
       <div class="tag">optional</div>
 
-      <div class="box2inner" [class.veiled]="helpDisplay.box2">
+      <div class="boxLayer1" [class.veiled]="helpDisplay.MandLeng.show">
         <p class="boxTitle boxTitleB">
           Mandatory or Forbidden Words
         </p>
@@ -126,82 +128,121 @@
         TIP: Your mandatory words should all be the same length.
       </div>
 
-      <div class="speechBubbleHolder">
-        <img class="speechBubble" src="../../assets/speech_bubble3.png" />
-        <div class="speechBubbleTextbox">
-          <p class="speechBubbleText">
-            {{ helpDisplay.MandLeng }}
-          </p>
-        </div>
+      <div class="boxLayer2">
+        <img
+          class="crocSep crocSepR flipHorizontal"
+          src="../../assets/croc-silh-g-m.png"
+        />
       </div>
 
-      <div class="crocSepHolder">
-        <img class="crocSepRight" src="../../assets/croc-silh-g.png" />
+      <div class="boxLayer3" *ngIf="helpDisplay.MandLeng.show">
+        <img
+          class="speechBubble flipHorizontal"
+          src="../../assets/speech_bubble3.png"
+        />
+        <div class="speechBubbleTextbox" (click)="exitErrorBubble('MandLeng')">
+          <p class="speechBubbleText">
+            {{ helpDisplay.MandLeng.text }}
+          </p>
+        </div>
       </div>
     </div>
 
     <div *ngIf="!onlyShowResultBox" class="box box3" id="box3">
       <div class="tag">optional</div>
-      <p class="boxTitle boxTitleC">Desirable Words</p>
-      <img class="crocSepLeft" src="../../assets/croc-silh-g-m.png" />
-      <p>
-        Say, a large bank of words you've already made clues for.
-        <br />
-        Best results when minimum isn't set higher than three.
-      </p>
-      <textarea
-        formControlName="desi"
-        class="inputBox inputBoxDesi"
-        placeholder="{{ desiPlaceholderText }}"
-        (keypress)="formChanged()"
-      ></textarea>
-      <div class="desiButtonHolder">
-        <div>
-          <input
-            class="desiButton"
-            checked
-            type="radio"
-            formControlName="desiSeparator"
-            id="space"
-            value=" "
-            (click)="updateDesiPlaceholderText('space')"
-            (click)="formChanged()"
-          />
-          <label for="space" class="desiDetectLabel">
-            Detect words by space</label
-          >
+
+      <div
+        class="boxLayer1"
+        [class.veiled]="
+          helpDisplay.DesiLeng.show ||
+          helpDisplay.DesiThre.show ||
+          helpDisplay.DesiQuot.show
+        "
+      >
+        <p class="boxTitle boxTitleC">Desirable Words</p>
+
+        <p>
+          Say, a large bank of words you've already made clues for.
+          <br />
+          Best results when minimum isn't set higher than three.
+        </p>
+        <textarea
+          formControlName="desi"
+          class="inputBox inputBoxDesi"
+          placeholder="{{ desiPlaceholderText }}"
+          (keypress)="formChanged()"
+        ></textarea>
+        <div class="desiButtonHolder">
+          <div>
+            <input
+              class="desiButton"
+              checked
+              type="radio"
+              formControlName="desiSeparator"
+              id="space"
+              value=" "
+              (click)="updateDesiPlaceholderText('space')"
+              (click)="formChanged()"
+            />
+            <label for="space" class="desiDetectLabel">
+              Detect words by space</label
+            >
+          </div>
+          <div>
+            <input
+              class="desiButton"
+              type="radio"
+              formControlName="desiSeparator"
+              id="marks"
+              value='"'
+              (click)="updateDesiPlaceholderText('marks')"
+              (click)="formChanged()"
+            />
+            <label for="marks" class="desiDetectLabel">
+              Detect words by speechmarks</label
+            >
+          </div>
         </div>
-        <div>
-          <input
-            class="desiButton"
-            type="radio"
-            formControlName="desiSeparator"
-            id="marks"
-            value='"'
-            (click)="updateDesiPlaceholderText('marks')"
-            (click)="formChanged()"
-          />
-          <label for="marks" class="desiDetectLabel">
-            Detect words by speechmarks</label
-          >
+
+        <div class="includeAtLeast_box">
+          <p class="includeAtLeast_text">
+            Include at least
+          </p>
+
+          <textarea
+            class="threshInputBox"
+            placeholder="0"
+            maxlength="2"
+            formControlName="threshold"
+            (keypress)="formChanged()"
+          ></textarea>
+          <p class="includeAtLeast_text">
+            of these words
+          </p>
         </div>
       </div>
 
-      <div class="includeAtLeast_box">
-        <p class="includeAtLeast_text">
-          Include at least
-        </p>
+      <div class="boxLayer2">
+        <img class="crocSep crocSepL" src="../../assets/croc-silh-g-m.png" />
+      </div>
 
-        <textarea
-          class="threshInputBox"
-          placeholder="0"
-          maxlength="2"
-          formControlName="threshold"
-          (keypress)="formChanged()"
-        ></textarea>
-        <p class="includeAtLeast_text">
-          of these words
-        </p>
+      <div
+        class="boxLayer3"
+        *ngIf="
+          helpDisplay.DesiLeng.show ||
+          helpDisplay.DesiThre.show ||
+          helpDisplay.DesiQuot.show
+        "
+      >
+        <img class="speechBubble" src="../../assets/speech_bubble3.png" />
+        <div
+          class="speechBubbleTextbox"
+          (click)="exitErrorBubble(helpDisplay.current)"
+        >
+          <p class="speechBubbleText">
+            {{ helpDisplay[helpDisplay.current].text }}
+          </p>
+        </div>
       </div>
     </div>
 
@@ -221,14 +262,16 @@
         <button
           class="startStopButton"
           [class.started]="startButtonActive.value"
-          [class.ready]="socketIsReady.value"
-          [class.disabled]="!socketIsReady.value"
+          [class.ready]="socketIsReady.value || deactivateSocket"
+          [class.disabled]="!socketIsReady.value || deactivateSocket"
           type="button"
           (click)="
             socketIsReady.value && startButtonActive.value && socketStop()
           "
           (click)="
-            socketIsReady.value && !startButtonActive.value && socketEmit()
+            ((socketIsReady.value && !startButtonActive.value) ||
+              deactivateSocket) &&
+              socketEmit()
           "
         >
           {{
