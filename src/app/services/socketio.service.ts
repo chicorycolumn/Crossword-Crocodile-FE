@@ -6,13 +6,22 @@ import socketIOClient from 'socket.io-client';
 })
 export class SocketioService {
   socket;
+  turnOffButtons(startButtonActive, serverIsIndeedWorking) {
+    if (startButtonActive.value) {
+      startButtonActive.value = false;
+    }
+    if (serverIsIndeedWorking.value) {
+      serverIsIndeedWorking.value = false;
+    }
+  }
 
   constructor() {}
   setupSocketConnection(
     shouldEndpointBeHeroku,
     startButtonActive,
     serverIsIndeedWorking,
-    results
+    results,
+    socketIsReady
   ) {
     this.socket = socketIOClient(
       shouldEndpointBeHeroku
@@ -26,31 +35,29 @@ export class SocketioService {
     });
 
     this.socket.on('message', (data) => {
-      //screw Change this to specific "terminated" event?
       console.log('Server sent ', data, Date.now() / 1000 - 1593360000);
     });
 
+    this.socket.on('connection confirmed', (data) => {
+      console.log('Server sent ', data, Date.now() / 1000 - 1593360000);
+      this.turnOffButtons(startButtonActive, serverIsIndeedWorking);
+      socketIsReady.value = true;
+    });
+
     this.socket.on('started', (data) => {
-      console.log('***Server confirms started.');
+      console.log('Server says started.', Date.now() / 1000 - 1593360000);
       if (!serverIsIndeedWorking.value) {
         serverIsIndeedWorking.value = true;
       }
     });
 
     this.socket.on('terminated', (data) => {
-      console.log('***Server confirms terminated.');
-      if (startButtonActive.value) {
-        startButtonActive.value = false;
-      }
-      if (serverIsIndeedWorking.value) {
-        serverIsIndeedWorking.value = false;
-      }
+      console.log('Server says terminated.', Date.now() / 1000 - 1593360000);
+      this.turnOffButtons(startButtonActive, serverIsIndeedWorking);
     });
 
     this.socket.on('produced grid', (data) => {
       results.push(data['result']);
-      // console.log(data['mandatory_words']);
-      // console.log(results);
     });
   }
 

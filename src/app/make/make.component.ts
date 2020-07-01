@@ -6,7 +6,8 @@ import * as Util from '../shared/utils';
 
 let deactivateSocket = 0; // dev switch
 let onlyShowResultBox = 0; // dev switch
-let timeOfBuild = 928; // dev note
+let padWithExampleResults = 0; // dev switch
+let timeOfBuild = 949; // dev note
 
 @Component({
   selector: 'app-make',
@@ -21,7 +22,20 @@ export class MakeComponent implements OnInit {
   desiPlaceholderText = 'eg spoke azure';
   gridLayout = 'two rows';
   resultsIndex = 0;
-  results = [];
+  results = padWithExampleResults ? Util.results : [];
+  socketIsReady = { value: false };
+  helpDisplay = {
+    box1: false,
+    box2: true,
+    box3: false,
+    MandLeng:
+      'Your mandatory words must be the same length as the grid specifications.',
+    DesiLeng:
+      'Your mandatory words must be the same length as the grid specifications.',
+    DesiThre:
+      'Your required number of desired words has been set higher than the number of desired words.',
+    DesiQuot: `You've selected to separate desired words by speechmarks, but I can't find any in the box. Remember, use the doublequote character. (")`,
+  };
 
   makeCrosswordForm = this.fb.group({
     shape: this.fb.group({
@@ -49,13 +63,14 @@ export class MakeComponent implements OnInit {
         true,
         this.startButtonActive,
         this.serverIsIndeedWorking,
-        this.results
+        this.results,
+        this.socketIsReady
       );
     }
   }
 
   devEvent() {
-    Util.sayHi();
+    console.log(this.results);
     this.socketService.verifyOff();
   }
   socketToLocalHost() {
@@ -64,7 +79,8 @@ export class MakeComponent implements OnInit {
         false,
         this.startButtonActive,
         this.serverIsIndeedWorking,
-        this.results
+        this.results,
+        this.socketIsReady
       );
     }
   }
@@ -89,13 +105,13 @@ export class MakeComponent implements OnInit {
   }
 
   failedValidation(code) {
-    if (code == 'mand-leng') {
+    if (code == 'MandLeng') {
       console.log('FAIL', code);
-    } else if (code == 'desi-thre') {
+    } else if (code == 'DesiThre') {
       console.log('FAIL', code);
-    } else if (code == 'desi-leng') {
+    } else if (code == 'DesiLeng') {
       console.log('FAIL', code);
-    } else if (code == 'desi-quot') {
+    } else if (code == 'DesiQuot') {
       console.log('FAIL', code);
     }
   }
@@ -119,24 +135,24 @@ export class MakeComponent implements OnInit {
         (word) => !dimensions.includes(word.length)
       )
     ) {
-      this.failedValidation('mand-leng');
+      this.failedValidation('MandLeng');
       return;
     }
     console.log(333);
     if (!gridSpecs['desirable_words_unfiltered']) {
-      this.failedValidation('desi-quot');
+      this.failedValidation('DesiQuot');
       return;
     } else if (
       gridSpecs['desirable_words_unfiltered'].length < gridSpecs['threshold']
     ) {
-      this.failedValidation('desi-thre');
+      this.failedValidation('DesiThre');
       return;
     } else if (
       gridSpecs['desirable_words_unfiltered'].some(
         (word) => !dimensions.includes(word.length)
       )
     ) {
-      this.failedValidation('desi-leng');
+      this.failedValidation('DesiLeng');
       return;
     }
     console.log(444);

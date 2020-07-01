@@ -34,9 +34,6 @@ export function makeDesiList(form: { desiSeparator; desi }) {
         .filter((str) => str.length);
     }
   }
-  console.log('inside makeDesiList');
-  // console.log('normalizeArray', normalizeArray);
-  // console.log('this.normalizeArray', this.normalizeArray);
   return normalizeArray(desiSeparated);
 }
 
@@ -64,3 +61,103 @@ export function findModalLength(arr: string[]) {
     });
   return modalLength;
 }
+
+export const results = [
+  {
+    grid: [
+      [
+        '1ac',
+        [
+          'seeds',
+          'seeks',
+          'seems',
+          'seeps',
+          'seers',
+          'sheds',
+          'skews',
+          'sleds',
+          'specs',
+          'spews',
+          'stems',
+          'steps',
+          'stews',
+        ],
+      ],
+      [
+        '2ac',
+        [
+          'mates',
+          'maths',
+          'mites',
+          'mitts',
+          'motes',
+          'moths',
+          'mutes',
+          'mutts',
+          'myths',
+        ],
+      ],
+    ],
+  },
+  {
+    summary: ['NTD', 'SMC', 'LOS'],
+    grid: [
+      [
+        '1ac',
+        [
+          'scabs',
+          'scams',
+          'scans',
+          'scars',
+          'seals',
+          'seams',
+          'sears',
+          'seats',
+          'shags',
+          'shahs',
+          'shams',
+          'slabs',
+          'slags',
+          'slams',
+          'slaps',
+          'slats',
+          'slavs',
+          'slays',
+          'snags',
+          'snaps',
+          'soaks',
+          'soaps',
+          'soars',
+          'spans',
+          'spars',
+          'spats',
+          'stabs',
+          'stags',
+          'stars',
+          'stats',
+          'stays',
+          'swabs',
+          'swans',
+          'swaps',
+          'swats',
+          'sways',
+        ],
+      ],
+      ['2ac', ['devil']],
+      ['3ac', ['devil']],
+      ['4ac', ['shell', 'smell', 'spell', 'steal', 'steel', 'swell']],
+      ['5ac', ['devil']],
+      ['6ac', ['devil']],
+    ],
+  },
+  {
+    grid: [
+      ['1ac', ['devil']],
+      ['2ac', ['devil']],
+      ['3ac', ['devil']],
+      ['4ac', ['shell', 'smell', 'spell', 'steal', 'steel', 'swell']],
+      ['5ac', ['devil']],
+      ['6ac', ['devil']],
+    ],
+  },
+];

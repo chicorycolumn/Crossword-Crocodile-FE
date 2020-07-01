@@ -218,7 +218,7 @@ p {
   font-size: 12pt;
   border-radius: 25px 0px 0px 25px;
   border-right: var(--green-shad) solid 1px;
-  padding-top: 10px;
+  padding-top: 7.5px;
   padding-bottom: 5px;
 }
 
@@ -253,7 +253,7 @@ p {
 
 .coordWords {
   /* border: orangered solid 0.5pt; */
-  width: 100%;
+  width: 75%;
   text-align: center;
   margin: 0;
   white-space: pre-wrap;
@@ -322,12 +322,12 @@ p {
   border-radius: 5px 5px 5px 5px;
 }
 
-.startStopButton:hover {
+.ready:hover {
   background-color: #3e8e41;
   box-shadow: 0 9px rgb(0, 83, 0);
 }
 
-.startStopButton:active {
+.ready:active {
   background-color: #3e8e41;
   box-shadow: 0 5px #666;
   transform: translateY(4px);
@@ -336,6 +336,21 @@ p {
 .started {
   background-color: palevioletred;
   box-shadow: 0 9px rgb(151, 80, 104);
+}
+
+.disabled {
+  background-color: grey;
+  box-shadow: 0 9px black;
+}
+
+.disabled:hover {
+  background-color: grey;
+  box-shadow: 0 9px black;
+}
+
+.disabled:active {
+  background-color: grey;
+  box-shadow: 0 9px black;
 }
 
 .started:hover {
@@ -380,4 +395,82 @@ p {
 
 .scrollDown {
   border-radius: 0px 0px 25px 0px;
+}
+
+.box2inner {
+  /* border: orange solid 0.5pt; */
+  position: relative;
+  top: 0px;
+  width: 440px;
+  height: 208px;
+  z-index: 0;
+}
+
+.veiled {
+  z-index: -1;
+}
+
+.speechBubbleHolder {
+  /* background-color: var(--standard-panel-colour-aux); */
+  position: relative;
+  top: -208px;
+  width: 440px;
+  height: 208px;
+}
+
+.speechBubble {
+  height: 150px;
+  width: 410px;
+  margin-top: 15px;
+  -moz-transform: scale(-1, 1);
+  -o-transform: scale(-1, 1);
+  -webkit-transform: scale(-1, 1);
+  transform: scale(-1, 1);
+}
+
+.speechBubbleTextbox {
+  position: relative;
+  /* border: red solid 0.5pt; */
+  top: -140px;
+  overflow: hidden;
+  width: 200px;
+  height: 118px;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.speechBubbleText {
+  margin: 10px;
+  margin-top: 10px;
+}
+
+.crocBorder1 {
+  border: red solid 5pt;
+}
+
+.crocSepHolder {
+  position: relative;
+  top: -416px;
+  width: 440px;
+  height: 208px;
+}
+
+.crocSepRight {
+  height: 40px;
+  z-index: 3;
+  /* margin-top: -600px;
+  margin-left: 425px;
+  margin-bottom: 0px;
+  position: relative; */
+}
+
+.crocSepLeft {
+  height: 40px;
+  z-index: 3;
+  margin-top: -400px;
+  margin-left: -510px;
+  margin-bottom: -100px;
 }

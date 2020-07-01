@@ -88,40 +88,56 @@
 
     <div *ngIf="!onlyShowResultBox" class="box box2" id="box2">
       <div class="tag">optional</div>
-      <p class="boxTitle boxTitleB">
-        Mandatory or Forbidden Words
-      </p>
-      <img class="crocSepRight" src="../../assets/croc-silh-g.png" />
-      <div class="insideBoxTwo">
-        <label>
-          <p>
-            Each grid must include:
-          </p>
-          <textarea
-            class="inputBox inputBoxMand"
-            placeholder="eg Santa claus"
-            formControlName="mandatory_words"
-            (keypress)="formChanged()"
-          ></textarea>
-        </label>
-        <label>
-          <p>
-            Each grid must exclude:
-          </p>
-          <textarea
-            class="inputBox inputBoxForb"
-            formControlName="banned_words"
-            placeholder="eg miffs fiats"
-            (keypress)="formChanged()"
-          ></textarea>
-        </label>
+
+      <div class="box2inner" [class.veiled]="helpDisplay.box2">
+        <p class="boxTitle boxTitleB">
+          Mandatory or Forbidden Words
+        </p>
+
+        <div class="insideBoxTwo">
+          <label>
+            <p>
+              Each grid must include:
+            </p>
+            <textarea
+              class="inputBox inputBoxMand"
+              placeholder="eg Santa claus"
+              formControlName="mandatory_words"
+              (keypress)="formChanged()"
+            ></textarea>
+          </label>
+          <label>
+            <p>
+              Each grid must exclude:
+            </p>
+            <textarea
+              class="inputBox inputBoxForb"
+              formControlName="banned_words"
+              placeholder="eg miffs fiats"
+              (keypress)="formChanged()"
+            ></textarea>
+          </label>
+        </div>
+        <br />
+        Separate your words with a space, capitalisation is ignored.
+        <br />
+        TIP: Best results with no more than three mandatory words.
+        <br />
+        TIP: Your mandatory words should all be the same length.
       </div>
-      <br />
-      Separate your words with a space, capitalisation is ignored.
-      <br />
-      TIP: Best results with no more than three mandatory words.
-      <br />
-      TIP: Your mandatory words should all be the same length.
+
+      <div class="speechBubbleHolder">
+        <img class="speechBubble" src="../../assets/speech_bubble3.png" />
+        <div class="speechBubbleTextbox">
+          <p class="speechBubbleText">
+            {{ helpDisplay.MandLeng }}
+          </p>
+        </div>
+      </div>
+
+      <div class="crocSepHolder">
+        <img class="crocSepRight" src="../../assets/croc-silh-g.png" />
+      </div>
     </div>
 
     <div *ngIf="!onlyShowResultBox" class="box box3" id="box3">
@@ -205,11 +221,23 @@
         <button
           class="startStopButton"
           [class.started]="startButtonActive.value"
+          [class.ready]="socketIsReady.value"
+          [class.disabled]="!socketIsReady.value"
           type="button"
-          (click)="startButtonActive.value && socketStop()"
-          (click)="!startButtonActive.value && socketEmit()"
+          (click)="
+            socketIsReady.value && startButtonActive.value && socketStop()
+          "
+          (click)="
+            socketIsReady.value && !startButtonActive.value && socketEmit()
+          "
         >
-          {{ startButtonActive.value ? "STOP" : "MAKE GRIDS" }}
+          {{
+            socketIsReady.value
+              ? startButtonActive.value
+                ? "STOP"
+                : "MAKE GRIDS"
+              : "connecting..."
+          }}
         </button>
 
         <p *ngIf="results.length" class="gridRender">
