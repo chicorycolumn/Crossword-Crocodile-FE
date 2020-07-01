@@ -34,7 +34,10 @@ export function makeDesiList(form: { desiSeparator; desi }) {
         .filter((str) => str.length);
     }
   }
-  return this.normalizeArray(desiSeparated);
+  console.log('inside makeDesiList');
+  // console.log('normalizeArray', normalizeArray);
+  // console.log('this.normalizeArray', this.normalizeArray);
+  return normalizeArray(desiSeparated);
 }
 
 export function findModalLength(arr: string[]) {

@@ -103,13 +103,13 @@ export class MakeComponent implements OnInit {
   socketEmit() {
     let form = this.makeCrosswordForm.value;
     let gridSpecs = {};
-
+    console.log(111);
     gridSpecs['desirable_words_unfiltered'] = Util.makeDesiList(form);
     gridSpecs['threshold'] = parseInt(form['threshold']) || 0;
     let dimensions = form.shape.shapeName
       .split('x')
       .map((num) => parseInt(num));
-
+    console.log(222);
     gridSpecs['mandatory_words'] = Util.normalizeArray(
       form['mandatory_words'].split(' ').filter((str) => str.length)
     );
@@ -122,7 +122,7 @@ export class MakeComponent implements OnInit {
       this.failedValidation('mand-leng');
       return;
     }
-
+    console.log(333);
     if (!gridSpecs['desirable_words_unfiltered']) {
       this.failedValidation('desi-quot');
       return;
@@ -139,25 +139,25 @@ export class MakeComponent implements OnInit {
       this.failedValidation('desi-leng');
       return;
     }
-
+    console.log(444);
     gridSpecs['grid_width'] =
       Util.findModalLength(gridSpecs['mandatory_words']) ||
       dimensions.sort((a, b) => b - a)[0];
     dimensions.splice(dimensions.indexOf(gridSpecs['grid_width']), 1);
     gridSpecs['grid_height'] = dimensions[0];
-
+    console.log(555);
     gridSpecs['banned_words'] = Util.normalizeArray(
       form['banned_words'].split(' ').filter((str) => str.length)
     );
-
+    console.log(666);
     this.startButtonActive.value = true;
     gridSpecs['time'] = Date.now() / 1000;
     console.log('Emitting grid specs!', Date.now() / 1000 - 1593360000);
 
     console.log(gridSpecs);
-
+    console.log(777);
     this.wipeResultState();
-
+    console.log(888);
     this.socketService.emitGridSpecs(gridSpecs);
   }
 
