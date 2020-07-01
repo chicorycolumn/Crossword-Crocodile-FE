@@ -8,9 +8,12 @@ export class SocketioService {
   socket;
 
   constructor() {}
-  setupSocketConnection(startButtonActive, results) {
-    let shouldEndpointBeHeroku = true;
-
+  setupSocketConnection(
+    shouldEndpointBeHeroku,
+    startButtonActive,
+    serverIsIndeedWorking,
+    results
+  ) {
     this.socket = socketIOClient(
       shouldEndpointBeHeroku
         ? 'https://cook-up-a-crossword.herokuapp.com/'
@@ -24,9 +27,23 @@ export class SocketioService {
 
     this.socket.on('message', (data) => {
       //screw Change this to specific "terminated" event?
-      console.log('server sent ', data, Date.now() / 1000 - 1593360000);
+      console.log('Server sent ', data, Date.now() / 1000 - 1593360000);
+    });
+
+    this.socket.on('started', (data) => {
+      console.log('***Server confirms started.');
+      if (!serverIsIndeedWorking.value) {
+        serverIsIndeedWorking.value = true;
+      }
+    });
+
+    this.socket.on('terminated', (data) => {
+      console.log('***Server confirms terminated.');
       if (startButtonActive.value) {
         startButtonActive.value = false;
+      }
+      if (serverIsIndeedWorking.value) {
+        serverIsIndeedWorking.value = false;
       }
     });
 

@@ -15,6 +15,7 @@ let onlyShowResultBox = 0; // dev switch
 export class MakeComponent implements OnInit {
   onlyShowResultBox = onlyShowResultBox;
   startButtonActive = { value: false };
+  serverIsIndeedWorking = { value: false };
   desiPlaceholderText = 'eg spoke azure';
   gridLayout = 'two rows';
   resultsIndex = 0;
@@ -318,11 +319,15 @@ export class MakeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.startButtonActive.value = false;
+    this.startButtonActive.value = false; //delete?
+    this.serverIsIndeedWorking.value = false; //delete?
+
     setTimeout(this.checkIfFlexWrap, 0);
     if (!deactivateSocket) {
       this.socketService.setupSocketConnection(
+        true,
         this.startButtonActive,
+        this.serverIsIndeedWorking,
         this.results
       );
     }
@@ -330,6 +335,16 @@ export class MakeComponent implements OnInit {
 
   devEvent() {
     this.socketService.verifyOff();
+  }
+  socketToLocalHost() {
+    if (!deactivateSocket) {
+      this.socketService.setupSocketConnection(
+        false,
+        this.startButtonActive,
+        this.serverIsIndeedWorking,
+        this.results
+      );
+    }
   }
 
   updateDesiPlaceholderText(sepName) {
@@ -441,6 +456,7 @@ export class MakeComponent implements OnInit {
     this.socketService.stop();
     setTimeout(() => {
       this.startButtonActive.value = false;
+      this.serverIsIndeedWorking.value = false;
     }, 0);
     setTimeout(() => {
       this.socketService.stop();

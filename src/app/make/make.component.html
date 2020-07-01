@@ -4,7 +4,13 @@
     <img class="centralButton" src="../../assets/croc-button4.png" />
   </div> -->
   <button (click)="devEvent()" style="position: fixed; z-index: 5;">
-    DEV BUTTON
+    CHECK PERMS
+  </button>
+  <button
+    (click)="socketToLocalHost()"
+    style="position: fixed; z-index: 5; margin-top: 20px;"
+  >
+    SOCKET LOCAL
   </button>
   <form class="grid" [formGroup]="makeCrosswordForm" (ngSubmit)="devEvent()">
     <div *ngIf="!onlyShowResultBox" class="box box1" id="box1">
@@ -176,7 +182,10 @@
           </div>
         </div>
       </div>
-      <div class="resultRightie">
+      <div
+        class="resultRightie"
+        [class.resultRightieActive]="serverIsIndeedWorking.value"
+      >
         <button
           class="startStopButton"
           [class.started]="startButtonActive.value"
