@@ -3,12 +3,28 @@
   <!-- <div class="centralButtonOval">
     <img class="centralButton" src="../../assets/croc-button4.png" />
   </div> -->
-  <button (click)="devEvent()" style="position: fixed; z-index: 5;">
-    CHECK PERMS
+  <div
+    style="
+      position: fixed;
+      z-index: 5;
+      margin-top: -50px;
+      background-color: hotpink;
+      text-align: center;
+      width: 100px;
+      height: 25px;
+    "
+  >
+    {{ this.timeOfBuild }}
+  </div>
+  <button
+    (click)="devEvent()"
+    style="position: fixed; z-index: 5; margin-top: -30px;"
+  >
+    DEV EVENT
   </button>
   <button
     (click)="socketToLocalHost()"
-    style="position: fixed; z-index: 5; margin-top: 20px;"
+    style="position: fixed; z-index: 5; margin-top: -10px;"
   >
     SOCKET LOCAL
   </button>
