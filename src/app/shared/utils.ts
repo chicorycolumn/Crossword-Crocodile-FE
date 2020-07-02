@@ -161,3 +161,13 @@ export const results = [
     ],
   },
 ];
+
+export const gridSpecsKey = {
+  desi: 'desirable_words_unfiltered',
+  threshold: 'threshold',
+  mand: 'mandatory_words',
+  width: 'grid_width',
+  height: 'grid_height',
+  bann: 'banned_words',
+  time: 'time',
+};

@@ -97,7 +97,10 @@
     <div *ngIf="!onlyShowResultBox" class="box box2" id="box2">
       <div class="tag">optional</div>
 
-      <div class="boxLayerA" [class.veiled]="helpDisplay.MandLeng.show">
+      <div
+        class="boxLayerA"
+        [class.veiled]="helpDisplay.MandLeng.show || helpDisplay.MandPoss.show"
+      >
         <p class="boxTitle boxTitleB">
           Mandatory or Forbidden Words
         </p>
@@ -110,10 +113,9 @@
             <textarea
               class="inputBox inputBoxMand"
               placeholder="eg Santa claus"
-              formControlName="mandatory_words"
+              formControlName="mand"
               (keypress)="formChanged()"
             ></textarea>
-            <!-- value="makeCrosswordForm.value['mandatory_words']" -->
           </label>
           <label>
             <p>
@@ -121,7 +123,7 @@
             </p>
             <textarea
               class="inputBox inputBoxForb"
-              formControlName="banned_words"
+              formControlName="bann"
               placeholder="eg miffs fiats"
               (keypress)="formChanged()"
             ></textarea>
@@ -141,14 +143,20 @@
         />
       </div>
 
-      <div class="boxLayerC" *ngIf="helpDisplay.MandLeng.show">
+      <div
+        class="boxLayerC"
+        *ngIf="helpDisplay.MandLeng.show || helpDisplay.MandPoss.show"
+      >
         <img
           class="speechBubble flipHorizontal"
           src="../../assets/speech_bubble3.png"
         />
-        <div class="speechBubbleTextbox" (click)="exitErrorBubble('MandLeng')">
+        <div
+          class="speechBubbleTextbox"
+          (click)="exitErrorBubble(helpDisplay.current)"
+        >
           <p class="speechBubbleText">
-            {{ helpDisplay.MandLeng.text }}
+            {{ helpDisplay[helpDisplay.current].text }}
           </p>
         </div>
       </div>

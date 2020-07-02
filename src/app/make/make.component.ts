@@ -4,10 +4,10 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { SocketioService } from '../services/socketio.service';
 import * as Util from '../shared/utils';
 
-let deactivateSocket = 1; // dev switch
+let deactivateSocket = 0; // dev switch
 let onlyShowResultBox = 0; // dev switch
 let padWithExampleResults = 0; // dev switch
-let timeOfBuild = 2049; // dev note
+let timeOfBuild = 1000; // dev note
 
 @Component({
   selector: 'app-make',
@@ -36,6 +36,11 @@ export class MakeComponent implements OnInit {
       text:
         "You've entered more mandatory words than there are words in the grid!",
     },
+    MandPoss: {
+      show: false,
+      text:
+        "I'm afraid these two mandatory words are impossible to fit together!",
+    },
     DesiLeng: {
       show: false,
       text:
@@ -56,8 +61,8 @@ export class MakeComponent implements OnInit {
     shape: this.fb.group({
       shapeName: '5x5',
     }),
-    mandatory_words: [''],
-    banned_words: [''],
+    mand: [''],
+    bann: [''],
     desi: [''],
     desiSeparator: [' '],
     threshold: [''],
@@ -92,7 +97,6 @@ export class MakeComponent implements OnInit {
   }
 
   devEvent() {
-    console.log(this.results);
     this.socketService.verifyOff();
   }
   socketToLocalHost() {
@@ -140,34 +144,20 @@ export class MakeComponent implements OnInit {
 
     let form = this.makeCrosswordForm.value;
     let gridSpecs = {};
-    console.log(111);
 
-    //
-    console.log(form['mandatory_words']);
-    form['mandatory_words'] = 'woo yeah howie';
-    console.log(form['mandatory_words']);
-    return;
-    //
-
-    gridSpecs['desirable_words_unfiltered'] = Util.makeDesiList(form);
+    gridSpecs['desi'] = Util.makeDesiList(form);
     gridSpecs['threshold'] = parseInt(form['threshold']) || 0;
     let dimensions = form.shape.shapeName
       .split('x')
       .map((num) => parseInt(num));
-    console.log(222);
-
-    if (!gridSpecs['desirable_words_unfiltered']) {
+    if (!gridSpecs['desi']) {
       this.failedValidation('DesiQuot');
       return;
-    } else if (
-      gridSpecs['desirable_words_unfiltered'].length < gridSpecs['threshold']
-    ) {
+    } else if (gridSpecs['desi'].length < gridSpecs['threshold']) {
       this.failedValidation('DesiThre');
       return;
     } else if (
-      gridSpecs['desirable_words_unfiltered'].some(
-        (word) => !dimensions.includes(word.length)
-      )
+      gridSpecs['desi'].some((word) => !dimensions.includes(word.length))
     ) {
       this.failedValidation('DesiLeng');
       return;
@@ -175,56 +165,69 @@ export class MakeComponent implements OnInit {
 
     if (
       parseInt(gridSpecs['threshold']) &&
-      parseInt(gridSpecs['threshold']) ===
-        parseInt(gridSpecs['desirable_words_unfiltered'].length)
+      parseInt(gridSpecs['threshold']) === parseInt(gridSpecs['desi'].length)
     ) {
-      gridSpecs['desirable_words_unfiltered'].forEach((desiWord) => {
-        form['mandatory_words'] += ` ${desiWord}`;
-      });
-      gridSpecs['desirable_words_unfiltered'] = [];
-      form['desirable_words_unfiltered'] = '';
+      let desiAllString = gridSpecs['desi'].join(' ');
+      let desiPlusMand = form['mand'] + ' ' + desiAllString;
+      this.makeCrosswordForm.controls['desi'].setValue('');
+      this.makeCrosswordForm.controls['threshold'].setValue(0);
+      gridSpecs['threshold'] = 0;
+      gridSpecs['desi'] = [];
+      this.makeCrosswordForm.controls['mand'].setValue(desiPlusMand);
     }
+    form = this.makeCrosswordForm.value;
 
-    console.log(333);
-
-    gridSpecs['mandatory_words'] = Util.normalizeArray(
-      form['mandatory_words'].split(' ').filter((str) => str.length)
+    gridSpecs['mand'] = Util.normalizeArray(
+      form['mand'].split(' ').filter((str) => str.length)
     );
-
-    if (
-      gridSpecs['mandatory_words'].some(
-        (word) => !dimensions.includes(word.length)
-      )
-    ) {
+    if (gridSpecs['mand'].some((word) => !dimensions.includes(word.length))) {
       this.failedValidation('MandLeng');
       return;
     }
-
-    console.log(444);
-    gridSpecs['grid_width'] =
-      Util.findModalLength(gridSpecs['mandatory_words']) ||
+    gridSpecs['width'] =
+      Util.findModalLength(gridSpecs['mand']) ||
       dimensions.sort((a, b) => b - a)[0];
-    dimensions.splice(dimensions.indexOf(gridSpecs['grid_width']), 1);
-    gridSpecs['grid_height'] = dimensions[0];
-    console.log(555);
-    gridSpecs['banned_words'] = Util.normalizeArray(
-      form['banned_words'].split(' ').filter((str) => str.length)
+    dimensions.splice(dimensions.indexOf(gridSpecs['width']), 1);
+    gridSpecs['height'] = dimensions[0];
+    gridSpecs['bann'] = Util.normalizeArray(
+      form['bann'].split(' ').filter((str) => str.length)
     );
 
-    // if (gridSpecs["grid_width"] !== gridSpecs["grid_height"]){
+    if (
+      gridSpecs['width'] !== gridSpecs['height'] &&
+      gridSpecs['mand'].length === 2
+    ) {
+      if (gridSpecs['mand'][0].length !== gridSpecs['mand'][1].length) {
+        let oddLettersA = gridSpecs['mand'][0]
+          .split('')
+          .filter((letter, index) => {
+            return !(index % 2) && letter;
+          });
+        let oddLettersB = gridSpecs['mand'][1]
+          .split('')
+          .filter((letter, index) => {
+            return !(index % 2) && letter;
+          });
+        console.log(oddLettersA, oddLettersB);
+        if (oddLettersA.every((letter) => !oddLettersB.includes(letter))) {
+          this.failedValidation('MandPoss');
+        }
+      }
+    }
 
-    // }
-
-    console.log(666);
     this.startButtonActive.value = true;
     gridSpecs['time'] = Date.now() / 1000;
-    console.log('Emitting grid specs!', Date.now() / 1000 - 1593360000);
 
-    console.log(gridSpecs);
-    console.log(777);
     this.wipeResultState();
-    console.log(888);
-    !this.deactivateSocket && this.socketService.emitGridSpecs(gridSpecs);
+
+    if (!this.deactivateSocket) {
+      let gridSpecsFormatted = {};
+      Object.keys(gridSpecs).forEach(
+        (key) => (gridSpecsFormatted[Util.gridSpecsKey[key]] = gridSpecs[key])
+      );
+      console.log(gridSpecsFormatted, Date.now() / 1000 - 1593360000);
+      this.socketService.emitGridSpecs(gridSpecsFormatted);
+    }
   }
 
   wipeResultState() {
@@ -240,7 +243,6 @@ export class MakeComponent implements OnInit {
   }
 
   socketStop() {
-    console.log('STOP fxn in make.comp.ts');
     !this.deactivateSocket && this.socketService.stop();
     setTimeout(() => {
       this.startButtonActive.value = false;
@@ -277,11 +279,4 @@ export class MakeComponent implements OnInit {
       this.gridLayout = 'two rows';
     }
   }
-
-  // onChanges(): void {
-  //   console.log('on changes');
-  //   this.makeCrosswordForm.valueChanges.subscribe((val) => {
-  //     console.log('ON CHANGES', val);
-  //   });
-  // }
 }
