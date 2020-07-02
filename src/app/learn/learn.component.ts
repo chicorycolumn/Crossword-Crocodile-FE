@@ -11,7 +11,6 @@ export class LearnComponent implements OnInit {
   ngOnInit(): void {}
 
   slideToElement(id) {
-    console.log(id);
     setTimeout(() => {
       // let el = document.getElementById(id);
       // el.scrollTop += 5000;

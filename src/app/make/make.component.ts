@@ -4,10 +4,10 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { SocketioService } from '../services/socketio.service';
 import * as Util from '../shared/utils';
 
-let deactivateSocket = 0; // dev switch
+let deactivateSocket = 1; // dev switch
 let onlyShowResultBox = 0; // dev switch
-let padWithExampleResults = 0; // dev switch
-let timeOfBuild = 1000; // dev note
+let padWithExampleResults = 1; // dev switch
+let timeOfBuild = 1125; // dev note
 
 @Component({
   selector: 'app-make',
@@ -22,40 +22,9 @@ export class MakeComponent implements OnInit {
   serverIsIndeedWorking = { value: false };
   desiPlaceholderText = 'eg spoke azure';
   gridLayout = 'two rows';
-  resultsIndex = 0;
-  results = padWithExampleResults ? Util.results : [];
+  results = { index: 0, array: padWithExampleResults ? Util.resultsArray : [] };
   socketIsReady = { value: false };
-  helpDisplay = {
-    MandLeng: {
-      show: false,
-      text:
-        'Your mandatory words must be the same length as the grid specifications.',
-    },
-    MandExce: {
-      show: false,
-      text:
-        "You've entered more mandatory words than there are words in the grid!",
-    },
-    MandPoss: {
-      show: false,
-      text:
-        "I'm afraid these two mandatory words are impossible to fit together!",
-    },
-    DesiLeng: {
-      show: false,
-      text:
-        'Your desired words must be the same length as the grid specifications.',
-    },
-    DesiThre: {
-      show: false,
-      text: 'Your required number of desired words has been set too high.',
-    },
-    DesiQuot: {
-      show: false,
-      text: `You've selected to separate desired words by speechmarks, but I can't find any in the box. Remember, use the doublequote character. (")`,
-    },
-    current: null,
-  };
+  helpDisplay = Util.helpDisplay;
 
   makeCrosswordForm = this.fb.group({
     shape: this.fb.group({
@@ -89,7 +58,15 @@ export class MakeComponent implements OnInit {
     }
   }
 
-  fruit = 'apple';
+  slideToElement(id) {
+    setTimeout(() => {
+      const yOffset = -75;
+      const element = document.getElementById(id);
+      const y =
+        element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    }, 100);
+  }
 
   exitErrorBubble(key) {
     this.helpDisplay[key].show = false;
@@ -99,6 +76,7 @@ export class MakeComponent implements OnInit {
   devEvent() {
     this.socketService.verifyOff();
   }
+
   socketToLocalHost() {
     if (!deactivateSocket) {
       this.socketService.setupSocketConnection(
@@ -120,126 +98,41 @@ export class MakeComponent implements OnInit {
   }
 
   changeResultsIndex(direction) {
-    if (direction === 'up' && this.resultsIndex > 0) {
-      this.resultsIndex--;
+    if (direction === 'up' && this.results.index > 0) {
+      this.results.index--;
     } else if (
       direction === 'down' &&
-      this.resultsIndex < this.results.length - 1
+      this.results.index < this.results.array.length - 1
     ) {
-      this.resultsIndex++;
+      this.results.index++;
     }
   }
 
-  failedValidation(code) {
-    this.helpDisplay[code].show = true;
-    this.helpDisplay.current = code;
+  failedValidation(code, helpDisplay, slideToElement) {
+    helpDisplay[code].show = true;
+    helpDisplay.current = code;
+    slideToElement(helpDisplay[code].id);
   }
 
   socketEmit() {
-    Object.keys(this.helpDisplay).forEach((key) => {
-      if (key !== 'current') {
-        this.helpDisplay[key].show = false;
-      }
-    });
-
-    let form = this.makeCrosswordForm.value;
-    let gridSpecs = {};
-
-    gridSpecs['desi'] = Util.makeDesiList(form);
-    gridSpecs['threshold'] = parseInt(form['threshold']) || 0;
-    let dimensions = form.shape.shapeName
-      .split('x')
-      .map((num) => parseInt(num));
-    if (!gridSpecs['desi']) {
-      this.failedValidation('DesiQuot');
-      return;
-    } else if (gridSpecs['desi'].length < gridSpecs['threshold']) {
-      this.failedValidation('DesiThre');
-      return;
-    } else if (
-      gridSpecs['desi'].some((word) => !dimensions.includes(word.length))
-    ) {
-      this.failedValidation('DesiLeng');
-      return;
-    }
-
-    if (
-      parseInt(gridSpecs['threshold']) &&
-      parseInt(gridSpecs['threshold']) === parseInt(gridSpecs['desi'].length)
-    ) {
-      let desiAllString = gridSpecs['desi'].join(' ');
-      let desiPlusMand = form['mand'] + ' ' + desiAllString;
-      this.makeCrosswordForm.controls['desi'].setValue('');
-      this.makeCrosswordForm.controls['threshold'].setValue(0);
-      gridSpecs['threshold'] = 0;
-      gridSpecs['desi'] = [];
-      this.makeCrosswordForm.controls['mand'].setValue(desiPlusMand);
-    }
-    form = this.makeCrosswordForm.value;
-
-    gridSpecs['mand'] = Util.normalizeArray(
-      form['mand'].split(' ').filter((str) => str.length)
+    Util.socketEmit(
+      this.helpDisplay,
+      this.makeCrosswordForm,
+      this.failedValidation,
+      this.startButtonActive,
+      this.wipeResultState,
+      this.socketService,
+      this.results,
+      this.slideToElement
     );
-    if (gridSpecs['mand'].some((word) => !dimensions.includes(word.length))) {
-      this.failedValidation('MandLeng');
-      return;
-    }
-    gridSpecs['width'] =
-      Util.findModalLength(gridSpecs['mand']) ||
-      dimensions.sort((a, b) => b - a)[0];
-    dimensions.splice(dimensions.indexOf(gridSpecs['width']), 1);
-    gridSpecs['height'] = dimensions[0];
-    gridSpecs['bann'] = Util.normalizeArray(
-      form['bann'].split(' ').filter((str) => str.length)
-    );
-
-    if (
-      gridSpecs['width'] !== gridSpecs['height'] &&
-      gridSpecs['mand'].length === 2
-    ) {
-      if (gridSpecs['mand'][0].length !== gridSpecs['mand'][1].length) {
-        let oddLettersA = gridSpecs['mand'][0]
-          .split('')
-          .filter((letter, index) => {
-            return !(index % 2) && letter;
-          });
-        let oddLettersB = gridSpecs['mand'][1]
-          .split('')
-          .filter((letter, index) => {
-            return !(index % 2) && letter;
-          });
-        console.log(oddLettersA, oddLettersB);
-        if (oddLettersA.every((letter) => !oddLettersB.includes(letter))) {
-          this.failedValidation('MandPoss');
-        }
-      }
-    }
-
-    this.startButtonActive.value = true;
-    gridSpecs['time'] = Date.now() / 1000;
-
-    this.wipeResultState();
-
-    if (!this.deactivateSocket) {
-      let gridSpecsFormatted = {};
-      Object.keys(gridSpecs).forEach(
-        (key) => (gridSpecsFormatted[Util.gridSpecsKey[key]] = gridSpecs[key])
-      );
-      console.log(gridSpecsFormatted, Date.now() / 1000 - 1593360000);
-      this.socketService.emitGridSpecs(gridSpecsFormatted);
-    }
   }
 
-  wipeResultState() {
-    let len = this.results.length;
+  wipeResultState(results) {
+    let len = results.array.length;
     for (let i = 0; i < len; i++) {
-      this.results.pop();
+      results.array.pop();
     }
-    this.resultsIndex = 0;
-  }
-
-  message() {
-    this.socketService.message();
+    results.index = 0;
   }
 
   socketStop() {

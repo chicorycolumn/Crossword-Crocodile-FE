@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import socketIOClient from 'socket.io-client';
+import { resultsArray } from '../shared/utils';
 
 @Injectable({
   providedIn: 'root',
@@ -57,7 +58,8 @@ export class SocketioService {
     });
 
     this.socket.on('produced grid', (data) => {
-      results.push(data['result']);
+      console.log(data['result']);
+      results.array.push(data['result']);
     });
   }
 

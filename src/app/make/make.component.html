@@ -262,8 +262,11 @@
 
     <div class="box box4" id="box4">
       <div class="resultLeftie">
-        <div *ngIf="results.length" class="resultLeftieInner1">
-          <div *ngFor="let coordArr of results[resultsIndex].grid" class="hor">
+        <div *ngIf="results.array.length" class="resultLeftieInner1">
+          <div
+            *ngFor="let coordArr of results.array[results.index].grid"
+            class="hor"
+          >
             <p class="coordName">{{ coordArr[0] | formatCoord }}</p>
             <p class="coordWords">{{ coordArr[1] | spaceArray }}</p>
           </div>
@@ -296,19 +299,20 @@
               : "connecting..."
           }}
         </button>
-
-        <p *ngIf="results.length" class="gridRender">
-          {{ results[resultsIndex].summary[0] }}
-          <br />
-          <br />
-          {{ results[resultsIndex].summary[1] }}
-          <br />
-          <br />
-          {{ results[resultsIndex].summary[2] }}
-        </p>
-
+        <div *ngIf="results.array.length">
+          <p
+            *ngFor="let line of results.array[results.index].summary"
+            class="gridRender"
+          >
+            {{ line }}
+          </p>
+        </div>
         <div class="indexDisplay">
-          {{ results.length ? resultsIndex + 1 + " of " + results.length : "" }}
+          {{
+            results.array.length
+              ? results.index + 1 + " of " + results.array.length
+              : ""
+          }}
         </div>
       </div>
 
