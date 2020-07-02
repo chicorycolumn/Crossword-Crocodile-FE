@@ -6,7 +6,8 @@ export function socketEmit(
   wipeResultState,
   socketService,
   results,
-  slideToElement
+  slideToElement,
+  deactivateSocket
 ) {
   Object.keys(helpDisplay).forEach((key) => {
     if (key !== 'current') {
@@ -85,7 +86,7 @@ export function socketEmit(
     }
   }
 
-  if (this.deactivateSocket) {
+  if (deactivateSocket) {
     console.log(gridSpecs);
   } else {
     startButtonActive.value = true;

@@ -7,7 +7,7 @@ import * as Util from '../shared/utils';
 let deactivateSocket = 0; // dev switch
 let onlyShowResultBox = 0; // dev switch
 let padWithExampleResults = 0; // dev switch
-let timeOfBuild = 1614; // dev note
+let timeOfBuild = 1619; // dev note
 
 @Component({
   selector: 'app-make',
@@ -123,7 +123,8 @@ export class MakeComponent implements OnInit {
       this.wipeResultState,
       this.socketService,
       this.results,
-      this.slideToElement
+      this.slideToElement,
+      this.deactivateSocket
     );
   }
 
