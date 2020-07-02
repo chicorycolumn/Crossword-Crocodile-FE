@@ -61,7 +61,7 @@ export function socketEmit(
   dimensions.splice(dimensions.indexOf(gridSpecs['width']), 1);
   gridSpecs['height'] = dimensions[0];
   gridSpecs['bann'] = normalizeArray(
-    form['bann'].split(' ').filter((str) => str.length)
+    form['bann'].split(/\s/).filter((str) => str.length)
   );
 
   if (

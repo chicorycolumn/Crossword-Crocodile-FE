@@ -38,3 +38,8 @@ body {
 .upMargin {
   margin-bottom: -90px;
 }
+
+textarea {
+  font-size: 14px;
+  font-family: "Courier New", Courier, monospace;
+}
