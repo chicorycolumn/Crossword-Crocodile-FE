@@ -6,7 +6,7 @@ import * as Util from '../shared/utils';
 
 let deactivateSocket = 0; // dev switch
 let onlyShowResultBox = 0; // dev switch
-let padWithExampleResults = 1; // dev switch
+let padWithExampleResults = 0; // dev switch
 let timeOfBuild = 1438; // dev note
 
 @Component({
