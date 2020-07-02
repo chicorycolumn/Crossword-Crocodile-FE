@@ -4,10 +4,10 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { SocketioService } from '../services/socketio.service';
 import * as Util from '../shared/utils';
 
-let deactivateSocket = 1; // dev switch
+let deactivateSocket = 0; // dev switch
 let onlyShowResultBox = 0; // dev switch
 let padWithExampleResults = 1; // dev switch
-let timeOfBuild = 1125; // dev note
+let timeOfBuild = 1438; // dev note
 
 @Component({
   selector: 'app-make',
