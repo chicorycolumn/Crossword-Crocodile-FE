@@ -47,17 +47,6 @@
   max-width: 490px;
   border-top: var(--green-shad) solid 1px;
   margin-bottom: 50px;
-  /* padding: 0px 25px 0px 25px; */
-  /* margin-bottom: 50px; */
-  /* padding-top: 10px; */
-  /* padding-bottom: 10px; */
-  /* color: none; */
-  /* background-color: transparent; */
-  /* padding-left: 5px; */
-  /* padding-right: 5px; */
-  /* border-radius: 0; */
-  /* width: 485px; */
-  /* min-width: 485px; */
 }
 
 .shapeText {
@@ -173,7 +162,7 @@ p {
   margin-bottom: 0px;
 }
 .boxTitleC {
-  margin-bottom: 0ypx;
+  margin-bottom: 0px;
   /* font-style: italic; */
 }
 
@@ -188,7 +177,7 @@ p {
 }
 
 .resultRightieActive {
-  background-color: lightskyblue;
+  background-color: var(--standard-panel-colour);
 }
 
 .gridRender {
@@ -480,13 +469,42 @@ p {
   height: 13px;
 }
 
-.tinyIconHolder {
+.rightieOverlay {
   position: absolute;
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  flex-direction: column;
+  justify-content: flex-end;
   padding: 0px 5px 5px 5px;
   /* background-color: white; */
   width: 110px;
-  margin-top: 192px;
+  margin-top: 50px;
+  height: 160px;
+  /* border: black dashed 1pt; */
+}
+
+.tinyIconContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.loadingMessageContainer {
+  opacity: 0.5;
+  /* border: orange dotted 1pt; */
+  margin-bottom: 20px;
+  height: 80px;
+  /* display: flex;
+  flex-direction: column;
+  justify-content: space-evenly; */
+}
+
+.loadingIcon {
+  height: 25px;
+}
+
+.loadingText {
+  color: darkgreen;
+  margin: 0px;
+  margin-top: 5px;
+  font-size: 14px;
 }

@@ -7,7 +7,7 @@ import * as Util from '../shared/utils';
 let deactivateSocket = 0; // dev switch
 let onlyShowResultBox = 0; // dev switch
 let padWithExampleResults = 0; // dev switch
-let timeOfBuild = 1904; // dev note
+let timeOfBuild = 2006; // dev note
 
 @Component({
   selector: 'app-make',

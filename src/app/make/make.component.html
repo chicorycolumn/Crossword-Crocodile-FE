@@ -307,29 +307,54 @@
             {{ line }}
           </p>
         </div>
-        <div class="tinyIconHolder">
-          <span
-            tooltip="Download all results"
-            placement="bottom"
-            [show-delay]="0"
-            [hide-delay]="0"
+        <div class="rightieOverlay">
+          <div
+            *ngIf="
+              startButtonActive.value &&
+              !serverIsIndeedWorking.value &&
+              !results.array.length
+            "
+            class="loadingMessageContainer"
           >
-            <img
-              class="tinyIcon"
-              src="../../assets/download icon ZEUS.png"
-              (click)="clickToDownload()"
-          /></span>
-          <span
-            tooltip="Report problems"
-            placement="bottom"
-            [show-delay]="0"
-            [hide-delay]="0"
+            <img class="loadingIcon" src="../../assets/sending icon ZEUS.png" />
+            <p class="loadingText">Sending to server...</p>
+          </div>
+          <div
+            *ngIf="
+              startButtonActive.value &&
+              serverIsIndeedWorking.value &&
+              !results.array.length
+            "
+            class="loadingMessageContainer"
           >
-            <img
-              class="tinyIcon"
-              src="../../assets/report icon ZEUS.png"
-              (click)="clickToReport()"
-          /></span>
+            <img class="loadingIcon" src="../../assets/working icon ZEUS.png" />
+            <p class="loadingText">Server is working...</p>
+          </div>
+
+          <div class="tinyIconContainer">
+            <span
+              tooltip="Download all results"
+              placement="bottom"
+              [show-delay]="0"
+              [hide-delay]="0"
+            >
+              <img
+                class="tinyIcon"
+                src="../../assets/download icon ZEUS.png"
+                (click)="clickToDownload()"
+            /></span>
+            <span
+              tooltip="Report problems"
+              placement="bottom"
+              [show-delay]="0"
+              [hide-delay]="0"
+            >
+              <img
+                class="tinyIcon"
+                src="../../assets/report icon ZEUS.png"
+                (click)="clickToReport()"
+            /></span>
+          </div>
         </div>
         <div class="indexDisplay">
           {{
