@@ -163,8 +163,12 @@ export function findModalLength(arr: string[]) {
 }
 
 export const resultsArray = [
-  { summary: ['ABC', 'DEF', 'GHI', 'JKL', 'MNO'], grid: [['1ac', ['seeds']]] },
   {
+    summary: ['ABC', 'DEF', 'GHI', 'JKL', 'MNO'],
+    grid: [['1ac', ['seeds']]],
+  },
+  {
+    summary: ['AAA', 'BBB', 'CCC', 'DDD'],
     grid: [
       [
         '1ac',
@@ -252,6 +256,7 @@ export const resultsArray = [
     ],
   },
   {
+    summary: ['XXX', 'YYY', 'ZZZ'],
     grid: [
       ['1ac', ['devil']],
       ['2ac', ['devil']],

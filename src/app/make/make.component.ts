@@ -7,7 +7,7 @@ import * as Util from '../shared/utils';
 let deactivateSocket = 0; // dev switch
 let onlyShowResultBox = 0; // dev switch
 let padWithExampleResults = 0; // dev switch
-let timeOfBuild = 1635; // dev note
+let timeOfBuild = 1904; // dev note
 
 @Component({
   selector: 'app-make',
@@ -95,6 +95,58 @@ export class MakeComponent implements OnInit {
       marks: 'eg "SPOKE" part of a wheel. "azure" - Shade of blue.',
     };
     this.desiPlaceholderText = ref[sepName];
+  }
+
+  clickToDownload() {
+    let border = '------------------------';
+    let resultsTxt =
+      "Thank you for using Crossword Crocodile!\n\n           .-._   _ _ _ _ _ _ _ _\n.-''-.__.-'00  '-' ' ' ' ' ' ' ' '-.\n'.___ '    .   .--_'-' '-' '-' _'-' '._\n V: V 'vv-'   '_   '.       .'  _..' '.'.\n   '=.____.=_.--'   :_.__.__:_   '.   : :\n           (((____.-'        '-.  /   : :\n                               (((-' .' /\n                            _____..'  .'\nart by Shanaka Dias        '-._____.-'\n\n\n" +
+      border +
+      '\n';
+    let gridTxt = '';
+    let summaryTxt = '';
+
+    this.results.array.forEach((resObj) => {
+      resObj['summary'].forEach((summaryLine) => {
+        summaryTxt += '\n' + summaryLine;
+      });
+      resObj['grid'].forEach((gridLine) => {
+        let arr = (<string>gridLine[0]).split(/(\d+)/);
+        let num = arr[1];
+        let word = arr[2].toLowerCase();
+        const ref = { ac: 'Across', do: 'Down' };
+        let formattedCoord = `${num} ${ref[word]}`;
+        let wordsToFormat = gridLine.slice(1);
+        let formattedWords =
+          typeof wordsToFormat[0] === 'string'
+            ? wordsToFormat[0]
+            : (<string[]>wordsToFormat[0]).join(', ');
+        gridTxt +=
+          '\n' +
+          formattedCoord +
+          (/a/i.test(formattedCoord) ? ':  ' : ':    ') +
+          formattedWords;
+      });
+      resultsTxt += summaryTxt + '\n' + gridTxt + '\n\n' + border + '\n';
+      gridTxt = '';
+      summaryTxt = '';
+    });
+
+    let myblob = new Blob([resultsTxt], {
+      type: 'text/plain',
+    });
+
+    const url = URL.createObjectURL(myblob);
+    const link = document.createElement('a');
+    link.download = `Grid-Results-${Date.now()}.txt`;
+    link.href = url;
+    link.click();
+  }
+  clickToReport() {
+    window.open(
+      'mailto:c.matus.contact@gmail.com?subject=Crossword Feedback',
+      '_blank'
+    );
   }
 
   changeResultsIndex(direction) {

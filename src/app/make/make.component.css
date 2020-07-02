@@ -198,6 +198,7 @@ p {
   line-height: 9pt;
   padding-left: 7.5pt;
   padding-right: 0pt;
+  font-weight: bold;
   /* margin-top: 25pt; */
 }
 
@@ -475,10 +476,17 @@ p {
   margin-left: 425px;
 }
 
-/* .crocSepLeft {
-  height: 40px;
-  z-index: 3;
-  margin-top: -400px;
-  margin-left: -510px;
-  margin-bottom: -100px;
-} */
+.tinyIcon {
+  height: 13px;
+}
+
+.tinyIconHolder {
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0px 5px 5px 5px;
+  /* background-color: white; */
+  width: 110px;
+  margin-top: 192px;
+}

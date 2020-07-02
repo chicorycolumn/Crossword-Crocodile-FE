@@ -5,6 +5,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router'; // if use url 
 import { MakeComponent } from './make.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
+import { TooltipModule } from 'ng2-tooltip-directive';
 
 import { SocketioService } from '../services/socketio.service';
 
@@ -15,6 +16,7 @@ import { SocketioService } from '../services/socketio.service';
     ReactiveFormsModule,
     CommonModule,
     SharedModule,
+    TooltipModule,
   ],
   declarations: [MakeComponent],
   providers: [SocketioService],
