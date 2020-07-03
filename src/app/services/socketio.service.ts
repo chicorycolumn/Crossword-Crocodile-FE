@@ -59,7 +59,9 @@ export class SocketioService {
         console.log('WOAH SALLY');
         this.stop();
       } else if (!serverIsIndeedWorking.value) {
-        serverIsIndeedWorking.value = true;
+        setTimeout(() => {
+          serverIsIndeedWorking.value = true;
+        }, 100);
       }
     });
 
