@@ -7,7 +7,7 @@ import * as Util from '../shared/utils';
 let DEV_deactivateSocket = 0; // dev switch
 let DEV_onlyShowResultBox = 0; // dev switch
 let DEV_padWithExampleResults = 0; // dev switch
-let DEV_timeOfBuild = 1543; // dev note
+let DEV_timeOfBuild = 1604; // dev note
 
 @Component({
   selector: 'app-make',
@@ -87,7 +87,7 @@ export class MakeComponent implements OnInit {
   }
 
   devEvent2() {
-    this.socketService.stop();
+    this.socketService.stop('Client used dev button to request disconnect.');
   }
 
   socketToLocalHost() {
@@ -188,13 +188,19 @@ export class MakeComponent implements OnInit {
       this.startButtonActive.value
     );
 
-    !this.DEV_deactivateSocket && this.socketService.stop();
+    let timestamp = Date.now() / 1000;
+
+    !this.DEV_deactivateSocket &&
+      this.socketService.stop(`Client clicked STOP button at ${timestamp}`);
     setTimeout(() => {
       this.startButtonActive.value = false;
       this.serverIsIndeedWorking.value = false;
     }, 0);
     setTimeout(() => {
-      !this.DEV_deactivateSocket && this.socketService.stop();
+      !this.DEV_deactivateSocket &&
+        this.socketService.stop(
+          `10ms delayed redundancy-repeat of client clicking STOP button at  at ${timestamp}`
+        );
     }, 10);
   }
 

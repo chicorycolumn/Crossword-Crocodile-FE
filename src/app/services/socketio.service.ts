@@ -37,7 +37,9 @@ export class SocketioService {
         Date.now() / 1000 - 1593360000
       );
       this.turnOffButtons();
-      this.stop();
+      this.stop(
+        "A foreign disconnection happened, thus client requests disconnect so we're all on the same page."
+      );
     });
 
     this.socket.on('message', (data) => {
@@ -70,7 +72,9 @@ export class SocketioService {
         console.log(
           'WOAH SALLY, STARTBUTTON INACTIVE BUT SERVER SENT A STARTED MSG.'
         );
-        this.stop();
+        this.stop(
+          "Client requests disconnect, because startbutton inactive but server had sent a 'started' event."
+        );
       } else if (!serverIsIndeedWorking.value) {
         setTimeout(() => {
           serverIsIndeedWorking.value = true;
@@ -96,7 +100,9 @@ export class SocketioService {
         console.log(
           'WOAH NELLY, STARTBUTTON INACTIVE BUT SERVER SENT A RESULT.'
         );
-        this.stop();
+        this.stop(
+          'Client requests disconnect, because startbutton inactive but server had sent a result.'
+        );
       }
     });
   }
@@ -110,9 +116,13 @@ export class SocketioService {
     }
   }
 
-  stop() {
-    console.log('gonna ask to stop', Date.now() / 1000 - 1593360000);
-    this.socket.emit('please terminate', {});
+  stop(message) {
+    console.log(
+      'gonna ask to stop for this reason: ',
+      message,
+      Date.now() / 1000 - 1593360000
+    );
+    this.socket.emit('please terminate', { message: message });
   }
 
   emitGridSpecs(data) {
