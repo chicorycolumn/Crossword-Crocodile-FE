@@ -7,7 +7,7 @@ import * as Util from '../shared/utils';
 let DEV_deactivateSocket = 0; // dev switch
 let DEV_onlyShowResultBox = 0; // dev switch
 let DEV_padWithExampleResults = 0; // dev switch
-let DEV_timeOfBuild = 1025; // dev note
+let DEV_timeOfBuild = 1543; // dev note
 
 @Component({
   selector: 'app-make',
@@ -35,7 +35,7 @@ export class MakeComponent implements OnInit {
     shape: this.fb.group({
       shapeName: '5x5',
     }),
-    mand: [''],
+    mand: ['santa claus'],
     bann: [''],
     desi: [''],
     desiSeparator: [' '],
@@ -84,6 +84,10 @@ export class MakeComponent implements OnInit {
 
   devEvent() {
     this.socketService.verifyOff();
+  }
+
+  devEvent2() {
+    this.socketService.stop();
   }
 
   socketToLocalHost() {
@@ -176,7 +180,32 @@ export class MakeComponent implements OnInit {
     slideToElement(helpDisplay[code].id);
   }
 
+  socketStop() {
+    console.log(
+      'MCT STOP says serverIsIndeedWorking.value is',
+      this.serverIsIndeedWorking.value,
+      'and startButtonActive.value is',
+      this.startButtonActive.value
+    );
+
+    !this.DEV_deactivateSocket && this.socketService.stop();
+    setTimeout(() => {
+      this.startButtonActive.value = false;
+      this.serverIsIndeedWorking.value = false;
+    }, 0);
+    setTimeout(() => {
+      !this.DEV_deactivateSocket && this.socketService.stop();
+    }, 10);
+  }
+
   socketEmit() {
+    console.log(
+      'MCT EMIT says serverIsIndeedWorking.value is',
+      this.serverIsIndeedWorking.value,
+      'and startButtonActive.value is',
+      this.startButtonActive.value
+    );
+
     Util.socketEmit(
       this.helpDisplay,
       this.makeCrosswordForm,
@@ -197,17 +226,6 @@ export class MakeComponent implements OnInit {
       results.array.pop();
     }
     results.index = 0;
-  }
-
-  socketStop() {
-    !this.DEV_deactivateSocket && this.socketService.stop();
-    setTimeout(() => {
-      this.startButtonActive.value = false;
-      this.serverIsIndeedWorking.value = false;
-    }, 0);
-    setTimeout(() => {
-      !this.DEV_deactivateSocket && this.socketService.stop();
-    }, 10);
   }
 
   verifyOff() {

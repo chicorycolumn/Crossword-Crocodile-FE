@@ -10,6 +10,8 @@ export function socketEmit(
   DEV_deactivateSocket,
   DEV_hard9x5
 ) {
+  console.log('UTIL SOCKET EMIT!!!!');
+
   Object.keys(helpDisplay).forEach((key) => {
     if (key !== 'current') {
       helpDisplay[key].show = false;

@@ -20,7 +20,7 @@
     (click)="devEvent()"
     style="position: fixed; z-index: 5; margin-top: -30px;"
   >
-    DEV EVENT
+    CHECK PERMS
   </button>
   <button
     (click)="socketToLocalHost()"
@@ -35,6 +35,12 @@
     [style.backgroundColor]="DEV_hard9x5.value ? 'red' : 'lightgrey'"
   >
     HARD 9x5
+  </button>
+  <button
+    (click)="devEvent2()"
+    style="position: fixed; z-index: 5; margin-top: 30px;"
+  >
+    SOCKET STOP
   </button>
   <form class="grid" [formGroup]="makeCrosswordForm" (ngSubmit)="devEvent()">
     <div *ngIf="!DEV_onlyShowResultBox" class="box box1" id="box1">
