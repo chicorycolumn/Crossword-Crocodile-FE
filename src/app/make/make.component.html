@@ -25,6 +25,7 @@
   <button
     (click)="socketToLocalHost()"
     style="position: fixed; z-index: 5; margin-top: -10px;"
+    [style.backgroundColor]="socketUsingLocal.value ? 'red' : 'lightgrey'"
   >
     SOCKET LOCAL
   </button>

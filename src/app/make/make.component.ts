@@ -19,6 +19,7 @@ export class MakeComponent implements OnInit {
   deactivateSocket = deactivateSocket;
   timeOfBuild = timeOfBuild;
   startButtonActive = { value: false };
+  socketUsingLocal = { value: false };
   serverIsIndeedWorking = { value: false };
   desiPlaceholderText = 'eg spoke azure';
   gridLayout = 'two rows';
@@ -86,6 +87,7 @@ export class MakeComponent implements OnInit {
         this.results,
         this.socketIsReady
       );
+      this.socketUsingLocal.value = true;
     }
   }
 
