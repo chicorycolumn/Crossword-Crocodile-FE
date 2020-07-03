@@ -35,6 +35,14 @@ export class SocketioService {
       console.log('Connected!', Date.now() / 1000 - 1593360000);
     });
 
+    this.socket.on('disconnect', () => {
+      console.log(
+        'HEY LAD DISCONNECT OCCURRED',
+        Date.now() / 1000 - 1593360000
+      );
+      this.turnOffButtons(startButtonActive, serverIsIndeedWorking);
+    });
+
     this.socket.on('message', (data) => {
       console.log('Server sent ', data, Date.now() / 1000 - 1593360000);
     });
@@ -47,7 +55,10 @@ export class SocketioService {
 
     this.socket.on('started', (data) => {
       console.log('Server says started.', Date.now() / 1000 - 1593360000);
-      if (!serverIsIndeedWorking.value) {
+      if (!startButtonActive.value) {
+        console.log('WOAH SALLY');
+        this.stop();
+      } else if (!serverIsIndeedWorking.value) {
         serverIsIndeedWorking.value = true;
       }
     });
@@ -58,8 +69,13 @@ export class SocketioService {
     });
 
     this.socket.on('produced grid', (data) => {
-      console.log(data['result']);
-      results.array.push(data['result']);
+      console.log('+');
+      if (startButtonActive.value) {
+        results.array.push(data['result']);
+      } else {
+        console.log('WOAH NELLY');
+        this.stop();
+      }
     });
   }
 
