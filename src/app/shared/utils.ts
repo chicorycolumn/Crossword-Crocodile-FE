@@ -7,7 +7,8 @@ export function socketEmit(
   socketService,
   results,
   slideToElement,
-  deactivateSocket
+  deactivateSocket,
+  DEV_hard9x5
 ) {
   Object.keys(helpDisplay).forEach((key) => {
     if (key !== 'current') {
@@ -98,6 +99,12 @@ export function socketEmit(
       (key) => (gridSpecsFormatted[gridSpecsKey[key]] = gridSpecs[key])
     );
     console.log(gridSpecsFormatted, Date.now() / 1000 - 1593360000);
+
+    if (DEV_hard9x5.value) {
+      gridSpecsFormatted['grid_width'] = 9;
+      gridSpecsFormatted['grid_height'] = 5;
+    }
+
     socketService.emitGridSpecs(gridSpecsFormatted);
   }
 }

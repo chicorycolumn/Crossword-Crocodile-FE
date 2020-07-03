@@ -14,7 +14,7 @@
       height: 25px;
     "
   >
-    {{ this.timeOfBuild }}
+    {{ this.DEV_timeOfBuild }}
   </div>
   <button
     (click)="devEvent()"
@@ -25,12 +25,19 @@
   <button
     (click)="socketToLocalHost()"
     style="position: fixed; z-index: 5; margin-top: -10px;"
-    [style.backgroundColor]="socketUsingLocal.value ? 'red' : 'lightgrey'"
+    [style.backgroundColor]="DEV_socketUsingLocal.value ? 'red' : 'lightgrey'"
   >
     SOCKET LOCAL
   </button>
+  <button
+    (click)="setHard5x9()"
+    style="position: fixed; z-index: 5; margin-top: 10px;"
+    [style.backgroundColor]="DEV_hard9x5.value ? 'red' : 'lightgrey'"
+  >
+    HARD 9x5
+  </button>
   <form class="grid" [formGroup]="makeCrosswordForm" (ngSubmit)="devEvent()">
-    <div *ngIf="!onlyShowResultBox" class="box box1" id="box1">
+    <div *ngIf="!DEV_onlyShowResultBox" class="box box1" id="box1">
       <div class="tag hiddenTag">required</div>
 
       <div class="boxLayerA" [class.veiled]="false">
@@ -95,7 +102,7 @@
       <div class="boxLayerC" *ngIf="false"></div>
     </div>
 
-    <div *ngIf="!onlyShowResultBox" class="box box2" id="box2">
+    <div *ngIf="!DEV_onlyShowResultBox" class="box box2" id="box2">
       <div class="tag">optional</div>
 
       <div
@@ -163,7 +170,7 @@
       </div>
     </div>
 
-    <div *ngIf="!onlyShowResultBox" class="box box3" id="box3">
+    <div *ngIf="!DEV_onlyShowResultBox" class="box box3" id="box3">
       <div class="tag">optional</div>
 
       <div
@@ -280,15 +287,15 @@
         <button
           class="startStopButton"
           [class.started]="startButtonActive.value"
-          [class.ready]="socketIsReady.value || deactivateSocket"
-          [class.disabled]="!socketIsReady.value || deactivateSocket"
+          [class.ready]="socketIsReady.value || DEV_deactivateSocket"
+          [class.disabled]="!socketIsReady.value || DEV_deactivateSocket"
           type="button"
           (click)="
             socketIsReady.value && startButtonActive.value && socketStop()
           "
           (click)="
             ((socketIsReady.value && !startButtonActive.value) ||
-              deactivateSocket) &&
+              DEV_deactivateSocket) &&
               socketEmit()
           "
         >

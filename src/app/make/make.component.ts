@@ -4,10 +4,10 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { SocketioService } from '../services/socketio.service';
 import * as Util from '../shared/utils';
 
-let deactivateSocket = 0; // dev switch
-let onlyShowResultBox = 0; // dev switch
-let padWithExampleResults = 0; // dev switch
-let timeOfBuild = 818; // dev note
+let DEV_deactivateSocket = 0; // dev switch
+let DEV_onlyShowResultBox = 0; // dev switch
+let DEV_padWithExampleResults = 0; // dev switch
+let DEV_timeOfBuild = 818; // dev note
 
 @Component({
   selector: 'app-make',
@@ -15,15 +15,19 @@ let timeOfBuild = 818; // dev note
   styleUrls: ['./make.component.css'],
 })
 export class MakeComponent implements OnInit {
-  onlyShowResultBox = onlyShowResultBox;
-  deactivateSocket = deactivateSocket;
-  timeOfBuild = timeOfBuild;
+  DEV_onlyShowResultBox = DEV_onlyShowResultBox;
+  DEV_deactivateSocket = DEV_deactivateSocket;
+  DEV_timeOfBuild = DEV_timeOfBuild;
   startButtonActive = { value: false };
-  socketUsingLocal = { value: false };
+  DEV_socketUsingLocal = { value: false };
+  DEV_hard9x5 = { value: false };
   serverIsIndeedWorking = { value: false };
   desiPlaceholderText = 'eg spoke azure';
   gridLayout = 'two rows';
-  results = { index: 0, array: padWithExampleResults ? Util.resultsArray : [] };
+  results = {
+    index: 0,
+    array: DEV_padWithExampleResults ? Util.resultsArray : [],
+  };
   socketIsReady = { value: false };
   helpDisplay = Util.helpDisplay;
 
@@ -48,7 +52,7 @@ export class MakeComponent implements OnInit {
     this.serverIsIndeedWorking.value = false; //delete?
 
     setTimeout(this.checkIfFlexWrap, 0);
-    if (!deactivateSocket) {
+    if (!DEV_deactivateSocket) {
       this.socketService.setupSocketConnection(
         true,
         this.startButtonActive,
@@ -69,6 +73,10 @@ export class MakeComponent implements OnInit {
     }, 100);
   }
 
+  setHard5x9() {
+    this.DEV_hard9x5.value = true;
+  }
+
   exitErrorBubble(key) {
     this.helpDisplay[key].show = false;
     // this.helpDisplay.current = null;
@@ -79,7 +87,7 @@ export class MakeComponent implements OnInit {
   }
 
   socketToLocalHost() {
-    if (!deactivateSocket) {
+    if (!DEV_deactivateSocket) {
       this.socketService.setupSocketConnection(
         false,
         this.startButtonActive,
@@ -87,7 +95,7 @@ export class MakeComponent implements OnInit {
         this.results,
         this.socketIsReady
       );
-      this.socketUsingLocal.value = true;
+      this.DEV_socketUsingLocal.value = true;
     }
   }
 
@@ -178,7 +186,8 @@ export class MakeComponent implements OnInit {
       this.socketService,
       this.results,
       this.slideToElement,
-      this.deactivateSocket
+      this.DEV_deactivateSocket,
+      this.DEV_hard9x5
     );
   }
 
@@ -191,13 +200,13 @@ export class MakeComponent implements OnInit {
   }
 
   socketStop() {
-    !this.deactivateSocket && this.socketService.stop();
+    !this.DEV_deactivateSocket && this.socketService.stop();
     setTimeout(() => {
       this.startButtonActive.value = false;
       this.serverIsIndeedWorking.value = false;
     }, 0);
     setTimeout(() => {
-      !this.deactivateSocket && this.socketService.stop();
+      !this.DEV_deactivateSocket && this.socketService.stop();
     }, 10);
   }
 
