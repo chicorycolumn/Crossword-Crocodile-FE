@@ -54,13 +54,23 @@ export class SocketioService {
     });
 
     this.socket.on('started', (data) => {
-      console.log('Server says started.', Date.now() / 1000 - 1593360000);
+      console.log('---');
+      console.log(
+        'SERVER STARTED!!!!!!!!!!!!!!!!!',
+        Date.now() / 1000 - 1593360000
+      );
+      console.log('serverIsIndeedWorking.value', serverIsIndeedWorking.value);
       if (!startButtonActive.value) {
         console.log('WOAH SALLY');
         this.stop();
       } else if (!serverIsIndeedWorking.value) {
         setTimeout(() => {
           serverIsIndeedWorking.value = true;
+          console.log(
+            'serverIsIndeedWorking.value',
+            serverIsIndeedWorking.value
+          );
+          console.log('---');
         }, 100);
       }
     });
