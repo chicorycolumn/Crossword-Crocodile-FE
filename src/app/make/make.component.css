@@ -172,8 +172,7 @@ p {
 }
 
 .gridRender {
-  font-family: "Courier New", Courier, "Lucida Sans", "Lucida Sans Regular",
-    "Lucida Grande", "Lucida Sans Unicode", monospace;
+  font-family: "Courier New", Courier, Arial, monospace;
   font-size: 16px;
   letter-spacing: 8.5pt;
   line-height: 9pt;
