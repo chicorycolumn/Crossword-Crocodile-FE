@@ -69,9 +69,9 @@ export class SocketioService {
     });
 
     this.socket.on('produced grid', (data) => {
-      console.log('+');
       if (startButtonActive.value) {
         results.array.push(data['result']);
+        console.log(data['result']);
       } else {
         console.log('WOAH NELLY');
         this.stop();
