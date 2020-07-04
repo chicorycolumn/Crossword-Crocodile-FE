@@ -358,10 +358,10 @@ export class MakeComponent implements OnInit {
     });
 
     document.addEventListener('keydown', (e) => {
-      e.preventDefault();
       console.log(document.getElementById('box4'));
 
       if (this.selectedElements['box4']) {
+        e.preventDefault();
         if (e.charCode == 38 || e.keyCode == 38) {
           this.changeResultsIndex('up');
         } else if (e.charCode == 40 || e.keyCode == 40) {
