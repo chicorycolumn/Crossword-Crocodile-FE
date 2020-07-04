@@ -328,3 +328,44 @@ export let helpDisplay = {
   },
   current: null,
 };
+
+export const rotateCarousel = (object, direction) => {
+  let savedValue;
+  let middlemanSaved;
+  let objKeys;
+
+  if (direction) {
+    objKeys = Object.keys(object);
+  } else {
+    objKeys = Object.keys(object).reverse();
+  }
+
+  for (let i = 0; i < objKeys.length; i++) {
+    let key = objKeys[i];
+
+    if (i === 0) {
+      savedValue = object[key];
+    } else if (i < objKeys.length) {
+      savedValue = object[key];
+      object[key] = middlemanSaved;
+    }
+    if (i + 1 === objKeys.length) {
+      object[objKeys[0]] = savedValue;
+    }
+    middlemanSaved = savedValue;
+  }
+};
+
+export const rotateCarouselArray = (array, direction) => {
+  let classValues = array.map((obj) => obj.class);
+
+  if (direction) {
+    classValues.push(classValues.shift());
+  } else {
+    classValues.unshift(classValues.pop());
+  }
+
+  classValues.forEach((newClass, index) => {
+    array[index].class = newClass;
+  });
+};

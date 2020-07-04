@@ -7,7 +7,7 @@ import * as Util from '../shared/utils';
 let DEV_deactivateSocket = 0; // dev switch
 let DEV_onlyShowResultBox = 0; // dev switch
 let DEV_padWithExampleResults = 0; // dev switch
-let DEV_timeOfBuild = 1604; // dev note
+let DEV_timeOfBuild = 1532; // dev note
 
 @Component({
   selector: 'app-make',
@@ -15,6 +15,59 @@ let DEV_timeOfBuild = 1604; // dev note
   styleUrls: ['./make.component.css'],
 })
 export class MakeComponent implements OnInit {
+  slidesData = [
+    {
+      id: 's0',
+      class: 'carouselItemA',
+      src: '../../assets/Crossword 5x5.png',
+      value: '5x5',
+      text: 'Six 5-letter words',
+      checked: true,
+    },
+    {
+      id: 's1',
+      class: 'carouselItemB',
+      src: '../../assets/Crossword 7x5.png',
+      value: '7x5',
+      text: 'Three 7-letter words\nFour 5-letter words',
+      checked: false,
+    },
+    {
+      id: 's2',
+      class: 'carouselItemC',
+      src: '../../assets/Crossword 7x7.png',
+      value: '7x7',
+      text: 'Eight 7-letter words',
+      checked: false,
+    },
+    {
+      id: 's3',
+      class: 'carouselItemOffRight',
+      src: '../../assets/Crossword 9x5.png',
+      value: '9x5',
+      text: 'Three 9-letter words\nFive 5-letter words',
+      checked: false,
+    },
+
+    {
+      id: 's4',
+      class: 'carouselItemHidden',
+      src: '../../assets/Crossword 9x7.png',
+      value: '9x7',
+      text: 'Four 9-letter words\nFive 7-letter words',
+      checked: false,
+    },
+    {
+      id: 's5',
+      class: 'carouselItemOffLeft',
+      src: '../../assets/Crossword 9x9.png',
+      value: '9x9',
+      text: 'Eight 9-letter words',
+      checked: false,
+    },
+  ];
+
+  devButtonsShowing = { value: false };
   DEV_onlyShowResultBox = DEV_onlyShowResultBox;
   DEV_deactivateSocket = DEV_deactivateSocket;
   DEV_timeOfBuild = DEV_timeOfBuild;
@@ -35,7 +88,7 @@ export class MakeComponent implements OnInit {
     shape: this.fb.group({
       shapeName: '5x5',
     }),
-    mand: ['santa claus'],
+    mand: [''],
     bann: [''],
     desi: [''],
     desiSeparator: [' '],
@@ -63,6 +116,10 @@ export class MakeComponent implements OnInit {
     }
   }
 
+  rotateCarousel(direction) {
+    Util.rotateCarouselArray(this.slidesData, direction);
+  }
+
   slideToElement(id) {
     setTimeout(() => {
       const yOffset = -75;
@@ -71,6 +128,16 @@ export class MakeComponent implements OnInit {
         element.getBoundingClientRect().top + window.pageYOffset + yOffset;
       window.scrollTo({ top: y, behavior: 'smooth' });
     }, 100);
+  }
+
+  checkShapeRadio(id) {
+    this.slidesData.forEach((slideData) => {
+      if (slideData.id === id) {
+        slideData.checked = true;
+      } else {
+        slideData.checked = false;
+      }
+    });
   }
 
   setHard5x9() {
@@ -85,6 +152,8 @@ export class MakeComponent implements OnInit {
   devEvent() {
     this.socketService.verifyOff();
   }
+
+  plusSlides(direction) {}
 
   devEvent2() {
     this.socketService.stop('Client used dev button to request disconnect.');
@@ -204,7 +273,20 @@ export class MakeComponent implements OnInit {
     }, 10);
   }
 
+  showDevButtons() {
+    if (this.makeCrosswordForm.value['bann'] === 'ved') {
+      this.devButtonsShowing.value = true;
+      this.makeCrosswordForm.controls['bann'].setValue('');
+    }
+  }
+
   socketEmit() {
+    console.log(this.slidesData[0].checked);
+    console.log(this.slidesData[1].checked);
+    console.log(this.slidesData[2].checked);
+    console.log(this.makeCrosswordForm.value.shape);
+    return;
+
     console.log(
       'MCT EMIT says serverIsIndeedWorking.value is',
       this.serverIsIndeedWorking.value,
@@ -239,6 +321,7 @@ export class MakeComponent implements OnInit {
   }
 
   formChanged() {
+    console.log('form changed');
     if (this.startButtonActive.value) {
       this.socketStop();
     }

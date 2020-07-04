@@ -1,47 +1,45 @@
 <div class="main" (window:resize)="onResize($event)">
-  <!-- <button class="centralButton">MAKE GRIDS</button> -->
-  <!-- <div class="centralButtonOval">
-    <img class="centralButton" src="../../assets/croc-button4.png" />
-  </div> -->
-  <div
-    style="
-      position: fixed;
-      z-index: 5;
-      margin-top: -50px;
-      background-color: hotpink;
-      text-align: center;
-      width: 100px;
-      height: 25px;
-    "
-  >
-    {{ this.DEV_timeOfBuild }}
+  <div *ngIf="devButtonsShowing.value">
+    <div
+      style="
+        position: fixed;
+        z-index: 5;
+        margin-top: -50px;
+        background-color: hotpink;
+        text-align: center;
+        width: 100px;
+        height: 25px;
+      "
+    >
+      {{ this.DEV_timeOfBuild }}
+    </div>
+    <button
+      (click)="devEvent()"
+      style="position: fixed; z-index: 5; margin-top: -30px;"
+    >
+      CHECK PERMS
+    </button>
+    <button
+      (click)="socketToLocalHost()"
+      style="position: fixed; z-index: 5; margin-top: -10px;"
+      [style.backgroundColor]="DEV_socketUsingLocal.value ? 'red' : 'lightgrey'"
+    >
+      SOCKET LOCAL
+    </button>
+    <button
+      (click)="setHard5x9()"
+      style="position: fixed; z-index: 5; margin-top: 10px;"
+      [style.backgroundColor]="DEV_hard9x5.value ? 'red' : 'lightgrey'"
+    >
+      HARD 9x5
+    </button>
+    <button
+      (click)="devEvent2()"
+      style="position: fixed; z-index: 5; margin-top: 30px;"
+    >
+      SOCKET STOP
+    </button>
   </div>
-  <button
-    (click)="devEvent()"
-    style="position: fixed; z-index: 5; margin-top: -30px;"
-  >
-    CHECK PERMS
-  </button>
-  <button
-    (click)="socketToLocalHost()"
-    style="position: fixed; z-index: 5; margin-top: -10px;"
-    [style.backgroundColor]="DEV_socketUsingLocal.value ? 'red' : 'lightgrey'"
-  >
-    SOCKET LOCAL
-  </button>
-  <button
-    (click)="setHard5x9()"
-    style="position: fixed; z-index: 5; margin-top: 10px;"
-    [style.backgroundColor]="DEV_hard9x5.value ? 'red' : 'lightgrey'"
-  >
-    HARD 9x5
-  </button>
-  <button
-    (click)="devEvent2()"
-    style="position: fixed; z-index: 5; margin-top: 30px;"
-  >
-    SOCKET STOP
-  </button>
   <form class="grid" [formGroup]="makeCrosswordForm" (ngSubmit)="devEvent()">
     <div *ngIf="!DEV_onlyShowResultBox" class="box box1" id="box1">
       <div class="tag hiddenTag">required</div>
@@ -52,52 +50,47 @@
         <br />
         <br />
         <form formGroupName="shape">
-          <div class="shapeHolder">
-            <div class="imageAndText">
-              <label>
+          <div class="slideshowContainer">
+            <div
+              *ngFor="let slideData of slidesData"
+              class="slide"
+              id="{{ slideData.id }}"
+              ngClass="{{ slideData.class }}"
+            >
+              <label class="slideLabel">
                 <input
                   class="shapeRadio"
                   type="radio"
-                  value="5x5"
+                  value="{{ slideData.value }}"
                   formControlName="shapeName"
                   (click)="formChanged()"
+                  (click)="checkShapeRadio(slideData.id)"
+                  [class.shapeRadioChecked]="slideData.checked"
                 />
-                <img class="shapeImage" src="../../assets/Crossword 5x5.png" />
-                <p class="shapeText">Six 5-letter words</p>
-              </label>
-            </div>
-            <div class="imageAndText">
-              <label>
-                <input
-                  class="shapeRadio"
-                  type="radio"
-                  value="7x5"
-                  formControlName="shapeName"
-                  (click)="formChanged()"
-                />
-
-                <img class="shapeImage" src="../../assets/Crossword 7x5.png" />
-                <p class="shapeText">
-                  Three 7-letter words<br />Four 5-letter words
-                </p>
-              </label>
-            </div>
-            <div class="imageAndText">
-              <label>
-                <input
-                  class="shapeRadio"
-                  type="radio"
-                  value="9x5"
-                  formControlName="shapeName"
-                  (click)="formChanged()"
-                />
-                <img class="shapeImage" src="../../assets/Crossword 9x5.png" />
-                <p class="shapeText">
-                  Three 9-letter words<br />Five 5-letter words
-                </p>
+                <div class="insideLabelToCollectClick">
+                  <div class="gridImageHolder">
+                    <img
+                      class="slideImage"
+                      [class.grayedOut]="!slideData.checked"
+                      src="{{ slideData.src }}"
+                    />
+                  </div>
+                  <p
+                    class="shapeText"
+                    [style.opacity]="slideData.checked ? 1 : 0.4"
+                  >
+                    {{ slideData.value }}
+                  </p>
+                </div>
               </label>
             </div>
           </div>
+
+          <a class="slidePrev" (click)="rotateCarousel(1)">
+            &#10094;
+          </a>
+          <a class="slideNext" (click)="rotateCarousel(0)">&#10095;</a>
+          <br />
         </form>
       </div>
 
@@ -152,6 +145,7 @@
 
       <div class="boxLayerB">
         <img
+          (click)="showDevButtons()"
           class="crocSep crocSepR flipHorizontal"
           src="../../assets/croc-silh-g-m.png"
         />

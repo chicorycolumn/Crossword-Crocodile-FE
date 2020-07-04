@@ -48,13 +48,36 @@
 }
 
 .shapeText {
-  font-size: 9pt;
+  font-size: 28px;
+  cursor: pointer;
+  /* margin-left: 5px;
+  margin-right: 5px; */
+  margin-top: 10px;
+  color: darkgreen;
+  opacity: 0.4;
+  margin-left: -1px;
+  /* font-weight: bold; */
+  font-family: "Courier New", Courier, Arial, monospace;
+}
+
+.shapeHolderOuter {
+  border: white solid 1pt;
 }
 
 .shapeHolder {
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
+  justify-content: space-between;
+  border: orangered solid 1pt;
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0px;
+}
+
+.imageAndText {
+  /* border: blue solid 1pt; */
+  margin: 0px;
 }
 
 .shapeImage {
@@ -64,22 +87,30 @@
 }
 
 .shapeRadio {
-  position: relative;
-  opacity: 0;
-  width: 0;
-  height: 0;
+  display: none;
+  font-size: 100px;
+  /* background-color: tomato; */
+  position: absolute;
+  opacity: 1;
+  width: 100px;
+  height: 140px;
+  margin-left: -25px;
+  border: tomato solid 1pt;
 }
 
-.shapeRadio + img {
+.shapeRadio + div {
   cursor: pointer;
 }
 
-.shapeRadio:checked + img {
+.shapeRadioChecked + div {
   filter: none;
 }
 
-p {
-  text-align: center;
+.insideLabelToCollectClick {
+  /* border: grey dotted 1pt; */
+  height: 100%;
+  width: 100%;
+  /* background-color: rgba(255, 10, 10, 0.8); */
 }
 
 .tag {
@@ -276,7 +307,7 @@ p {
   margin-top: -2.5px;
   width: 100%;
   height: 40px;
-  background-color: rgb(0, 151, 0);
+  background-color: var(--rich-green);
   cursor: pointer;
   display: inline-block;
   cursor: pointer;
@@ -482,4 +513,145 @@ p {
   margin: 0px;
   margin-top: 5px;
   font-size: 14px;
+}
+
+/* Slideshow container */
+.slideshowContainer {
+  margin-left: 15px;
+  margin-right: auto;
+  margin-top: -10px;
+  width: 93.5%;
+  height: 155px;
+  position: relative;
+  overflow: hidden;
+}
+
+.slide {
+  cursor: pointer;
+  /* border: black dotted 1pt; */
+  position: absolute;
+  transition: 0.25s;
+  width: 135px;
+  max-width: 140px;
+  overflow: hidden;
+  height: 97.5%;
+  position: absolute;
+  /* border-radius: 50px; */
+  background-color: rgba(0, 0, 0, 0.01);
+}
+
+/* #s0,
+#s3,
+#s6 {
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+#s1,
+#s4,
+#s7 {
+  background-color: rgba(0, 0, 0, 0.01);
+}
+#s2,
+#s5,
+#s8 {
+  background-color: rgba(0, 0, 0, 0.015);
+} */
+
+.carouselItemA {
+  margin-left: 0px;
+}
+
+.carouselItemB {
+  margin-left: 137.5px;
+}
+
+.carouselItemC {
+  margin-left: 275px;
+}
+
+.carouselItemOffRight {
+  margin-left: 412.5px;
+}
+
+.carouselItemOffLeft {
+  margin-left: -137.5px;
+}
+
+.carouselItemHidden {
+  display: none;
+}
+
+.carouselItemHiddenDeep {
+  display: none;
+}
+
+.slideLabel {
+  background-color: blue;
+}
+
+.slideImage {
+  width: 50%;
+  /* height: 70px;
+  height: 75px; */
+  filter: none;
+  z-index: 0;
+  /* margin-top: 10px; */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.gridImageHolder {
+  margin-top: 10px;
+  /* border: white dotted 2pt; */
+  height: 65px;
+  max-height: 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  text-align: center;
+}
+
+.grayedOut {
+  filter: brightness(5%) invert(100%);
+}
+
+/* Next & previous buttons */
+.slidePrev,
+.slideNext {
+  /* background-color: thistle; */
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: 20px;
+  height: 130px;
+  margin-top: -60px;
+  padding: 12px;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  transition: 0.6s ease;
+  border-radius: 3px 3px 3px 3px;
+  user-select: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.slidePrev {
+  left: -20px;
+  padding-left: 7.5px;
+}
+
+/* Position the "next button" to the right */
+.slideNext {
+  right: -20px;
+  /* padding-left: 12px; */
+  padding-right: 7.5px;
+}
+
+/* On hover, add a black background color with a little bit see-through */
+.slidePrev:hover,
+.slideNext:hover {
+  background-color: var(--green-shad);
 }
