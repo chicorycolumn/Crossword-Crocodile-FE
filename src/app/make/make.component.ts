@@ -8,7 +8,7 @@ let DEV_allToTrue = 0; // dev switch
 let DEV_deactivateSocket = 0; // dev switch
 let DEV_onlyShowResultBox = 0; // dev switch
 let DEV_padWithExampleResults = 0; // dev switch
-let DEV_timeOfBuild = 1806; // dev note
+let DEV_timeOfBuild = 1831; // dev note
 
 @Component({
   selector: 'app-make',
@@ -71,6 +71,7 @@ export class MakeComponent implements OnInit {
   devButtonsShowing = { value: false };
   disconnectedByServer = { value: false };
   transparentResults = { value: false };
+  selectedElements = {};
   resultsMargin = { value: 1 };
   DEV_onlyShowResultBox = DEV_allToTrue || DEV_onlyShowResultBox;
   DEV_deactivateSocket = DEV_allToTrue || DEV_deactivateSocket;
@@ -338,6 +339,10 @@ export class MakeComponent implements OnInit {
     }
   }
 
+  makeElementSelected(id, mouse) {
+    this.selectedElements[id] = mouse;
+  }
+
   socketEmit() {
     this.disconnectedByServer.value = false;
 
@@ -345,13 +350,23 @@ export class MakeComponent implements OnInit {
       e.preventDefault();
       console.log(e.deltaY);
 
-      if (e.deltaY < 0 && this.results.index > 0) {
-        this.results.index--;
-      } else if (
-        e.deltaY > 0 &&
-        this.results.index < this.results.array.length - 1
-      ) {
-        this.results.index++;
+      if (e.deltaY < 0) {
+        this.changeResultsIndex('up');
+      } else if (e.deltaY > 0) {
+        this.changeResultsIndex('down');
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      e.preventDefault();
+      console.log(document.getElementById('box4'));
+
+      if (this.selectedElements['box4']) {
+        if (e.charCode == 38 || e.keyCode == 38) {
+          this.changeResultsIndex('up');
+        } else if (e.charCode == 40 || e.keyCode == 40) {
+          this.changeResultsIndex('down');
+        }
       }
     });
 

@@ -273,6 +273,8 @@
     <div class="box box4" id="box4">
       <div class="resultLeftie">
         <div
+          (mouseover)="makeElementSelected('box4', true)"
+          (mouseout)="makeElementSelected('box4', false)"
           *ngIf="results.array.length"
           class="resultLeftieInner1"
           id="resultLeftieInner1"
