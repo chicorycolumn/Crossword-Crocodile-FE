@@ -8,7 +8,7 @@ let DEV_allToTrue = 0; // dev switch
 let DEV_deactivateSocket = 0; // dev switch
 let DEV_onlyShowResultBox = 0; // dev switch
 let DEV_padWithExampleResults = 0; // dev switch
-let DEV_timeOfBuild = 1726; // dev note
+let DEV_timeOfBuild = 1806; // dev note
 
 @Component({
   selector: 'app-make',
@@ -201,10 +201,8 @@ export class MakeComponent implements OnInit {
 
   clickToDownload() {
     let border = '------------------------';
-    let resultsTxt =
-      "Thank you for using Crossword Crocodile!\n\n           .-._   _ _ _ _ _ _ _ _\n.-''-.__.-'00  '-' ' ' ' ' ' ' ' '-.\n'.___ '    .   .--_'-' '-' '-' _'-' '._\n V: V 'vv-'   '_   '.       .'  _..' '.'.\n   '=.____.=_.--'   :_.__.__:_   '.   : :\n           (((____.-'        '-.  /   : :\n                               (((-' .' /\n                            _____..'  .'\nart by Shanaka Dias        '-._____.-'\n\n\n" +
-      border +
-      '\n';
+    let resultsTxt = Util.asciiArt;
+
     let gridTxt = '';
     let summaryTxt = '';
 
@@ -342,6 +340,20 @@ export class MakeComponent implements OnInit {
 
   socketEmit() {
     this.disconnectedByServer.value = false;
+
+    document.getElementById('box4').addEventListener('wheel', (e) => {
+      e.preventDefault();
+      console.log(e.deltaY);
+
+      if (e.deltaY < 0 && this.results.index > 0) {
+        this.results.index--;
+      } else if (
+        e.deltaY > 0 &&
+        this.results.index < this.results.array.length - 1
+      ) {
+        this.results.index++;
+      }
+    });
 
     console.log(
       'MCT EMIT says serverIsIndeedWorking.value is',
