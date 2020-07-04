@@ -242,11 +242,36 @@
 }
 
 .hor {
+  margin-left: 5px;
   display: flex;
   flex-direction: row;
   margin-top: 5px;
-  margin-left: 5px;
   margin-bottom: 10px;
+}
+
+.horMargin1 {
+  margin-top: 5px;
+  margin-bottom: 10px;
+  /* background-color: greenyellow; */
+}
+
+.horMargin2 {
+  margin-top: 2.5px;
+  margin-bottom: 5px;
+  /* background-color: yellow; */
+}
+
+.horMargin3 {
+  margin-top: 1px;
+  margin-bottom: 2px;
+  /* background-color: red; */
+}
+
+.horMargin4 {
+  margin-top: 1px;
+  margin-bottom: 2px;
+  font-size: 15px;
+  /* background-color: blue; */
 }
 
 .coordName {
@@ -508,6 +533,10 @@
   height: 25px;
 }
 
+.loadingIconLarge {
+  height: 50px;
+}
+
 .loadingText {
   color: darkgreen;
   margin: 0px;
@@ -519,7 +548,7 @@
 .slideshowContainer {
   margin-left: 15px;
   margin-right: auto;
-  margin-top: -10px;
+  margin-top: -20px;
   width: 93.5%;
   height: 155px;
   position: relative;
@@ -601,7 +630,7 @@
 }
 
 .gridImageHolder {
-  margin-top: 10px;
+  margin-top: 25px;
   /* border: white dotted 2pt; */
   height: 65px;
   max-height: 80px;
@@ -622,7 +651,7 @@
   /* background-color: thistle; */
   cursor: pointer;
   position: absolute;
-  top: 50%;
+  top: 92.5px;
   width: 20px;
   height: 130px;
   margin-top: -60px;

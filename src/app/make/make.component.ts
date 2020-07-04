@@ -4,10 +4,11 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { SocketioService } from '../services/socketio.service';
 import * as Util from '../shared/utils';
 
+let DEV_allToTrue = 0; // dev switch
 let DEV_deactivateSocket = 0; // dev switch
 let DEV_onlyShowResultBox = 0; // dev switch
 let DEV_padWithExampleResults = 0; // dev switch
-let DEV_timeOfBuild = 1532; // dev note
+let DEV_timeOfBuild = 1726; // dev note
 
 @Component({
   selector: 'app-make',
@@ -28,23 +29,23 @@ export class MakeComponent implements OnInit {
       id: 's1',
       class: 'carouselItemB',
       src: '../../assets/Crossword 7x5.png',
-      value: '7x5',
+      value: '5x7',
       text: 'Three 7-letter words\nFour 5-letter words',
       checked: false,
     },
     {
       id: 's2',
       class: 'carouselItemC',
-      src: '../../assets/Crossword 7x7.png',
-      value: '7x7',
+      src: '../../assets/Crossword 9x5.png',
+      value: '5x9',
       text: 'Eight 7-letter words',
       checked: false,
     },
     {
       id: 's3',
       class: 'carouselItemOffRight',
-      src: '../../assets/Crossword 9x5.png',
-      value: '9x5',
+      src: '../../assets/Crossword 7x7.png',
+      value: '7x7',
       text: 'Three 9-letter words\nFive 5-letter words',
       checked: false,
     },
@@ -53,7 +54,7 @@ export class MakeComponent implements OnInit {
       id: 's4',
       class: 'carouselItemHidden',
       src: '../../assets/Crossword 9x7.png',
-      value: '9x7',
+      value: '7x9',
       text: 'Four 9-letter words\nFive 7-letter words',
       checked: false,
     },
@@ -68,8 +69,11 @@ export class MakeComponent implements OnInit {
   ];
 
   devButtonsShowing = { value: false };
-  DEV_onlyShowResultBox = DEV_onlyShowResultBox;
-  DEV_deactivateSocket = DEV_deactivateSocket;
+  disconnectedByServer = { value: false };
+  transparentResults = { value: false };
+  resultsMargin = { value: 1 };
+  DEV_onlyShowResultBox = DEV_allToTrue || DEV_onlyShowResultBox;
+  DEV_deactivateSocket = DEV_allToTrue || DEV_deactivateSocket;
   DEV_timeOfBuild = DEV_timeOfBuild;
   startButtonActive = { value: false };
   DEV_socketUsingLocal = { value: false };
@@ -79,7 +83,10 @@ export class MakeComponent implements OnInit {
   gridLayout = 'two rows';
   results = {
     index: 0,
-    array: DEV_padWithExampleResults ? Util.resultsArray : [],
+    array:
+      DEV_allToTrue || DEV_padWithExampleResults
+        ? Util.exampleResultsArray
+        : [],
   };
   socketIsReady = { value: false };
   helpDisplay = Util.helpDisplay;
@@ -111,7 +118,11 @@ export class MakeComponent implements OnInit {
         this.startButtonActive,
         this.serverIsIndeedWorking,
         this.results,
-        this.socketIsReady
+        this.socketIsReady,
+        this.disconnectedByServer,
+        this.shrinkTextIfOverflowing,
+        this.resultsMargin,
+        this.transparentResults
       );
     }
   }
@@ -153,6 +164,10 @@ export class MakeComponent implements OnInit {
     this.socketService.verifyOff();
   }
 
+  clearInputBox(id) {
+    this.makeCrosswordForm.controls['threshold'].setValue('');
+  }
+
   plusSlides(direction) {}
 
   devEvent2() {
@@ -166,7 +181,11 @@ export class MakeComponent implements OnInit {
         this.startButtonActive,
         this.serverIsIndeedWorking,
         this.results,
-        this.socketIsReady
+        this.socketIsReady,
+        this.disconnectedByServer,
+        this.shrinkTextIfOverflowing,
+        this.resultsMargin,
+        this.transparentResults
       );
       this.DEV_socketUsingLocal.value = true;
     }
@@ -232,14 +251,55 @@ export class MakeComponent implements OnInit {
     );
   }
 
+  shrinkTextIfOverflowing(resultsMargin, transparentResults) {
+    transparentResults.value = true;
+
+    const isOverflown = (element) => {
+      return (
+        element.scrollHeight > element.clientHeight ||
+        element.scrollWidth > element.clientWidth
+      );
+    };
+
+    let timeout = 0;
+
+    setTimeout(() => {
+      if (isOverflown(document.getElementById('resultLeftieInner1'))) {
+        resultsMargin.value = 2;
+
+        setTimeout(() => {
+          if (isOverflown(document.getElementById('resultLeftieInner1'))) {
+            resultsMargin.value = 3;
+
+            setTimeout(() => {
+              if (isOverflown(document.getElementById('resultLeftieInner1'))) {
+                resultsMargin.value = 4;
+              }
+            }, timeout);
+          }
+        }, timeout);
+
+        transparentResults.value = false;
+      } else {
+        resultsMargin.value = 1;
+        transparentResults.value = false;
+      }
+    }, timeout);
+  }
+
   changeResultsIndex(direction) {
-    if (direction === 'up' && this.results.index > 0) {
-      this.results.index--;
-    } else if (
-      direction === 'down' &&
-      this.results.index < this.results.array.length - 1
-    ) {
-      this.results.index++;
+    if (this.results.array.length) {
+      this.resultsMargin.value = 1;
+
+      if (direction === 'up' && this.results.index > 0) {
+        this.results.index--;
+      } else if (
+        direction === 'down' &&
+        this.results.index < this.results.array.length - 1
+      ) {
+        this.results.index++;
+      }
+      this.shrinkTextIfOverflowing(this.resultsMargin, this.transparentResults);
     }
   }
 
@@ -281,11 +341,7 @@ export class MakeComponent implements OnInit {
   }
 
   socketEmit() {
-    console.log(this.slidesData[0].checked);
-    console.log(this.slidesData[1].checked);
-    console.log(this.slidesData[2].checked);
-    console.log(this.makeCrosswordForm.value.shape);
-    return;
+    this.disconnectedByServer.value = false;
 
     console.log(
       'MCT EMIT says serverIsIndeedWorking.value is',
@@ -321,7 +377,6 @@ export class MakeComponent implements OnInit {
   }
 
   formChanged() {
-    console.log('form changed');
     if (this.startButtonActive.value) {
       this.socketStop();
     }

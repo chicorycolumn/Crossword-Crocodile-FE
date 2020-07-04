@@ -171,7 +171,37 @@ export function findModalLength(arr: string[]) {
   return modalLength;
 }
 
-export const resultsArray = [
+export const exampleResultsArray = [
+  {
+    summary: ['ABC', 'DEF', 'GHI', 'JKL'],
+    grid: [
+      ['1ac', ['seeds']],
+      ['1ac', ['brented', 'breeted', 'brelted', 'breated', 'bralted']],
+      ['1ac', ['seeds']],
+      ['1ac', ['scented', 'sheeted', 'smelted', 'sweated', 'swalted']],
+      ['1ac', ['seeds']],
+      ['1ac', ['seeds']],
+      ['1ac', ['lineage']],
+      ['1ac', ['overeat']],
+      ['1ac', ['samoyed']],
+    ],
+  },
+
+  {
+    summary: ['ABC', 'DEF', 'GHI', 'JKL'],
+    grid: [
+      ['1ac', ['seeds']],
+      ['1ac', ['brented']],
+      ['1ac', ['seeds']],
+      ['1ac', ['scented']],
+      ['1ac', ['seeds']],
+      ['1ac', ['seeds']],
+      ['1ac', ['lineage']],
+      ['1ac', ['overeat']],
+      ['1ac', ['samoyed']],
+    ],
+  },
+
   {
     summary: ['ABC', 'DEF', 'GHI', 'JKL', 'MNO'],
     grid: [['1ac', ['seeds']]],

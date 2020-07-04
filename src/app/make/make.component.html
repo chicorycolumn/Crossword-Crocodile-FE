@@ -233,10 +233,12 @@
 
           <textarea
             class="threshInputBox"
+            id="threshInputBox"
             placeholder="0"
             maxlength="2"
             formControlName="threshold"
             (keypress)="formChanged()"
+            (click)="clearInputBox('threshold')"
           ></textarea>
           <p class="includeAtLeast_text">
             of these words
@@ -270,10 +272,18 @@
 
     <div class="box box4" id="box4">
       <div class="resultLeftie">
-        <div *ngIf="results.array.length" class="resultLeftieInner1">
+        <div
+          *ngIf="results.array.length"
+          class="resultLeftieInner1"
+          id="resultLeftieInner1"
+          [style]="
+            transparentResults.value ? 'color: transparent;' : 'color: black;'
+          "
+        >
           <div
             *ngFor="let coordArr of results.array[results.index].grid"
             class="hor"
+            ngClass="{{ 'horMargin' + resultsMargin.value }}"
           >
             <p class="coordName">{{ coordArr[0] | formatCoord }}</p>
             <p class="coordWords">{{ coordArr[1] | spaceArray }}</p>
@@ -316,6 +326,16 @@
           </p>
         </div>
         <div class="rightieOverlay">
+          <div
+            *ngIf="disconnectedByServer.value && !results.array.length"
+            class="loadingMessageContainer"
+            style="margin-bottom: 40px;"
+          >
+            <img class="loadingIconLarge" src="../../assets/croc-book.png" />
+            <p class="loadingText">
+              Sorry, none yet, but please try again!
+            </p>
+          </div>
           <div
             *ngIf="
               startButtonActive.value &&

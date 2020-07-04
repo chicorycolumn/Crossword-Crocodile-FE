@@ -15,7 +15,11 @@ export class SocketioService {
     startButtonActive,
     serverIsIndeedWorking,
     results,
-    socketIsReady
+    socketIsReady,
+    disconnectedByServer,
+    shrinkTextIfOverflowing,
+    resultsMargin,
+    transparentResults
   ) {
     this.socket = socketIOClient(
       shouldEndpointBeHeroku
@@ -40,6 +44,9 @@ export class SocketioService {
       this.stop(
         "A foreign disconnection happened, thus client requests disconnect so we're all on the same page."
       );
+      if (startButtonActive.value) {
+        disconnectedByServer.value = true;
+      }
     });
 
     this.socket.on('message', (data) => {
@@ -94,6 +101,11 @@ export class SocketioService {
 
     this.socket.on('produced grid', (data) => {
       if (startButtonActive.value) {
+        if (!results.array.length) {
+          console.log('5555555555555555555');
+          shrinkTextIfOverflowing(resultsMargin, transparentResults);
+        }
+
         results.array.push(data['result']);
         console.log(data['result']);
       } else {
