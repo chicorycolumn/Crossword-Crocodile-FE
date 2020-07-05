@@ -7,6 +7,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { MakeModule } from './make/make.module';
 import { LearnModule } from './learn/learn.module';
+import { PlayModule } from './play/play.module';
 import { SharedModule } from './shared/shared.module';
 
 @NgModule({
@@ -16,6 +17,7 @@ import { SharedModule } from './shared/shared.module';
     AppRoutingModule,
     MakeModule,
     LearnModule,
+    PlayModule,
     ReactiveFormsModule,
     SharedModule,
   ],

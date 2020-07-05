@@ -5,6 +5,7 @@ const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/make' },
   { path: 'make', pathMatch: 'full', redirectTo: '/make' },
   { path: 'learn', pathMatch: 'full', redirectTo: '/learn' },
+  { path: 'play', pathMatch: 'full', redirectTo: '/play' },
   { path: '**', pathMatch: 'full', redirectTo: '/' },
 ];
 

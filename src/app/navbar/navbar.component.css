@@ -1,11 +1,13 @@
 .navbar {
-  background-color: var(--rich-green);
+  /* background-color: var(--rich-green); */
+  background-color: var(--actual-panel-green);
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   position: fixed;
   width: 100%;
   z-index: 5;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 5px 5px;
 }
 
 .title {
@@ -15,10 +17,56 @@
   margin: 0px;
 }
 
-.button-holder {
+.navRightHolder {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
-  border: black dotted 2pt;
-  width: 300px;
+  justify-content: space-around;
+  /* border: black dotted 2pt; */
+  width: 250px;
+  /* border: yellow solid 1pt; */
+
+  height: 60px;
+}
+
+.navButton {
+  opacity: 0.8;
+  color: black;
+  text-decoration: none;
+  /* font-weight: bold; */
+  font-size: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  height: 100%;
+  /* background-color: fuchsia; */
+}
+
+.navButtonText {
+  margin: 0px;
+}
+
+.navButtonImage {
+  height: 25px;
+  width: 25px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.titleGraphic {
+  margin-top: auto;
+  margin-bottom: auto;
+  height: 50px;
+}
+
+.logo {
+  margin-top: 5px;
+  margin-left: 5px;
+  margin-bottom: 5px;
+  height: 50px;
+}
+
+.navLeftHolder {
+  display: flex;
+  flex-direction: row;
+  justify-items: flex-start;
 }

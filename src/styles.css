@@ -4,6 +4,7 @@
   --light-shad-coords: 0px 2px 5px;
   --standard-panel-colour: rgba(238, 255, 230, 0.5);
   --rich-green: rgb(0, 151, 0);
+  --actual-panel-green: rgb(221, 255, 224);
 }
 
 body {

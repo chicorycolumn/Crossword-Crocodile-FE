@@ -1,0 +1,21 @@
+.basicContainer {
+  margin-left: auto;
+  margin-right: auto;
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  /* border: yellow solid 2pt; */
+}
+
+.basicText {
+  /* text-align: center; */
+}
+
+.basicImage {
+  margin-left: auto;
+  margin-right: auto;
+  height: 100px;
+  width: 125px;
+}

@@ -1,16 +1,51 @@
 <div class="navbar">
-  <p class="title">Crossword Crocodile</p>
-  <div class="button-holder">
-    <a routerLink="/learn">
+  <div class="navLeftHolder">
+    <img class="logo" src="../../assets/CrossCroc logo1.png" />
+    <img class="titleGraphic" src="../../assets/CrossCroc title1 iceberg.png" />
+  </div>
+
+  <div class="navRightHolder">
+    <!-- <a routerLink="/learn">
       <div class="nav-button">LEARN</div>
+    </a> -->
+
+    <a class="navButton" routerLink="/make">
+      <img
+        [src]="
+          currentUrl === '/make' || currentUrl === '/'
+            ? '../../assets/square1.png'
+            : '../../assets/square0.png'
+        "
+        class="navButtonImage"
+      />
+      <p class="navButtonText">Make</p>
     </a>
 
-    <a routerLink="/make">
-      <div class="nav-button">MAKE</div>
+    <a class="navButton" routerLink="/play">
+      <img
+        [src]="
+          currentUrl === '/play'
+            ? '../../assets/square2.png'
+            : '../../assets/square0.png'
+        "
+        class="navButtonImage"
+      />
+      <p class="navButtonText">Play</p>
     </a>
 
-    <a routerLink="/">
-      <div class="nav-button" style="color: grey;">PLAY</div>
+    <a
+      class="navButton"
+      [href]="'mailto:c.matus.contact@gmail.com?subject=Crossword Feedback'"
+    >
+      <img
+        [src]="
+          currentUrl === '/mail'
+            ? '../../assets/square3.png'
+            : '../../assets/square0.png'
+        "
+        class="navButtonImage"
+      />
+      <p class="navButtonText">Mail</p>
     </a>
   </div>
 </div>
