@@ -173,6 +173,8 @@ export function findModalLength(arr: string[]) {
 
 export const exampleResultsArray = [
   {
+    margin: 1,
+    marginUnset: true,
     summary: ['ABC', 'DEF', 'GHI', 'JKL'],
     grid: [
       ['1ac', ['seeds']],
@@ -188,6 +190,8 @@ export const exampleResultsArray = [
   },
 
   {
+    margin: 2,
+    marginUnset: true,
     summary: ['ABC', 'DEF', 'GHI', 'JKL'],
     grid: [
       ['1ac', ['seeds']],
@@ -203,10 +207,14 @@ export const exampleResultsArray = [
   },
 
   {
+    margin: 3,
+    marginUnset: true,
     summary: ['ABC', 'DEF', 'GHI', 'JKL', 'MNO'],
     grid: [['1ac', ['seeds']]],
   },
   {
+    margin: 1,
+    marginUnset: false,
     summary: ['AAA', 'BBB', 'CCC', 'DDD'],
     grid: [
       [
@@ -244,6 +252,8 @@ export const exampleResultsArray = [
     ],
   },
   {
+    margin: 1,
+    marginUnset: false,
     summary: ['NTD', 'SMC', 'LOS'],
     grid: [
       [
@@ -295,6 +305,8 @@ export const exampleResultsArray = [
     ],
   },
   {
+    margin: 1,
+    marginUnset: false,
     summary: ['XXX', 'YYY', 'ZZZ'],
     grid: [
       ['1ac', ['devil']],
@@ -404,3 +416,55 @@ export const asciiArt =
   "Thank you for using Crossword Crocodile!\n\n           .-._   _ _ _ _ _ _ _ _\n.-''-.__.-'00  '-' ' ' ' ' ' ' ' '-.\n'.___ '    .   .--_'-' '-' '-' _'-' '._\n V: V 'vv-'   '_   '.       .'  _..' '.'.\n   '=.____.=_.--'   :_.__.__:_   '.   : :\n           (((____.-'        '-.  /   : :\n                               (((-' .' /\n                            _____..'  .'\nart by Shanaka Dias        '-._____.-'\n\n\n" +
   '------------------------';
 +'\n';
+
+export const slidesData = [
+  {
+    id: 's0',
+    class: 'carouselItemA',
+    src: '../../assets/Crossword 5x5.png',
+    value: '5x5',
+    text: 'Six 5-letter words',
+    checked: true,
+  },
+  {
+    id: 's1',
+    class: 'carouselItemB',
+    src: '../../assets/Crossword 7x5.png',
+    value: '5x7',
+    text: 'Three 7-letter words\nFour 5-letter words',
+    checked: false,
+  },
+  {
+    id: 's2',
+    class: 'carouselItemC',
+    src: '../../assets/Crossword 9x5.png',
+    value: '5x9',
+    text: 'Eight 7-letter words',
+    checked: false,
+  },
+  {
+    id: 's3',
+    class: 'carouselItemOffRight',
+    src: '../../assets/Crossword 7x7.png',
+    value: '7x7',
+    text: 'Three 9-letter words\nFive 5-letter words',
+    checked: false,
+  },
+
+  {
+    id: 's4',
+    class: 'carouselItemHidden',
+    src: '../../assets/Crossword 9x7.png',
+    value: '7x9',
+    text: 'Four 9-letter words\nFive 7-letter words',
+    checked: false,
+  },
+  {
+    id: 's5',
+    class: 'carouselItemOffLeft',
+    src: '../../assets/Crossword 9x9.png',
+    value: '9x9',
+    text: 'Eight 9-letter words',
+    checked: false,
+  },
+];

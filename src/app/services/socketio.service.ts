@@ -18,8 +18,9 @@ export class SocketioService {
     socketIsReady,
     disconnectedByServer,
     shrinkTextIfOverflowing,
-    resultsMargin,
-    transparentResults
+    firstResultsAreIn,
+    transparentResults,
+    document
   ) {
     this.socket = socketIOClient(
       shouldEndpointBeHeroku
@@ -103,9 +104,10 @@ export class SocketioService {
       if (startButtonActive.value) {
         if (!results.array.length) {
           console.log('5555555555555555555');
-          shrinkTextIfOverflowing(resultsMargin, transparentResults);
+          shrinkTextIfOverflowing(transparentResults, results);
         }
-
+        data['result']['margin'] = 1;
+        data['result']['marginUnset'] = true;
         results.array.push(data['result']);
         console.log(data['result']);
       } else {

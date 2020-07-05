@@ -16,57 +16,7 @@ let DEV_timeOfBuild = 1831; // dev note
   styleUrls: ['./make.component.css'],
 })
 export class MakeComponent implements OnInit {
-  slidesData = [
-    {
-      id: 's0',
-      class: 'carouselItemA',
-      src: '../../assets/Crossword 5x5.png',
-      value: '5x5',
-      text: 'Six 5-letter words',
-      checked: true,
-    },
-    {
-      id: 's1',
-      class: 'carouselItemB',
-      src: '../../assets/Crossword 7x5.png',
-      value: '5x7',
-      text: 'Three 7-letter words\nFour 5-letter words',
-      checked: false,
-    },
-    {
-      id: 's2',
-      class: 'carouselItemC',
-      src: '../../assets/Crossword 9x5.png',
-      value: '5x9',
-      text: 'Eight 7-letter words',
-      checked: false,
-    },
-    {
-      id: 's3',
-      class: 'carouselItemOffRight',
-      src: '../../assets/Crossword 7x7.png',
-      value: '7x7',
-      text: 'Three 9-letter words\nFive 5-letter words',
-      checked: false,
-    },
-
-    {
-      id: 's4',
-      class: 'carouselItemHidden',
-      src: '../../assets/Crossword 9x7.png',
-      value: '7x9',
-      text: 'Four 9-letter words\nFive 7-letter words',
-      checked: false,
-    },
-    {
-      id: 's5',
-      class: 'carouselItemOffLeft',
-      src: '../../assets/Crossword 9x9.png',
-      value: '9x9',
-      text: 'Eight 9-letter words',
-      checked: false,
-    },
-  ];
+  slidesData = Util.slidesData;
 
   devButtonsShowing = { value: false };
   disconnectedByServer = { value: false };
@@ -111,6 +61,12 @@ export class MakeComponent implements OnInit {
   ngOnInit(): void {
     this.startButtonActive.value = false; //delete?
     this.serverIsIndeedWorking.value = false; //delete?
+    document.addEventListener('keydown', (e) => {
+      this.keydownEvent(e, this.results, this.selectedElements);
+    });
+    document.getElementById('box4').addEventListener('wheel', (e) => {
+      this.wheelEvent(e, this.results);
+    });
 
     setTimeout(this.checkIfFlexWrap, 0);
     if (!DEV_deactivateSocket) {
@@ -122,8 +78,9 @@ export class MakeComponent implements OnInit {
         this.socketIsReady,
         this.disconnectedByServer,
         this.shrinkTextIfOverflowing,
-        this.resultsMargin,
-        this.transparentResults
+        this.firstResultsAreIn,
+        this.transparentResults,
+        document
       );
     }
   }
@@ -185,8 +142,9 @@ export class MakeComponent implements OnInit {
         this.socketIsReady,
         this.disconnectedByServer,
         this.shrinkTextIfOverflowing,
-        this.resultsMargin,
-        this.transparentResults
+        this.firstResultsAreIn,
+        this.transparentResults,
+        document
       );
       this.DEV_socketUsingLocal.value = true;
     }
@@ -250,7 +208,7 @@ export class MakeComponent implements OnInit {
     );
   }
 
-  shrinkTextIfOverflowing(resultsMargin, transparentResults) {
+  shrinkTextIfOverflowing(transparentResults, results) {
     transparentResults.value = true;
 
     const isOverflown = (element) => {
@@ -264,15 +222,18 @@ export class MakeComponent implements OnInit {
 
     setTimeout(() => {
       if (isOverflown(document.getElementById('resultLeftieInner1'))) {
-        resultsMargin.value = 2;
+        results.array[results.index].margin = 2;
+        results.array[results.index].marginUnset = false;
 
         setTimeout(() => {
           if (isOverflown(document.getElementById('resultLeftieInner1'))) {
-            resultsMargin.value = 3;
+            results.array[results.index].margin = 3;
+            results.array[results.index].marginUnset = false;
 
             setTimeout(() => {
               if (isOverflown(document.getElementById('resultLeftieInner1'))) {
-                resultsMargin.value = 4;
+                results.array[results.index].margin = 4;
+                results.array[results.index].marginUnset = false;
               }
             }, timeout);
           }
@@ -280,7 +241,8 @@ export class MakeComponent implements OnInit {
 
         transparentResults.value = false;
       } else {
-        resultsMargin.value = 1;
+        results.array[results.index].margin = 1;
+        results.array[results.index].marginUnset = false;
         transparentResults.value = false;
       }
     }, timeout);
@@ -288,17 +250,22 @@ export class MakeComponent implements OnInit {
 
   changeResultsIndex(direction) {
     if (this.results.array.length) {
-      this.resultsMargin.value = 1;
+      // this.resultsMargin.value = 1;
 
       if (direction === 'up' && this.results.index > 0) {
         this.results.index--;
+        if (this.results.array[this.results.index].marginUnset) {
+          this.shrinkTextIfOverflowing(this.transparentResults, this.results);
+        }
       } else if (
         direction === 'down' &&
         this.results.index < this.results.array.length - 1
       ) {
         this.results.index++;
+        if (this.results.array[this.results.index].marginUnset) {
+          this.shrinkTextIfOverflowing(this.transparentResults, this.results);
+        }
       }
-      this.shrinkTextIfOverflowing(this.resultsMargin, this.transparentResults);
     }
   }
 
@@ -343,10 +310,8 @@ export class MakeComponent implements OnInit {
     this.selectedElements[id] = mouse;
   }
 
-  socketEmit() {
-    this.disconnectedByServer.value = false;
-
-    document.getElementById('box4').addEventListener('wheel', (e) => {
+  wheelEvent(e, results) {
+    if (results.array.length) {
       e.preventDefault();
       console.log(e.deltaY);
 
@@ -355,20 +320,24 @@ export class MakeComponent implements OnInit {
       } else if (e.deltaY > 0) {
         this.changeResultsIndex('down');
       }
-    });
+    }
+  }
 
-    document.addEventListener('keydown', (e) => {
-      console.log(document.getElementById('box4'));
-
-      if (this.selectedElements['box4']) {
-        e.preventDefault();
-        if (e.charCode == 38 || e.keyCode == 38) {
-          this.changeResultsIndex('up');
-        } else if (e.charCode == 40 || e.keyCode == 40) {
-          this.changeResultsIndex('down');
-        }
+  keydownEvent(e, results, selectedElements) {
+    if (results.array.length && selectedElements['box4']) {
+      e.preventDefault();
+      if (e.charCode == 38 || e.keyCode == 38) {
+        this.changeResultsIndex('up');
+      } else if (e.charCode == 40 || e.keyCode == 40) {
+        this.changeResultsIndex('down');
       }
-    });
+    }
+  }
+
+  firstResultsAreIn(document) {}
+
+  socketEmit() {
+    this.disconnectedByServer.value = false;
 
     console.log(
       'MCT EMIT says serverIsIndeedWorking.value is',
@@ -376,6 +345,8 @@ export class MakeComponent implements OnInit {
       'and startButtonActive.value is',
       this.startButtonActive.value
     );
+
+    // document.removeEventListener('keydown');
 
     Util.socketEmit(
       this.helpDisplay,

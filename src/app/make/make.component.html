@@ -270,11 +270,14 @@
       </div>
     </div>
 
-    <div class="box box4" id="box4">
+    <div
+      class="box box4"
+      id="box4"
+      (mouseover)="makeElementSelected('box4', true)"
+      (mouseout)="makeElementSelected('box4', false)"
+    >
       <div class="resultLeftie">
         <div
-          (mouseover)="makeElementSelected('box4', true)"
-          (mouseout)="makeElementSelected('box4', false)"
           *ngIf="results.array.length"
           class="resultLeftieInner1"
           id="resultLeftieInner1"
@@ -285,7 +288,7 @@
           <div
             *ngFor="let coordArr of results.array[results.index].grid"
             class="hor"
-            ngClass="{{ 'horMargin' + resultsMargin.value }}"
+            ngClass="{{ 'horMargin' + results.array[results.index].margin }}"
           >
             <p class="coordName">{{ coordArr[0] | formatCoord }}</p>
             <p class="coordWords">{{ coordArr[1] | spaceArray }}</p>
