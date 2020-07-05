@@ -252,26 +252,26 @@
 .horMargin1 {
   margin-top: 5px;
   margin-bottom: 10px;
-  background-color: greenyellow;
+  /* background-color: greenyellow; */
 }
 
 .horMargin2 {
   margin-top: 2.5px;
   margin-bottom: 5px;
-  background-color: yellow;
+  /* background-color: yellow; */
 }
 
 .horMargin3 {
   margin-top: 1px;
   margin-bottom: 2px;
-  background-color: red;
+  /* background-color: red; */
 }
 
 .horMargin4 {
   margin-top: 1px;
   margin-bottom: 2px;
   font-size: 15px;
-  background-color: blue;
+  /* background-color: blue; */
 }
 
 .coordName {
