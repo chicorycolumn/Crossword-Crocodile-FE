@@ -10,13 +10,6 @@
   box-shadow: rgba(0, 0, 0, 0.25) 0px 5px 5px;
 }
 
-.title {
-  font-weight: bold;
-  font-size: 36px;
-  color: white;
-  margin: 0px;
-}
-
 .navRightHolder {
   display: flex;
   flex-direction: row;
@@ -24,7 +17,6 @@
   /* border: black dotted 2pt; */
   width: 250px;
   /* border: yellow solid 1pt; */
-
   height: 60px;
 }
 
@@ -69,4 +61,33 @@
   display: flex;
   flex-direction: row;
   justify-items: flex-start;
+}
+
+@media only screen and (min-device-width: 320px) and (max-device-width: 568px) {
+  .titleGraphic {
+    height: 35px;
+    background-color: black;
+  }
+  .logo {
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-right: 5px;
+    height: 30px;
+  }
+
+  .navRightHolder {
+    width: 200px;
+  }
+  .navButtonImage {
+    height: 20px;
+    width: 20px;
+  }
+  .navbar {
+    height: 50px;
+  }
+  .navButton {
+    height: 50px;
+    margin-top: 2px;
+    /* border: blue solid 1pt; */
+  }
 }

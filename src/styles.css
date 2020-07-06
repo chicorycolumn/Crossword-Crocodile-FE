@@ -45,3 +45,6 @@ textarea {
   font-size: 14px;
   font-family: "Courier New", Courier, monospace;
 }
+
+@media only screen and (min-device-width: 320px) and (max-device-width: 568px) {
+}

@@ -483,6 +483,8 @@
   top: -208px;
   width: 440px;
   height: 208px;
+  /* margin: yellow solid 1pt; */
+  /* background-color: fuchsia; */
 }
 
 .crocSep {
@@ -493,11 +495,11 @@
 }
 
 .crocSepL {
-  margin-left: -512px;
+  margin-left: -490.5px;
 }
 
 .crocSepR {
-  margin-left: 425px;
+  margin-left: 440.5px;
 }
 
 .tinyIcon {
@@ -567,6 +569,10 @@
   position: absolute;
   /* border-radius: 50px; */
   background-color: rgba(0, 0, 0, 0.01);
+}
+
+.slide:hover {
+  background-color: rgba(0, 189, 9, 0.1);
 }
 
 /* #s0,
@@ -685,4 +691,42 @@
 .slidePrev:hover,
 .slideNext:hover {
   background-color: var(--green-shad);
+}
+
+/* ipad
+@media only screen and (min-device-width: 568px) and (max-device-width: 1024px) {
+  .box {
+    background-color: fuchsia;
+  }
+} */
+
+/* phone */
+@media only screen and (min-device-width: 320px) and (max-device-width: 568px) {
+  .box {
+    /* background-color: cyan; */
+  }
+
+  .grid {
+    width: 450px;
+  }
+
+  .main {
+    width: 450px;
+  }
+
+  .boxLayerB {
+    /* display: none; */
+  }
+
+  .crocSepL {
+    margin-left: -435.5px;
+  }
+
+  .crocSepR {
+    margin-left: 415.5px;
+  }
+
+  .inputBoxDesi {
+    width: 360px;
+  }
 }
