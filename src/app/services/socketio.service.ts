@@ -41,13 +41,13 @@ export class SocketioService {
         'HEY LAD DISCONNECT OCCURRED',
         Date.now() / 1000 - 1593360000
       );
+      if (startButtonActive.value) {
+        disconnectedByServer.value = true;
+      }
       this.turnOffButtons();
       this.stop(
         "A foreign disconnection happened, thus client requests disconnect so we're all on the same page."
       );
-      if (startButtonActive.value) {
-        disconnectedByServer.value = true;
-      }
     });
 
     this.socket.on('message', (data) => {

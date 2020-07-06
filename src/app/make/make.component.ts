@@ -17,7 +17,7 @@ let DEV_timeOfBuild = 1201; // dev note
 })
 export class MakeComponent implements OnInit {
   slidesData = Util.slidesData;
-
+  isMobile = false;
   devButtonsShowing = { value: false };
   disconnectedByServer = { value: false };
   transparentResults = { value: false };
@@ -61,6 +61,11 @@ export class MakeComponent implements OnInit {
   ngOnInit(): void {
     this.startButtonActive.value = false; //delete?
     this.serverIsIndeedWorking.value = false; //delete?
+
+    this.slidesData.forEach((slideObj) => {
+      slideObj.checked = slideObj.value === '5x5';
+    });
+
     document.addEventListener('keydown', (e) => {
       this.keydownEvent(e, this.results, this.selectedElements);
     });
@@ -68,42 +73,24 @@ export class MakeComponent implements OnInit {
       this.wheelEvent(e, this.results);
     });
 
-    let body = document.getElementById('body');
-    // console.log(el);
-
-    // console.log('********************');
-    // let isMobile = window.matchMedia('only screen and (max-width: 568px)')
-    //   .matches;
-    // console.log(isMobile);
-    // console.log('********************');
-    // if (isMobile) {
-    //   document.body.style.zoom = '0.6';
-    // }
-
-    // [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000].forEach((maxWidth) => {
-    //   console.log(
-    //     maxWidth,
-    //     window.matchMedia(`only screen and (max-width: ${maxWidth}px)`).matches
-    //   );
-    // });
-    if (window.matchMedia(`only screen and (max-width: 500px)`).matches) {
-      document.body.style.zoom = '0.6';
+    let mobileWidth = 450;
+    if (
+      window.matchMedia(`only screen and (max-width: ${mobileWidth}px)`).matches
+    ) {
+      this.isMobile = true;
     }
-    // if (window.matchMedia(`only screen and (max-width: 400px)`).matches) {
-    //   document.body.style.zoom = '0.8';
-    // }
-    console.log('############', document.body.style.zoom);
 
-    // while (
-    //   body.scrollWidth > body.clientWidth &&
-    //   parseInt(document.body.style.zoom) > 0.5
-    // ) {
-    //   console.log(`was ${document.body.style.zoom}`);
-    //   document.body.style.zoom = (
-    //     parseInt(document.body.style.zoom) - 0.1
-    //   ).toString();
-    //   console.log(`now ${document.body.style.zoom}`);
-    // }
+    const zoomRef = { 320: '0.6', 375: '0.65', 420: '0.75' };
+    Object.keys(zoomRef)
+      .sort((a, b) => +b - +a)
+      .forEach((maxWidth) => {
+        if (
+          window.matchMedia(`only screen and (max-width: ${maxWidth}px)`)
+            .matches
+        ) {
+          document.body.style.zoom = zoomRef[maxWidth];
+        }
+      });
 
     setTimeout(this.checkIfFlexWrap, 0);
     if (!DEV_deactivateSocket) {
@@ -152,7 +139,7 @@ export class MakeComponent implements OnInit {
 
   exitErrorBubble(key) {
     this.helpDisplay[key].show = false;
-    // this.helpDisplay.current = null;
+    this.helpDisplay.current = null;
   }
 
   devEvent() {
@@ -337,18 +324,28 @@ export class MakeComponent implements OnInit {
   }
 
   showDevButtons() {
-    if (this.makeCrosswordForm.value['bann'] === 'ved') {
-      this.devButtonsShowing.value = true;
-      this.makeCrosswordForm.controls['bann'].setValue('');
+    if (this.devButtonsShowing.value) {
+      this.devButtonsShowing.value = false;
+    } else {
+      if (this.makeCrosswordForm.value['bann'] === 'ved') {
+        this.devButtonsShowing.value = true;
+      }
     }
   }
 
-  makeElementSelected(id, mouse) {
-    this.selectedElements[id] = mouse;
+  makeElementSelected(id, bool) {
+    if (bool && /crocSep/.test(id) && !this.selectedElements[id]) {
+      setTimeout(() => {
+        this.selectedElements[id] = true;
+      }, 750);
+      setTimeout(() => {
+        this.selectedElements[id] = false;
+      }, 1250);
+    } else this.selectedElements[id] = bool;
   }
 
   wheelEvent(e, results) {
-    if (results.array.length) {
+    if (results.array.length && this.selectedElements['resultRightie']) {
       e.preventDefault();
       console.log(e.deltaY);
 
@@ -361,7 +358,19 @@ export class MakeComponent implements OnInit {
   }
 
   keydownEvent(e, results, selectedElements) {
-    if (results.array.length && selectedElements['box4']) {
+    if (selectedElements['box1']) {
+      if (e.charCode == 37 || e.keyCode == 37) {
+        e.preventDefault();
+        let el = document.getElementById('slidePrev');
+        el.click();
+      } else if (e.charCode == 49 || e.keyCode == 39) {
+        e.preventDefault();
+        let el = document.getElementById('slideNext');
+        el.click();
+      }
+    }
+
+    if (results.array.length && selectedElements['resultRightie']) {
       e.preventDefault();
       if (e.charCode == 38 || e.keyCode == 38) {
         this.changeResultsIndex('up');

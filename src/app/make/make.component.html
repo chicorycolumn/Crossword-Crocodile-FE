@@ -41,7 +41,13 @@
     </button>
   </div>
   <form class="grid" [formGroup]="makeCrosswordForm" (ngSubmit)="devEvent()">
-    <div *ngIf="!DEV_onlyShowResultBox" class="box box1" id="box1">
+    <div
+      *ngIf="!DEV_onlyShowResultBox"
+      class="box box1"
+      id="box1"
+      (mouseover)="makeElementSelected('box1', true)"
+      (mouseout)="makeElementSelected('box1', false)"
+    >
       <div class="tag hiddenTag">required</div>
 
       <div class="boxLayerA" [class.veiled]="false">
@@ -72,7 +78,7 @@
                     <img
                       class="slideImage"
                       [class.grayedOut]="!slideData.checked"
-                      src="{{ slideData.src }}"
+                      src="{{ isMobile ? slideData.srcMobile : slideData.src }}"
                     />
                   </div>
                   <p
@@ -86,21 +92,30 @@
             </div>
           </div>
 
-          <a class="slidePrev" (click)="rotateCarousel(1)">
+          <a class="slidePrev" id="slidePrev" (click)="rotateCarousel(1)">
             &#10094;
           </a>
-          <a class="slideNext" (click)="rotateCarousel(0)">&#10095;</a>
+          <a class="slideNext" id="slideNext" (click)="rotateCarousel(0)"
+            >&#10095;</a
+          >
           <br />
         </form>
       </div>
 
       <div class="boxLayerB">
-        <!-- <img
-          class="crocSep crocSepL blur crocSepLarger"
-          src="../../assets/croc face2.png"
-        /> -->
-
-        <img class="crocSep crocSepL" src="../../assets/croc face.png" />
+        <img
+          class="crocSep crocSepL"
+          (mouseover)="makeElementSelected('crocSep1', true)"
+          (mouseout)="makeElementSelected('crocSep1', false)"
+          id="crocSep1"
+          src="{{
+            helpDisplay[helpDisplay.current].id === 'box1'
+              ? '../../assets/croc face mouthopen.png'
+              : selectedElements['crocSep1']
+              ? '../../assets/croc face cute.png'
+              : '../../assets/croc face.png'
+          }}"
+        />
       </div>
 
       <div class="boxLayerC" *ngIf="false"></div>
@@ -111,7 +126,7 @@
 
       <div
         class="boxLayerA"
-        [class.veiled]="helpDisplay.MandLeng.show || helpDisplay.MandPoss.show"
+        [class.veiled]="helpDisplay[helpDisplay.current].id === 'box2'"
       >
         <p class="boxTitle boxTitleB">
           Mandatory or Forbidden Words
@@ -120,7 +135,7 @@
         <div class="insideBoxTwo">
           <label>
             <p>
-              Each grid must include:
+              Each grid includes:
             </p>
             <textarea
               class="inputBox inputBoxMand"
@@ -131,7 +146,7 @@
           </label>
           <label>
             <p>
-              Each grid must exclude:
+              Each grid excludes:
             </p>
             <textarea
               class="inputBox inputBoxForb"
@@ -144,25 +159,33 @@
         <br />
         Separate your words with a space.
         <br />
-        <br />
-        Best results with no more than three mandatory words.
+        Ideally put no more than three mandatory words.
       </div>
 
       <div class="boxLayerB">
         <img
           (click)="showDevButtons()"
           class="crocSep crocSepR flipHorizontal"
-          src="../../assets/croc face.png"
+          (mouseover)="makeElementSelected('crocSep2', true)"
+          (mouseout)="makeElementSelected('crocSep2', false)"
+          id="crocSep2"
+          src="{{
+            helpDisplay[helpDisplay.current].id === 'box2'
+              ? '../../assets/croc face mouthopen.png'
+              : selectedElements['crocSep2']
+              ? '../../assets/croc face cute.png'
+              : '../../assets/croc face.png'
+          }}"
         />
       </div>
 
       <div
         class="boxLayerC"
-        *ngIf="helpDisplay.MandLeng.show || helpDisplay.MandPoss.show"
+        *ngIf="helpDisplay[helpDisplay.current].id === 'box2'"
       >
         <img
           class="speechBubble flipHorizontal"
-          src="../../assets/speech_bubble3.png"
+          src="../../assets/speech_bubble7.png"
         />
         <div
           class="speechBubbleTextbox"
@@ -180,18 +203,14 @@
 
       <div
         class="boxLayerA"
-        [class.veiled]="
-          helpDisplay.DesiLeng.show ||
-          helpDisplay.DesiThre.show ||
-          helpDisplay.DesiQuot.show
-        "
+        [class.veiled]="helpDisplay[helpDisplay.current].id === 'box3'"
       >
         <p class="boxTitle boxTitleC">Desirable Words</p>
 
-        <p>
-          Say, a large bank of words you've already made clues for.
+        <p class="desiInstructionsText">
+          Say, a large bank you've already made clues for.
           <br />
-          Best results when minimum isn't set higher than three.
+          Ideally set the minimum no higher than three.
         </p>
         <textarea
           formControlName="desi"
@@ -211,9 +230,7 @@
               (click)="updateDesiPlaceholderText('space')"
               (click)="formChanged()"
             />
-            <label for="space" class="desiDetectLabel">
-              Detect words by space</label
-            >
+            <label for="space" class="desiDetectLabel"> Detect by space</label>
           </div>
           <div>
             <input
@@ -226,7 +243,7 @@
               (click)="formChanged()"
             />
             <label for="marks" class="desiDetectLabel">
-              Detect words by speechmarks</label
+              Detect by speechmarks</label
             >
           </div>
         </div>
@@ -252,18 +269,26 @@
       </div>
 
       <div class="boxLayerB">
-        <img class="crocSep crocSepL" src="../../assets/croc face.png" />
+        <img
+          class="crocSep crocSepL"
+          (mouseover)="makeElementSelected('crocSep3', true)"
+          (mouseout)="makeElementSelected('crocSep3', false)"
+          id="crocSep3"
+          src="{{
+            helpDisplay[helpDisplay.current].id === 'box3'
+              ? '../../assets/croc face mouthopen.png'
+              : selectedElements['crocSep3']
+              ? '../../assets/croc face cute.png'
+              : '../../assets/croc face.png'
+          }}"
+        />
       </div>
 
       <div
         class="boxLayerC"
-        *ngIf="
-          helpDisplay.DesiLeng.show ||
-          helpDisplay.DesiThre.show ||
-          helpDisplay.DesiQuot.show
-        "
+        *ngIf="helpDisplay[helpDisplay.current].id === 'box3'"
       >
-        <img class="speechBubble" src="../../assets/speech_bubble3.png" />
+        <img class="speechBubble" src="../../assets/speech_bubble7.png" />
         <div
           class="speechBubbleTextbox"
           (click)="exitErrorBubble(helpDisplay.current)"
@@ -275,13 +300,14 @@
       </div>
     </div>
 
-    <div
-      class="box box4"
-      id="box4"
-      (mouseover)="makeElementSelected('box4', true)"
-      (mouseout)="makeElementSelected('box4', false)"
-    >
+    <div class="box box4" id="box4">
       <div class="resultLeftie">
+        <img
+          class="fadedLogo"
+          *ngIf="!results.array.length"
+          src="../../assets/CrossCroc logo1.png"
+        />
+
         <div
           *ngIf="results.array.length"
           class="resultLeftieInner1"
@@ -294,6 +320,18 @@
             *ngFor="let coordArr of results.array[results.index].grid"
             class="hor"
             ngClass="{{ 'horMargin' + results.array[results.index].margin }}"
+            [style.backgroundColor]="
+              devButtonsShowing.value &&
+              (results.array[results.index].margin === 1
+                ? 'greenyellow'
+                : results.array[results.index].margin === 2
+                ? 'yellow'
+                : results.array[results.index].margin === 3
+                ? 'red'
+                : results.array[results.index].margin === 4
+                ? 'blue'
+                : 'white')
+            "
           >
             <p class="coordName">{{ coordArr[0] | formatCoord }}</p>
             <p class="coordWords">{{ coordArr[1] | spaceArray }}</p>
@@ -301,7 +339,10 @@
         </div>
       </div>
       <div
+        (mouseover)="makeElementSelected('resultRightie', true)"
+        (mouseout)="makeElementSelected('resultRightie', false)"
         class="resultRightie"
+        id="resultRightie"
         [class.resultRightieActive]="serverIsIndeedWorking.value"
       >
         <button
@@ -403,7 +444,11 @@
         </div>
       </div>
 
-      <div class="resultScroll">
+      <div
+        class="resultScroll"
+        (mouseover)="makeElementSelected('resultRightie', true)"
+        (mouseout)="makeElementSelected('resultRightie', false)"
+      >
         <button
           type="button"
           class="scrollButton scrollUp"

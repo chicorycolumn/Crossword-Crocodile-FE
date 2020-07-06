@@ -1,6 +1,15 @@
 <div class="navbar">
   <div class="navLeftHolder">
-    <img class="logo" src="../../assets/CrossCroc logo1.png" />
+    <img
+      (mouseover)="makeElementSelected('logo', true)"
+      (mouseout)="makeElementSelected('logo', false)"
+      class="logo"
+      src="{{
+        logoRotate.value
+          ? '../../assets/CrossCroc logo1.png'
+          : '../../assets/CrossCroc logo1 reverse.png'
+      }}"
+    />
     <img class="titleGraphic" src="../../assets/CrossCroc title1 iceberg.png" />
   </div>
 

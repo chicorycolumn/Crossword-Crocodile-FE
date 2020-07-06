@@ -12,6 +12,8 @@ export class NavbarComponent implements OnInit {
   // currentPage = Router.url;
 
   currentUrl = '/make';
+  logoRotate = { value: true };
+  selectedElements = {};
 
   ngOnInit(): void {
     this.router.events.subscribe((val) => {
@@ -23,5 +25,16 @@ export class NavbarComponent implements OnInit {
     setTimeout(() => {
       this.currentUrl = this.router.url;
     }, 1);
+  }
+
+  makeElementSelected(id, bool) {
+    this.selectedElements[id] = bool;
+
+    if (this.selectedElements['logo']) {
+      this.logoRotate.value = false;
+      setTimeout(() => {
+        this.logoRotate.value = true;
+      }, 500);
+    }
   }
 }

@@ -110,7 +110,7 @@
   /* border: grey dotted 1pt; */
   height: 100%;
   width: 100%;
-  /* background-color: rgba(255, 10, 10, 0.8); */
+  /* background-color: red; */
 }
 
 .tag {
@@ -132,6 +132,7 @@
   overflow: auto;
   resize: none;
   height: 42.5px;
+  font-size: 15px;
 }
 
 .threshInputBox {
@@ -252,26 +253,22 @@
 .horMargin1 {
   margin-top: 5px;
   margin-bottom: 10px;
-  /* background-color: greenyellow; */
 }
 
 .horMargin2 {
   margin-top: 2.5px;
   margin-bottom: 5px;
-  /* background-color: yellow; */
 }
 
 .horMargin3 {
   margin-top: 1px;
   margin-bottom: 2px;
-  /* background-color: red; */
 }
 
 .horMargin4 {
   margin-top: 1px;
   margin-bottom: 2px;
   font-size: 15px;
-  /* background-color: blue; */
 }
 
 .coordName {
@@ -456,7 +453,7 @@
 }
 
 .speechBubbleTextbox:hover {
-  color: red;
+  color: green;
 }
 
 .speechBubbleTextbox {
@@ -630,21 +627,26 @@
   height: 75px; */
   filter: none;
   z-index: 0;
-  /* margin-top: 10px; */
+  /* margin-top: 25px; */
   margin-left: auto;
   margin-right: auto;
+  margin-top: auto;
+  margin-bottom: auto;
 }
 
 .gridImageHolder {
-  margin-top: 25px;
-  /* border: white dotted 2pt; */
-  height: 65px;
-  max-height: 80px;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  /* margin-top: 0px; */
+  /* border: white dotted 2pt; */
+  height: 60%;
+  /* max-height: 80px; */
+  /* display: flex;
+  flex-direction: column;
+  justify-content: center;
   align-content: center;
-  text-align: center;
+  text-align: center; */
 }
 
 .grayedOut {
@@ -693,6 +695,14 @@
   background-color: var(--green-shad);
 }
 
+.fadedLogo {
+  height: 100px;
+  opacity: 0.025;
+  filter: blur(0.5px);
+  margin-top: 50px;
+  margin-left: 25px;
+}
+
 /* ipad
 @media only screen and (min-device-width: 568px) and (max-device-width: 1024px) {
   .box {
@@ -733,5 +743,40 @@
 
   .inputBoxDesi {
     width: 360px;
+  }
+
+  .inputBox {
+    font-size: 17px;
+  }
+
+  .box2,
+  .box3 {
+    font-size: 19px;
+  }
+
+  .desiDetectLabel {
+    font-size: 17px;
+  }
+
+  .boxTitle {
+    font-size: 22px;
+  }
+
+  .includeAtLeast_text {
+    font-size: 19px;
+  }
+
+  .desiInstructionsText {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
+  .threshInputBox {
+    height: 25px;
+    width: 25px;
+    font-size: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
+    text-align: center;
   }
 }
