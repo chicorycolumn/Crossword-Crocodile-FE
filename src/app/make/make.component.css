@@ -703,7 +703,8 @@
 /* phone */
 @media only screen and (min-device-width: 320px) and (max-device-width: 568px) {
   .box {
-    /* background-color: cyan; */
+    /* width: 400px;
+    min-width: 400px; */
   }
 
   .grid {
@@ -718,12 +719,16 @@
     /* display: none; */
   }
 
+  .crocSep {
+    opacity: 0.5;
+  }
+
   .crocSepL {
     margin-left: -435.5px;
   }
 
   .crocSepR {
-    margin-left: 415.5px;
+    margin-left: 412px;
   }
 
   .inputBoxDesi {

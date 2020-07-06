@@ -68,6 +68,43 @@ export class MakeComponent implements OnInit {
       this.wheelEvent(e, this.results);
     });
 
+    let body = document.getElementById('body');
+    // console.log(el);
+
+    // console.log('********************');
+    // let isMobile = window.matchMedia('only screen and (max-width: 568px)')
+    //   .matches;
+    // console.log(isMobile);
+    // console.log('********************');
+    // if (isMobile) {
+    //   document.body.style.zoom = '0.6';
+    // }
+
+    // [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000].forEach((maxWidth) => {
+    //   console.log(
+    //     maxWidth,
+    //     window.matchMedia(`only screen and (max-width: ${maxWidth}px)`).matches
+    //   );
+    // });
+    if (window.matchMedia(`only screen and (max-width: 500px)`).matches) {
+      document.body.style.zoom = '0.6';
+    }
+    // if (window.matchMedia(`only screen and (max-width: 400px)`).matches) {
+    //   document.body.style.zoom = '0.8';
+    // }
+    console.log('############', document.body.style.zoom);
+
+    // while (
+    //   body.scrollWidth > body.clientWidth &&
+    //   parseInt(document.body.style.zoom) > 0.5
+    // ) {
+    //   console.log(`was ${document.body.style.zoom}`);
+    //   document.body.style.zoom = (
+    //     parseInt(document.body.style.zoom) - 0.1
+    //   ).toString();
+    //   console.log(`now ${document.body.style.zoom}`);
+    // }
+
     setTimeout(this.checkIfFlexWrap, 0);
     if (!DEV_deactivateSocket) {
       this.socketService.setupSocketConnection(
