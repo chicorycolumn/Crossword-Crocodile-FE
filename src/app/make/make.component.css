@@ -780,4 +780,14 @@
     margin-right: 10px;
     text-align: center;
   }
+
+  .resultRightie {
+    width: 165px;
+  }
+  .resultScroll {
+    width: 85px;
+  }
+  .scrollButton {
+    width: 75px;
+  }
 }
