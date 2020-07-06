@@ -8,7 +8,7 @@ let DEV_allToTrue = 0; // dev switch
 let DEV_deactivateSocket = 0; // dev switch
 let DEV_onlyShowResultBox = 0; // dev switch
 let DEV_padWithExampleResults = 0; // dev switch
-let DEV_timeOfBuild = 1201; // dev note
+let DEV_timeOfBuild = '6/7'; // dev note
 
 @Component({
   selector: 'app-make',

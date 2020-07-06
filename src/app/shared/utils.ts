@@ -361,7 +361,7 @@ export let helpDisplay = {
   DesiThre: {
     id: 'box3',
     show: false,
-    text: 'Your required number of desired words has been set too high.',
+    text: 'Your minimum number of desired words has been set too high.',
   },
   DesiQuot: {
     id: 'box3',
