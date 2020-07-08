@@ -39,6 +39,18 @@
     >
       SOCKET STOP
     </button>
+    <button
+      (click)="changeFruit()"
+      style="position: fixed; z-index: 5; margin-top: 50px;"
+    >
+      CHANGE FRUIT
+    </button>
+    <button
+      (click)="checkFruit()"
+      style="position: fixed; z-index: 5; margin-top: 70px;"
+    >
+      CHECK FRUIT
+    </button>
   </div>
   <form class="grid" [formGroup]="makeCrosswordForm" (ngSubmit)="devEvent()">
     <div

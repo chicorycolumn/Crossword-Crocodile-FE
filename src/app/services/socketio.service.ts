@@ -130,6 +130,14 @@ export class SocketioService {
     }
   }
 
+  changeFruit(fruit) {
+    this.socket.emit('change fruit', { fruit: fruit });
+  }
+
+  checkFruit() {
+    this.socket.emit('check fruit', {});
+  }
+
   stop(message) {
     console.log(
       'gonna ask to stop for this reason: ',

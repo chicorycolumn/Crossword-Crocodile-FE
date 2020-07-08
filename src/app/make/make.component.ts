@@ -8,7 +8,7 @@ let DEV_allToTrue = 0; // dev switch
 let DEV_deactivateSocket = 0; // dev switch
 let DEV_onlyShowResultBox = 0; // dev switch
 let DEV_padWithExampleResults = 0; // dev switch
-let DEV_timeOfBuild = '6/7'; // dev note
+let DEV_timeOfBuild = '814'; // dev note
 
 @Component({
   selector: 'app-make',
@@ -297,6 +297,15 @@ export class MakeComponent implements OnInit {
     helpDisplay[code].show = true;
     helpDisplay.current = code;
     slideToElement(helpDisplay[code].id);
+  }
+
+  changeFruit() {
+    console.log(this.makeCrosswordForm.value['bann']);
+    this.socketService.changeFruit(this.makeCrosswordForm.value['bann']);
+  }
+
+  checkFruit() {
+    this.socketService.checkFruit();
   }
 
   socketStop() {
