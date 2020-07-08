@@ -50,7 +50,7 @@ export class SocketioService {
       );
     });
 
-    this.socket.on('message', (data) => {
+    this.socket.on('server sent message', (data) => {
       console.log('Server sent ', data, Date.now() / 1000 - 1593360000);
     });
 
@@ -154,7 +154,7 @@ export class SocketioService {
 
   message() {
     console.log('gonna message', Date.now() / 1000 - 1593360000);
-    this.socket.emit('message', {
+    this.socket.emit('client sent message', {
       message: 'I am the client, I am trying to connect to server.',
     });
   }
