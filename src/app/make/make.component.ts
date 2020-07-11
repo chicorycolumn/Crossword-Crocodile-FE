@@ -174,6 +174,9 @@ export class MakeComponent implements OnInit {
 
   clearInputBox(id) {
     this.makeCrosswordForm.controls[id].setValue('');
+    if (id === 'desi') {
+      this.makeCrosswordForm.controls['threshold'].setValue(0);
+    }
   }
 
   plusSlides(direction) {}
