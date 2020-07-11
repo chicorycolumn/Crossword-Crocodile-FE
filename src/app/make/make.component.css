@@ -44,7 +44,7 @@
   min-height: 270px;
   min-width: 440px;
   max-width: 440px;
-  margin-top: 50px;
+  margin-top: 45px;
   margin-right: 20px;
   margin-left: 20px;
   text-align: center;
@@ -145,7 +145,7 @@
 }
 
 .inputBox {
-  width: 390px;
+  width: 380px;
   overflow: auto;
   resize: none;
   height: 42.5px;
@@ -557,10 +557,62 @@
   justify-content: space-between;
 }
 
+.clearButton {
+  opacity: 0.5;
+  background-color: white;
+  border: none;
+  margin: 0px;
+  writing-mode: vertical-lr;
+  text-orientation: upright;
+  font-size: 9px;
+  overflow: hidden;
+  position: relative;
+  height: 47.5px;
+  max-height: 47.5px;
+  border: grey solid 0.5px;
+  border-left: none;
+  margin-top: 0px;
+  width: 10px;
+  padding-left: 6px;
+  padding-right: 6px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.clearButton:hover {
+  background-color: gainsboro;
+}
+
+.clearButton:active {
+  background-color: var(--green-shad);
+}
+
+.clearButton2 {
+  padding: 0px;
+  margin: 0px;
+  width: 10px;
+  height: 48.5px;
+  border-radius: 0px 5px 5px 0px;
+  background-color: palevioletred;
+  border-top: rgb(255, 185, 208) solid 2px;
+  border-left: rgb(255, 185, 208) solid 2px;
+  border-right: rgb(175, 59, 97) solid 2px;
+  border-bottom: rgb(175, 59, 97) solid 2px;
+  position: absolute;
+}
+
+.clearButton2:active {
+  background-color: palevioletred;
+  border-right: rgb(255, 185, 208) solid 2px;
+  border-bottom: rgb(255, 185, 208) solid 2px;
+  border-left: rgb(175, 59, 97) solid 2px;
+  border-top: rgb(175, 59, 97) solid 2px;
+}
+
 .loadingMessageContainer {
   opacity: 0.5;
   /* border: orange dotted 1pt; */
-  margin-bottom: 30px;
+  margin-bottom: 40px;
   height: 80px;
 }
 
@@ -782,12 +834,13 @@
     margin-left: 412px;
   }
 
-  .inputBoxDesi {
-    width: 360px;
-  }
-
   .inputBox {
     font-size: 17px;
+    width: 145px;
+  }
+
+  .inputBoxDesi {
+    width: 360px;
   }
 
   .box2,

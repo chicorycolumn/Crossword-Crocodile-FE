@@ -166,11 +166,12 @@ export class MakeComponent implements OnInit {
   }
 
   devEvent() {
+    console.log('devEvent()');
     this.socketService.verifyOff();
   }
 
   clearInputBox(id) {
-    this.makeCrosswordForm.controls['threshold'].setValue('');
+    this.makeCrosswordForm.controls[id].setValue('');
   }
 
   plusSlides(direction) {}
@@ -231,6 +232,14 @@ export class MakeComponent implements OnInit {
       'mailto:c.matus.contact@gmail.com?subject=Crossword Feedback',
       '_blank'
     );
+  }
+
+  desiInputLostFocus() {
+    if (!/[^\s]/g.test(this.makeCrosswordForm.value['desi'])) {
+      this.makeCrosswordForm.controls['threshold'].setValue(0);
+    } else if (this.makeCrosswordForm.value['threshold'] === 0) {
+      this.makeCrosswordForm.controls['threshold'].setValue(1);
+    }
   }
 
   shrinkTextIfOverflowing(transparentResults, results) {
@@ -427,6 +436,7 @@ export class MakeComponent implements OnInit {
   }
 
   verifyOff() {
+    console.log('verifyOff()');
     this.socketService.verifyOff();
   }
 

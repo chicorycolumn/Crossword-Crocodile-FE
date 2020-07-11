@@ -36,6 +36,7 @@
 
 .navButtonText {
   margin: 0px;
+  font-size: 14px;
 }
 
 .navButtonImage {
@@ -47,7 +48,7 @@
 
 .titleGraphic {
   margin-top: auto;
-  margin-bottom: auto;
+  margin-bottom: 2.5px;
   height: 50px;
 }
 
@@ -68,12 +69,12 @@
 @media only screen and (min-device-width: 320px) and (max-device-width: 568px) {
   .titleGraphic {
     height: 35px;
-    margin-bottom: 2.5px;
+    margin-bottom: 5px;
     /* background-color: black; */
   }
   .logo {
     margin-top: auto;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
     height: 30px;
   }
 
