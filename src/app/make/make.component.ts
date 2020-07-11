@@ -33,6 +33,7 @@ export class MakeComponent implements OnInit {
   desiPlaceholderText = 'eg spoke azure';
   gridLayout = 'two rows';
   invisibleTextarea = { value: '' };
+  millionPermsRecord = { value: 0.00666 };
   elementToFlash = { resultLeftie: false };
   results = {
     index: 0,
@@ -167,7 +168,8 @@ export class MakeComponent implements OnInit {
 
   devEvent() {
     console.log('devEvent()');
-    this.socketService.verifyOff();
+    console.log(this.millionPermsRecord);
+    // this.socketService.verifyOff();
   }
 
   clearInputBox(id) {
@@ -423,7 +425,8 @@ export class MakeComponent implements OnInit {
       this.results,
       this.slideToElement,
       this.DEV_deactivateSocket,
-      this.DEV_hard9x5
+      this.DEV_hard9x5,
+      this.millionPermsRecord
     );
   }
 

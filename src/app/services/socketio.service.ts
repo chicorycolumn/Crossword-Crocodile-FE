@@ -10,6 +10,11 @@ export class SocketioService {
   serverIsIndeedWorking;
 
   constructor() {}
+
+  timestampOfLatestRequest = 0;
+  latestGridSpecs = {};
+  millionPermsRecord = { value: 0 };
+
   setupSocketConnection(
     shouldEndpointBeHeroku,
     startButtonActive,
@@ -42,15 +47,32 @@ export class SocketioService {
         Date.now() / 1000 - 1593360000
       );
       if (startButtonActive.value) {
-        disconnectedByServer.value = true;
+        if (Date.now() < this.timestampOfLatestRequest + 30000) {
+          serverIsIndeedWorking.value = false;
+          console.log('GONNA TRY AGAIN');
+          this.emitGridSpecs(this.latestGridSpecs, false, null);
+        } else {
+          disconnectedByServer.value = true;
+          this.turnOffButtons();
+          this.stop(
+            "A foreign disconnection happened, thus client requests disconnect so we're all on the same page."
+          );
+        }
       }
-      this.turnOffButtons();
-      this.stop(
-        "A foreign disconnection happened, thus client requests disconnect so we're all on the same page."
-      );
     });
 
     this.socket.on('server sent message', (data) => {
+      if (Object.keys(data).includes('million_perms_processed')) {
+        console.log(
+          'gonna set MPP to ',
+          parseFloat(data['million_perms_processed'])
+        );
+
+        this.millionPermsRecord.value = parseFloat(
+          data['million_perms_processed']
+        );
+      }
+
       console.log('Server sent ', data, Date.now() / 1000 - 1593360000);
     });
 
@@ -147,8 +169,13 @@ export class SocketioService {
     this.socket.emit('please terminate', { message: message });
   }
 
-  emitGridSpecs(data) {
+  emitGridSpecs(data, thisIsFirstTimeRequest, millionPermsRecord) {
     console.log('gonna emit', Date.now() / 1000 - 1593360000);
+    if (thisIsFirstTimeRequest) {
+      this.timestampOfLatestRequest = Date.now();
+      this.millionPermsRecord = millionPermsRecord;
+    }
+    this.latestGridSpecs = data;
     this.socket.emit('grid specs', data);
   }
 

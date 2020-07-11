@@ -8,7 +8,8 @@ export function socketEmit(
   results,
   slideToElement,
   DEV_deactivateSocket,
-  DEV_hard9x5
+  DEV_hard9x5,
+  millionPermsRecord
 ) {
   console.log('UTIL SOCKET EMIT!!!!');
 
@@ -107,7 +108,7 @@ export function socketEmit(
       gridSpecsFormatted['grid_height'] = 5;
     }
 
-    socketService.emitGridSpecs(gridSpecsFormatted);
+    socketService.emitGridSpecs(gridSpecsFormatted, true, millionPermsRecord);
   }
 }
 

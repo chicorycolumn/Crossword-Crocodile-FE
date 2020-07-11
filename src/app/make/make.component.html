@@ -439,7 +439,17 @@
             class="loadingMessageContainer"
           >
             <img class="loadingIcon" src="../../assets/working icon ZEUS.png" />
-            <p class="loadingText">Server is working...</p>
+            <p class="loadingText">
+              {{
+                millionPermsRecord.value > 0.14
+                  ? "It may take a few tries, but don't worry."
+                  : millionPermsRecord.value > 0.09
+                  ? "Having a good think..."
+                  : millionPermsRecord.value > 0.04
+                  ? "Working on it.."
+                  : "Let's see what we have here."
+              }}
+            </p>
           </div>
 
           <div class="tinyIconContainer">
