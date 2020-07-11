@@ -8,6 +8,23 @@
   padding-left: 20px;
 }
 
+.flashingBox {
+  animation-name: shimmerBox;
+  animation-duration: 1s;
+}
+
+@keyframes shimmerBox {
+  0% {
+    background-color: var(--standard-panel-colour);
+  }
+  30% {
+    background-color: rgb(242, 255, 235);
+  }
+  100% {
+    background-color: var(--standard-panel-colour);
+  }
+}
+
 .grid {
   margin-left: auto;
   margin-right: auto;
@@ -23,8 +40,8 @@
 }
 
 .box {
-  height: 250px;
-  min-height: 250px;
+  height: 260px;
+  min-height: 270px;
   min-width: 440px;
   max-width: 440px;
   margin-top: 50px;
@@ -56,7 +73,7 @@
   color: rgba(0, 61, 0, 0.74);
   opacity: 0.4;
   margin-left: -1px;
-  /* font-weight: bold; */
+  font-weight: bold;
   font-family: "Courier New", Courier, Arial, monospace;
 }
 
@@ -135,17 +152,33 @@
   font-size: 15px;
 }
 
+.insideBoxTwo {
+  margin-top: 10px;
+}
+
+.invisibleTextarea {
+  z-index: -5;
+  width: 0px;
+  height: 0px;
+  align-self: center;
+  justify-self: center;
+  position: fixed;
+  top: 46%;
+}
+
 .threshInputBox {
   width: 17.5px;
   height: 13.5px;
   overflow: hidden;
   resize: none;
-  margin-top: 15px;
+  margin-top: 12.5px;
   margin-left: 5px;
   margin-right: 5px;
+  text-align: center;
 }
 
 .includeAtLeast_text {
+  margin-top: 14px;
 }
 
 .includeAtLeast_box {
@@ -175,7 +208,7 @@
   font-size: 18px;
   font-weight: bold;
   margin: 0;
-  margin-top: 5px;
+  margin-top: 0px;
 }
 
 .boxTitleA {
@@ -231,6 +264,7 @@
   border-right: var(--green-shad) solid 1px;
   padding-top: 7.5px;
   padding-bottom: 5px;
+  /* background-color: fuchsia; */
 }
 
 .resultLeftieInner1 {
@@ -300,6 +334,7 @@
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
+  margin-top: 6px;
 }
 
 .desiButton {
@@ -422,7 +457,7 @@
 .boxLayerA {
   /* border: orange solid 0.5pt; */
   position: relative;
-  top: 0px;
+  top: 15px;
   width: 440px;
   height: 208px;
   z-index: 4;
@@ -488,7 +523,7 @@
 .crocSep {
   height: 40px;
   z-index: 3;
-  margin-top: 80px;
+  margin-top: 90px;
   position: relative;
 }
 
@@ -512,7 +547,7 @@
   padding: 0px 5px 5px 5px;
   width: 110px;
   margin-top: 50px;
-  height: 160px;
+  height: 180px;
   /* border: black dashed 1pt; */
 }
 
@@ -525,7 +560,7 @@
 .loadingMessageContainer {
   opacity: 0.5;
   /* border: orange dotted 1pt; */
-  margin-bottom: 20px;
+  margin-bottom: 30px;
   height: 80px;
 }
 
@@ -548,7 +583,7 @@
 .slideshowContainer {
   margin-left: 15px;
   margin-right: auto;
-  margin-top: -20px;
+  margin-top: -15px;
   width: 93.5%;
   height: 155px;
   position: relative;
@@ -570,7 +605,7 @@
 }
 
 .slide:hover {
-  background-color: rgba(0, 189, 9, 0.1);
+  background-color: rgba(0, 189, 9, 0.2);
 }
 
 /* #s0,
@@ -648,6 +683,7 @@
   justify-content: center;
   align-content: center;
   text-align: center; */
+  padding-top: 10px;
 }
 
 .grayedOut {
@@ -660,12 +696,12 @@
   /* background-color: thistle; */
   cursor: pointer;
   position: absolute;
-  top: 92.5px;
-  width: 20px;
-  height: 100px;
-  margin-top: -60px;
+  top: 90px;
+  width: 16px;
+  height: 141px;
+  margin-top: -52px;
   padding: 12px;
-  padding-top: 48px;
+  padding-top: 10px;
   padding-bottom: 0px;
   color: white;
   font-weight: bold;
@@ -700,8 +736,12 @@
   height: 100px;
   opacity: 0.025;
   filter: blur(0.5px);
-  margin-top: 50px;
-  margin-left: 25px;
+  margin-top: 62.5px;
+  margin-left: 30px;
+}
+
+.desiInstructionsText {
+  margin-top: 16px;
 }
 
 /* ipad
@@ -761,10 +801,12 @@
 
   .boxTitle {
     font-size: 22px;
+    margin-top: -5px;
   }
 
   .includeAtLeast_text {
-    font-size: 19px;
+    font-size: 17px;
+    margin-top: 11px;
   }
 
   .desiInstructionsText {
@@ -773,12 +815,13 @@
   }
 
   .threshInputBox {
-    height: 25px;
+    height: 17px;
     width: 25px;
-    font-size: 20px;
-    margin-left: 10px;
-    margin-right: 10px;
+    font-size: 17px;
+    margin-left: 7.5px;
+    margin-right: 7.5px;
     text-align: center;
+    margin-top: 10px;
   }
 
   .resultRightie {
@@ -789,5 +832,19 @@
   }
   .scrollButton {
     width: 75px;
+  }
+
+  .shapeText {
+    font-size: 30px;
+  }
+
+  .slidePrev,
+  .slideNext {
+    margin-top: -47.5px;
+  }
+
+  .mandInstructions {
+    margin-top: 12px;
+    margin-bottom: 0px;
   }
 }

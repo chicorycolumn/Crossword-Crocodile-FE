@@ -126,9 +126,7 @@ export function makeDesiList(form: { desiSeparator; desi }) {
   let desiSeparated;
   let sep = form.desiSeparator;
   if (sep === ' ') {
-    desiSeparated = form.desi
-      .split(form.desiSeparator)
-      .filter((str) => str.length);
+    desiSeparated = form.desi.split(/\s/).filter((str) => str.length);
   } else {
     let desiFormatted = form.desi.replace('“', '"').replace('”', '"');
     let desiSeparatedUnformatted = desiFormatted.match(/".+?"/g);
@@ -479,3 +477,65 @@ export const slidesData = [
     checked: false,
   },
 ];
+
+export const formatResultsForCopyingOrDownloading = (
+  results,
+  border,
+  shallJustGiveCurrent
+) => {
+  let resultsTxt = '';
+  let gridTxt = '';
+  let summaryTxt = '';
+  let resultsCopy = { array: [] };
+
+  if (shallJustGiveCurrent) {
+    resultsCopy = {
+      array: [
+        {
+          summary: results.array[results.index].summary,
+          grid: results.array[results.index].grid,
+        },
+      ],
+    };
+  } else {
+    resultsCopy = results;
+  }
+
+  resultsCopy.array.forEach((resObj) => {
+    resObj['summary'].forEach((summaryLine) => {
+      summaryTxt += '\n' + summaryLine;
+    });
+    resObj['grid'].forEach((gridLine) => {
+      let arr = (<string>gridLine[0]).split(/(\d+)/);
+      let num = arr[1];
+      let word = arr[2].toLowerCase();
+      const ref = { ac: 'Across', do: 'Down' };
+      let formattedCoord = `${num} ${ref[word]}`;
+      let wordsToFormat = gridLine.slice(1);
+      let formattedWords =
+        typeof wordsToFormat[0] === 'string'
+          ? wordsToFormat[0]
+          : (<string[]>wordsToFormat[0]).join(', ');
+      gridTxt +=
+        '\n' +
+        formattedCoord +
+        (/a/i.test(formattedCoord) ? ':  ' : ':    ') +
+        formattedWords;
+    });
+
+    resultsTxt +=
+      summaryTxt +
+      '\n' +
+      gridTxt +
+      (shallJustGiveCurrent ? '' : '\n\n' + border + '\n');
+
+    gridTxt = '';
+    summaryTxt = '';
+  });
+
+  if (/\s/.test(resultsTxt[0])) {
+    resultsTxt = resultsTxt.slice(1);
+  }
+
+  return resultsTxt;
+};

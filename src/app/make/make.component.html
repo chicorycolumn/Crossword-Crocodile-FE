@@ -168,10 +168,11 @@
             ></textarea>
           </label>
         </div>
-        <br />
-        Separate your words with a space.
-        <br />
-        Ideally put no more than three mandatory words.
+        <p class="mandInstructions">
+          Separate your words with a space.
+          <br />
+          Ideally put no more than three mandatory words.
+        </p>
       </div>
 
       <div class="boxLayerB">
@@ -311,9 +312,18 @@
         </div>
       </div>
     </div>
-
+    <textarea
+      readOnly
+      value="{{ invisibleTextarea.value }}"
+      class="invisibleTextarea"
+      id="invisibleTextarea"
+      style="resize: none;"
+    ></textarea>
     <div class="box box4" id="box4">
-      <div class="resultLeftie">
+      <div
+        class="resultLeftie"
+        [class.flashingBox]="elementToFlash['resultLeftie']"
+      >
         <img
           class="fadedLogo"
           *ngIf="!results.array.length"
@@ -432,8 +442,20 @@
               <img
                 class="tinyIcon"
                 src="../../assets/download icon ZEUS.png"
-                (click)="clickToDownload()"
+                (click)="results.array.length && clickToDownload()"
             /></span>
+            <span
+              tooltip="Copy this result"
+              placement="bottom"
+              [show-delay]="0"
+              [hide-delay]="0"
+            >
+              <img
+                class="tinyIcon"
+                src="../../assets/copy icon ZEUS.png"
+                (click)="results.array.length && clickToCopyCurrent()"
+            /></span>
+
             <span
               tooltip="Report problems"
               placement="bottom"

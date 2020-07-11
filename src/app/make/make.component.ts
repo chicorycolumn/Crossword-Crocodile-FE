@@ -32,6 +32,8 @@ export class MakeComponent implements OnInit {
   serverIsIndeedWorking = { value: false };
   desiPlaceholderText = 'eg spoke azure';
   gridLayout = 'two rows';
+  invisibleTextarea = { value: '' };
+  elementToFlash = { resultLeftie: false };
   results = {
     index: 0,
     array:
@@ -123,6 +125,27 @@ export class MakeComponent implements OnInit {
     }, 100);
   }
 
+  clickToCopyCurrent() {
+    this.invisibleTextarea.value = Util.formatResultsForCopyingOrDownloading(
+      this.results,
+      '',
+      true
+    );
+
+    this.elementToFlash.resultLeftie = true;
+
+    setTimeout(() => {
+      let el = document.getElementById('invisibleTextarea') as HTMLInputElement;
+      el.select();
+      el.setSelectionRange(0, 99999); /*For mobile devices*/
+      document.execCommand('copy');
+    }, 500);
+
+    setTimeout(() => {
+      this.elementToFlash.resultLeftie = false;
+    }, 1000);
+  }
+
   checkShapeRadio(id) {
     this.slidesData.forEach((slideData) => {
       if (slideData.id === id) {
@@ -184,36 +207,14 @@ export class MakeComponent implements OnInit {
 
   clickToDownload() {
     let border = '------------------------';
-    let resultsTxt = Util.asciiArt;
 
-    let gridTxt = '';
-    let summaryTxt = '';
+    let resultsTxt = Util.formatResultsForCopyingOrDownloading(
+      this.results,
+      border,
+      false
+    );
 
-    this.results.array.forEach((resObj) => {
-      resObj['summary'].forEach((summaryLine) => {
-        summaryTxt += '\n' + summaryLine;
-      });
-      resObj['grid'].forEach((gridLine) => {
-        let arr = (<string>gridLine[0]).split(/(\d+)/);
-        let num = arr[1];
-        let word = arr[2].toLowerCase();
-        const ref = { ac: 'Across', do: 'Down' };
-        let formattedCoord = `${num} ${ref[word]}`;
-        let wordsToFormat = gridLine.slice(1);
-        let formattedWords =
-          typeof wordsToFormat[0] === 'string'
-            ? wordsToFormat[0]
-            : (<string[]>wordsToFormat[0]).join(', ');
-        gridTxt +=
-          '\n' +
-          formattedCoord +
-          (/a/i.test(formattedCoord) ? ':  ' : ':    ') +
-          formattedWords;
-      });
-      resultsTxt += summaryTxt + '\n' + gridTxt + '\n\n' + border + '\n';
-      gridTxt = '';
-      summaryTxt = '';
-    });
+    resultsTxt = Util.asciiArt + '\n\n' + resultsTxt;
 
     let myblob = new Blob([resultsTxt], {
       type: 'text/plain',
