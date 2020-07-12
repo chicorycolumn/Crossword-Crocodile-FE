@@ -180,11 +180,11 @@ export class MakeComponent implements OnInit {
       this.wheelEvent(e, this.results);
     });
 
-    for (let i = 1; i < 2000; i++) {
-      if (window.matchMedia(`only screen and (max-height: ${i}px)`).matches) {
-        console.log(i);
-      }
-    }
+    // for (let i = 1; i < 2000; i++) {
+    //   if (window.matchMedia(`only screen and (max-height: ${i}px)`).matches) {
+    //     console.log(i);
+    //   }
+    // }
 
     let mobileWidth = 450;
     if (
@@ -193,7 +193,7 @@ export class MakeComponent implements OnInit {
       this.isMobile = true;
     }
 
-    const zoomRef = { 320: '0.6', 375: '0.65', 420: '0.75' };
+    const zoomRef = { 320: '0.6', 375: '0.65', 420: '0.75', 700: '0.9' };
     Object.keys(zoomRef)
       .sort((a, b) => +b - +a)
       .forEach((maxWidth) => {
@@ -202,6 +202,7 @@ export class MakeComponent implements OnInit {
             .matches
         ) {
           document.body.style.zoom = zoomRef[maxWidth];
+          console.log(`zoom is now ${zoomRef[maxWidth]}`);
         }
       });
 
