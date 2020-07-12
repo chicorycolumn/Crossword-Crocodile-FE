@@ -347,7 +347,11 @@
         <img
           class="fadedLogo"
           *ngIf="!results.array.length"
-          src="../../assets/CrossCroc logo1.png"
+          src="{{
+            isMobile
+              ? '../../assets/CrossCroc logo1 smaller.png'
+              : '../../assets/CrossCroc logo1.png'
+          }}"
         />
 
         <div
