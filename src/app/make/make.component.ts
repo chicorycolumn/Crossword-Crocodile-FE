@@ -208,8 +208,7 @@ export class MakeComponent implements OnInit {
           `only screen and (max-height: ${smallerComputerHeight}px)`
         ).matches
       ) {
-        console.log('zoom is 0.925');
-        document.body.style.zoom = '0.925';
+        document.body.style.zoom = '0.92';
       }
     }
 

@@ -563,7 +563,7 @@
   height: 44px;
   max-height: 44px;
   position: absolute;
-  margin-left: -22px;
+  margin-left: -23px;
   margin-top: 2px;
   border: none;
 }
@@ -730,7 +730,7 @@
   cursor: pointer;
   position: absolute;
   top: 90px;
-  width: 16px;
+  width: 20.5px;
   height: 141px;
   margin-top: -52px;
   padding: 12px;
@@ -748,12 +748,12 @@
 }
 
 .slidePrev {
-  left: -20px;
+  left: -25px;
   padding-left: 7.5px;
 }
 
 .slideNext {
-  right: -20px;
+  right: -25px;
   padding-right: 7.5px;
 }
 
@@ -858,14 +858,6 @@
     width: 21px;
   }
 
-  .slidePrev {
-    left: -25px;
-  }
-
-  .slideNext {
-    right: -25px;
-  }
-
   .mandInstructions {
     margin-top: 12px;
     margin-bottom: 0px;
@@ -880,5 +872,13 @@
     width: 30px;
     margin-left: -27px;
     margin-top: -4px;
+  }
+
+  .indexDisplay {
+    margin-top: 12.5px;
+  }
+
+  .loadingMessageContainer {
+    margin-bottom: 30px;
   }
 }
