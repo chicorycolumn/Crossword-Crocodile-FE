@@ -213,7 +213,7 @@ export class MakeComponent implements OnInit {
       );
     }
     setInterval(() => {
-      if (this.pseudoTooltip.current > 2) {
+      if (this.pseudoTooltip.current > 3) {
         this.pseudoTooltip.current = 0;
       } else {
         this.pseudoTooltip.current++;

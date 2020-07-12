@@ -7,20 +7,6 @@
   padding-left: 20px;
 }
 
-.flashingBox {
-  animation-name: shimmerBox;
-  animation-duration: 1s;
-}
-
-@keyframes shimmerBox {
-  20% {
-    background-color: white;
-  }
-  50% {
-    background-color: white;
-  }
-}
-
 .grid {
   margin-left: auto;
   margin-right: auto;
@@ -31,6 +17,8 @@
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-around;
+  border: brown dotted 1pt;
+  max-height: 630px;
 }
 
 .box {
@@ -56,6 +44,20 @@
   max-width: 490px;
   border-top: var(--green-shad) solid 1px;
   margin-bottom: 50px;
+}
+
+.flashingBox {
+  animation-name: shimmerBox;
+  animation-duration: 1s;
+}
+
+@keyframes shimmerBox {
+  20% {
+    background-color: white;
+  }
+  50% {
+    background-color: white;
+  }
 }
 
 .shapeText {

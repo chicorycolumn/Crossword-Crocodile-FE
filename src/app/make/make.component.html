@@ -476,6 +476,7 @@
             *ngIf="
               !startButtonActive.value &&
               !this.results.array.length &&
+              !disconnectedByServer.value &&
               pseudoTooltip.current < tooltipData.keys.length
             "
             class="loadingMessageContainer"
@@ -512,7 +513,8 @@
                 *ngIf="
                   tooltipData.keys[pseudoTooltip.current] === key &&
                   !startButtonActive.value &&
-                  !this.results.array.length
+                  !this.results.array.length &&
+                  !disconnectedByServer.value
                 "
                 src="../../assets/circle3.png"
                 class="highlightCircle"
