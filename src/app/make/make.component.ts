@@ -29,7 +29,7 @@ export class MakeComponent implements OnInit {
   DEV_socketUsingLocal = { value: false };
   DEV_hard9x5 = { value: false };
   serverIsIndeedWorking = { value: false };
-  desiPlaceholderText = 'eg spoke azure';
+  desiPlaceholderText = 'spoke azure';
   gridLayout = 'two rows';
   invisibleTextarea = { value: '' };
   millionPermsRecord = { value: 0.00666 };
@@ -324,8 +324,8 @@ export class MakeComponent implements OnInit {
 
   updateDesiPlaceholderText(sepName) {
     const ref = {
-      space: 'eg spoke azure',
-      marks: 'eg "SPOKE" part of a wheel. "azure" - Shade of blue.',
+      space: 'spoke azure',
+      marks: '"SPOKE" part of a wheel. "azure" - Shade of blue.',
     };
     this.desiPlaceholderText = ref[sepName];
   }

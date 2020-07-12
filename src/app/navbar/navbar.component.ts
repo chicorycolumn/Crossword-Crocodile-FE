@@ -12,6 +12,7 @@ export class NavbarComponent implements OnInit {
   currentUrl = '/make';
   logoRotate = { value: true };
   selectedElements = {};
+  isMobile = false;
 
   ngOnInit(): void {
     this.router.events.subscribe((val) => {
@@ -23,6 +24,13 @@ export class NavbarComponent implements OnInit {
     setTimeout(() => {
       this.currentUrl = this.router.url;
     }, 1);
+
+    let mobileWidth = 450;
+    if (
+      window.matchMedia(`only screen and (max-width: ${mobileWidth}px)`).matches
+    ) {
+      this.isMobile = true;
+    }
   }
 
   makeElementSelected(id, bool) {

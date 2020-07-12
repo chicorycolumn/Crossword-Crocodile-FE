@@ -153,7 +153,7 @@
             </p>
             <textarea
               class="inputBox inputBoxMand"
-              placeholder="eg Santa claus"
+              placeholder="Santa claus"
               formControlName="mand"
               (keypress)="formChanged()"
             ></textarea>
@@ -175,7 +175,7 @@
             <textarea
               class="inputBox inputBoxForb"
               formControlName="bann"
-              placeholder="eg miffs fiats"
+              placeholder="miffs fiats"
               (keypress)="formChanged()"
             ></textarea>
             <span (click)="clearInputBox('bann')" class="clearButton">
@@ -504,8 +504,8 @@
               *ngIf="isMobile || pseudoTooltip.showExitText"
               class="pseudoTooltipExit"
             >
-              <p>
-                CLICK TO QUIT
+              <p *ngIf="!isMobile">
+                "Click to quit"
               </p>
             </div>
             <img
