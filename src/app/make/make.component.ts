@@ -180,6 +180,12 @@ export class MakeComponent implements OnInit {
       this.wheelEvent(e, this.results);
     });
 
+    for (let i = 1; i < 2000; i++) {
+      if (window.matchMedia(`only screen and (max-height: ${i}px)`).matches) {
+        console.log(i);
+      }
+    }
+
     let mobileWidth = 450;
     if (
       window.matchMedia(`only screen and (max-width: ${mobileWidth}px)`).matches

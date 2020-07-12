@@ -17,8 +17,6 @@
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-around;
-  border: brown dotted 1pt;
-  max-height: 630px;
 }
 
 .box {
