@@ -13,15 +13,11 @@
 }
 
 @keyframes shimmerBox {
-  0% {
-  }
   20% {
     background-color: white;
   }
   50% {
     background-color: white;
-  }
-  100% {
   }
 }
 
@@ -42,7 +38,7 @@
   min-height: 270px;
   min-width: 440px;
   max-width: 440px;
-  margin-top: 45px;
+  margin-top: 35px;
   margin-right: 20px;
   margin-left: 20px;
   text-align: center;
