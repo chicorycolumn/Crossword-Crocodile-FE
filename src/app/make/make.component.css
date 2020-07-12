@@ -855,6 +855,15 @@
   .slidePrev,
   .slideNext {
     margin-top: -47.5px;
+    width: 21px;
+  }
+
+  .slidePrev {
+    left: -25px;
+  }
+
+  .slideNext {
+    right: -25px;
   }
 
   .mandInstructions {
