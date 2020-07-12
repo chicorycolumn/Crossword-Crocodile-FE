@@ -115,14 +115,18 @@
       <div class="boxLayerB">
         <img
           class="crocSep crocSepL"
+          (click)="makeCrocSneeze('crocSep1')"
           (mouseover)="makeElementSelected('crocSep1', true)"
           (mouseout)="makeElementSelected('crocSep1', false)"
           id="crocSep1"
           src="{{
             helpDisplay[helpDisplay.current].id === 'box1'
               ? '../../assets/croc face mouthopen.png'
-              : selectedElements['crocSep1']
+              : selectedElements['crocSep1'] &&
+                !selectedElements.occupied['crocSep1']
               ? '../../assets/croc face cute.png'
+              : selectedElements.alt['crocSep1']
+              ? '../../assets/croc face sneeze.png'
               : '../../assets/croc face.png'
           }}"
         />
@@ -191,6 +195,7 @@
 
       <div class="boxLayerB">
         <img
+          (click)="makeCrocSneeze('crocSep2')"
           (click)="showDevButtons()"
           class="crocSep crocSepR flipHorizontal"
           (mouseover)="makeElementSelected('crocSep2', true)"
@@ -199,8 +204,11 @@
           src="{{
             helpDisplay[helpDisplay.current].id === 'box2'
               ? '../../assets/croc face mouthopen.png'
-              : selectedElements['crocSep2']
+              : selectedElements['crocSep2'] &&
+                !selectedElements.occupied['crocSep2']
               ? '../../assets/croc face cute.png'
+              : selectedElements.alt['crocSep2']
+              ? '../../assets/croc face sneeze.png'
               : '../../assets/croc face.png'
           }}"
         />
@@ -302,14 +310,18 @@
       <div class="boxLayerB">
         <img
           class="crocSep crocSepL"
+          (click)="makeCrocSneeze('crocSep3')"
           (mouseover)="makeElementSelected('crocSep3', true)"
           (mouseout)="makeElementSelected('crocSep3', false)"
           id="crocSep3"
           src="{{
             helpDisplay[helpDisplay.current].id === 'box3'
               ? '../../assets/croc face mouthopen.png'
-              : selectedElements['crocSep3']
+              : selectedElements['crocSep3'] &&
+                !selectedElements.occupied['crocSep3']
               ? '../../assets/croc face cute.png'
+              : selectedElements.alt['crocSep3']
+              ? '../../assets/croc face sneeze.png'
               : '../../assets/croc face.png'
           }}"
         />
@@ -426,7 +438,12 @@
             {{ line }}
           </p>
         </div>
-        <div class="rightieOverlay">
+        <div
+          class="rightieOverlay"
+          (click)="disablePseudoTooltip()"
+          (mouseenter)="highlightPseudoTooltipExit(true)"
+          (mouseleave)="highlightPseudoTooltipExit(false)"
+        >
           <div
             *ngIf="disconnectedByServer.value && !results.array.length"
             class="loadingMessageContainer"
@@ -477,11 +494,20 @@
               !startButtonActive.value &&
               !this.results.array.length &&
               !disconnectedByServer.value &&
+              !pseudoTooltip.disabled &&
               pseudoTooltip.current < tooltipData.keys.length
             "
             class="loadingMessageContainer"
             style="margin-bottom: 30px;"
           >
+            <div
+              *ngIf="isMobile || pseudoTooltip.showExitText"
+              class="pseudoTooltipExit"
+            >
+              <p>
+                CLICK TO QUIT
+              </p>
+            </div>
             <img
               class="loadingIcon"
               src="{{
@@ -513,7 +539,8 @@
                 *ngIf="
                   tooltipData.keys[pseudoTooltip.current] === key &&
                   !startButtonActive.value &&
-                  !this.results.array.length &&
+                  !results.array.length &&
+                  !pseudoTooltip.disabled &&
                   !disconnectedByServer.value
                 "
                 src="../../assets/circle3.png"

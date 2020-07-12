@@ -626,6 +626,21 @@
   font-size: 14px;
 }
 
+.pseudoTooltipExit {
+  color: darkgreen;
+  position: absolute;
+  margin-top: -40px;
+  font-size: 12px;
+  height: 20px;
+  text-align: center;
+  width: 90%;
+}
+
+.pseudoTooltipExit p {
+  padding: 0px;
+  margin: 0px;
+}
+
 .slideshowContainer {
   margin-left: 15px;
   margin-right: auto;

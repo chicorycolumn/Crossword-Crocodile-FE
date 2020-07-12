@@ -21,7 +21,7 @@ export class MakeComponent implements OnInit {
   disconnectedByServer = { value: false };
   transparentResults = { value: false };
   copyNotification = { value: false };
-  selectedElements = {};
+  selectedElements = { alt: {}, occupied: {} };
   resultsMargin = { value: 1 };
   DEV_onlyShowResultBox = DEV_allToTrue || DEV_onlyShowResultBox;
   DEV_deactivateSocket = DEV_allToTrue || DEV_deactivateSocket;
@@ -36,6 +36,8 @@ export class MakeComponent implements OnInit {
   elementToFlash = { resultLeftie: false };
   pseudoTooltip = {
     current: 0,
+    disabled: false,
+    showExitText: false,
   };
 
   tooltipData = {
@@ -180,12 +182,6 @@ export class MakeComponent implements OnInit {
       this.wheelEvent(e, this.results);
     });
 
-    // for (let i = 1; i < 2000; i++) {
-    //   if (window.matchMedia(`only screen and (max-height: ${i}px)`).matches) {
-    //     console.log(i);
-    //   }
-    // }
-
     let mobileWidth = 450;
     if (
       window.matchMedia(`only screen and (max-width: ${mobileWidth}px)`).matches
@@ -193,7 +189,7 @@ export class MakeComponent implements OnInit {
       this.isMobile = true;
     }
 
-    const zoomRef = { 320: '0.6', 375: '0.65', 420: '0.75', 700: '0.9' };
+    const zoomRef = { 320: '0.6', 375: '0.65', 420: '0.75' };
     Object.keys(zoomRef)
       .sort((a, b) => +b - +a)
       .forEach((maxWidth) => {
@@ -201,10 +197,22 @@ export class MakeComponent implements OnInit {
           window.matchMedia(`only screen and (max-width: ${maxWidth}px)`)
             .matches
         ) {
-          document.body.style.zoom = zoomRef[maxWidth];
           console.log(`zoom is now ${zoomRef[maxWidth]}`);
+          document.body.style.zoom = zoomRef[maxWidth];
         }
       });
+
+    let smallerComputerHeight = 700;
+    if (!this.isMobile) {
+      if (
+        window.matchMedia(
+          `only screen and (max-height: ${smallerComputerHeight}px)`
+        ).matches
+      ) {
+        console.log('zoom is now 0.9');
+        document.body.style.zoom = '0.9';
+      }
+    }
 
     setTimeout(this.checkIfFlexWrap, 0);
     if (!DEV_deactivateSocket) {
@@ -252,6 +260,14 @@ export class MakeComponent implements OnInit {
     });
   }
 
+  disablePseudoTooltip() {
+    this.pseudoTooltip.disabled = true;
+  }
+
+  highlightPseudoTooltipExit(val) {
+    this.pseudoTooltip.showExitText = val;
+  }
+
   setHard5x9() {
     this.DEV_hard9x5.value = true;
   }
@@ -277,6 +293,17 @@ export class MakeComponent implements OnInit {
 
   devEvent2() {
     this.socketService.stop('Client used dev button to request disconnect.');
+  }
+
+  makeCrocSneeze(id) {
+    this.selectedElements.alt[id] = true;
+    this.selectedElements.occupied[id] = true;
+    setTimeout(() => {
+      this.selectedElements.alt[id] = false;
+    }, 500);
+    setTimeout(() => {
+      this.selectedElements.occupied[id] = false;
+    }, 5000);
   }
 
   socketToLocalHost() {
