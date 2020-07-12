@@ -29,7 +29,7 @@ export class MakeComponent implements OnInit {
   DEV_socketUsingLocal = { value: false };
   DEV_hard9x5 = { value: false };
   serverIsIndeedWorking = { value: false };
-  desiPlaceholderText = 'spoke azure';
+  desiPlaceholderText = 'azure spoke';
   gridLayout = 'two rows';
   invisibleTextarea = { value: '' };
   millionPermsRecord = { value: 0.00666 };
@@ -197,7 +197,6 @@ export class MakeComponent implements OnInit {
           window.matchMedia(`only screen and (max-width: ${maxWidth}px)`)
             .matches
         ) {
-          console.log(`zoom is now ${zoomRef[maxWidth]}`);
           document.body.style.zoom = zoomRef[maxWidth];
         }
       });
@@ -209,8 +208,8 @@ export class MakeComponent implements OnInit {
           `only screen and (max-height: ${smallerComputerHeight}px)`
         ).matches
       ) {
-        console.log('zoom is now 0.9');
-        document.body.style.zoom = '0.9';
+        console.log('zoom is 0.95');
+        document.body.style.zoom = '0.95';
       }
     }
 
@@ -324,8 +323,8 @@ export class MakeComponent implements OnInit {
 
   updateDesiPlaceholderText(sepName) {
     const ref = {
-      space: 'spoke azure',
-      marks: '"SPOKE" part of a wheel. "azure" - Shade of blue.',
+      space: 'azure spoke',
+      marks: '"AZURE" blue hue. "spoke" - Part of a wheel.',
     };
     this.desiPlaceholderText = ref[sepName];
   }
