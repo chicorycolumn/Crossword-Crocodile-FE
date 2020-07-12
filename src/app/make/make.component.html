@@ -158,7 +158,11 @@
             <span (click)="clearInputBox('mand')" class="clearButton">
               <img
                 class="tinyExitSymbol"
-                src="../../assets/red x in circle.png"
+                src="{{
+                  isMobile
+                    ? '../../assets/red x in circle 2.png'
+                    : '../../assets/red x in circle.png'
+                }}"
               />
             </span>
           </label>
@@ -505,7 +509,7 @@
                   !startButtonActive.value &&
                   !this.results.array.length
                 "
-                src="../../assets/circle2.png"
+                src="../../assets/circle3.png"
                 class="highlightCircle"
               />
             </span>

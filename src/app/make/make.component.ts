@@ -42,7 +42,7 @@ export class MakeComponent implements OnInit {
   };
 
   tooltipData = {
-    keys: ['download', 'copy', 'report'],
+    keys: ['download', 'copy', 'report', 'editor'],
     download: {
       text: 'Download all results',
       image: '../../assets/download icon ZEUS.png',
@@ -71,7 +71,6 @@ export class MakeComponent implements OnInit {
         link.href = url;
         link.click();
       },
-      highlight: false,
     },
     copy: {
       text: 'Copy current result',
@@ -109,7 +108,6 @@ export class MakeComponent implements OnInit {
           this.copyNotification.value = false;
         }, 750);
       },
-      highlight: false,
     },
     report: {
       text: 'Report a problem',
@@ -120,7 +118,13 @@ export class MakeComponent implements OnInit {
           '_blank'
         );
       },
-      highlight: false,
+    },
+    editor: {
+      text: 'Open in editor',
+      image: '../../assets/editor icon ZEUS.png',
+      function: () => {
+        alert('Editor feature pending');
+      },
     },
   };
 
