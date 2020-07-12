@@ -3,7 +3,6 @@
   margin: 0 auto;
   width: 95%;
   padding-top: 50px;
-  /* background-color: aquamarine; */
   padding-right: 20px;
   padding-left: 20px;
 }
@@ -15,7 +14,6 @@
 
 @keyframes shimmerBox {
   0% {
-    /* background-color: var(--standard-panel-colour); */
   }
   20% {
     background-color: white;
@@ -24,14 +22,12 @@
     background-color: white;
   }
   100% {
-    /* background-color: var(--standard-panel-colour); */
   }
 }
 
 .grid {
   margin-left: auto;
   margin-right: auto;
-  /* border: brown dotted 2pt; */
   width: 100%;
   max-width: 1100px;
   align-self: center;
@@ -39,7 +35,6 @@
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-around;
-  /* z-index: 1; */
 }
 
 .box {
@@ -70,8 +65,6 @@
 .shapeText {
   font-size: 20px;
   cursor: pointer;
-  /* margin-left: 5px;
-  margin-right: 5px; */
   margin-top: 10px;
   color: rgba(0, 61, 0, 0.74);
   opacity: 0.4;
@@ -96,7 +89,6 @@
 }
 
 .imageAndText {
-  /* border: blue solid 1pt; */
   margin: 0px;
 }
 
@@ -109,7 +101,6 @@
 .shapeRadio {
   display: none;
   font-size: 100px;
-  /* background-color: tomato; */
   position: absolute;
   opacity: 1;
   width: 100px;
@@ -127,10 +118,8 @@
 }
 
 .insideLabelToCollectClick {
-  /* border: grey dotted 1pt; */
   height: 100%;
   width: 100%;
-  /* background-color: red; */
 }
 
 .tag {
@@ -190,7 +179,6 @@
 .includeAtLeast_box {
   display: flex;
   flex-direction: row;
-  /* border: navy dotted 1pt; */
   justify-content: center;
   justify-self: center;
   text-align: center;
@@ -225,7 +213,6 @@
 }
 .boxTitleC {
   margin-bottom: 0px;
-  /* font-style: italic; */
 }
 
 .resultRightie {
@@ -263,14 +250,12 @@
 }
 
 .resultLeftie {
-  /* border: green solid 1px; */
   width: 100%;
   font-size: 12pt;
   border-radius: 25px 0px 0px 25px;
   border-right: var(--green-shad) solid 1px;
   padding-top: 7.5px;
   padding-bottom: 5px;
-  /* background-color: fuchsia; */
 }
 
 .resultLeftieInner1 {
@@ -314,7 +299,6 @@
 .coordName {
   width: 75px;
   min-width: 75px;
-  /* border: blue solid 0.5pt; */
   text-align: center;
   margin: 0;
   margin-right: 1px;
@@ -323,7 +307,6 @@
 }
 
 .coordWords {
-  /* border: orangered solid 0.5pt; */
   width: 75%;
   text-align: center;
   margin: 0;
@@ -449,7 +432,6 @@
 .scrollButton:active {
   background-color: rgb(147, 216, 118);
   box-shadow: 0 5px #666;
-  /* transform: translateY(4px); */
 }
 
 .scrollUp {
@@ -461,7 +443,6 @@
 }
 
 .boxLayerA {
-  /* border: orange solid 0.5pt; */
   position: relative;
   top: 15px;
   width: 440px;
@@ -498,7 +479,6 @@
 }
 
 .speechBubbleTextbox {
-  /* border: black solid 1pt; */
   position: relative;
   top: -155px;
   overflow: hidden;
@@ -522,8 +502,6 @@
   top: -208px;
   width: 440px;
   height: 208px;
-  /* margin: yellow solid 1pt; */
-  /* background-color: fuchsia; */
 }
 
 .crocSep {
@@ -550,7 +528,6 @@
   width: 110px;
   margin-top: 50px;
   height: 180px;
-  /* border: black dashed 1pt; */
 }
 
 .tinyIconContainer {
@@ -576,32 +553,22 @@
 }
 
 .clearButton {
-  /* opacity: 0.5; */
   background-color: white;
-  border: none;
   margin: 0px;
   writing-mode: vertical-lr;
   text-orientation: upright;
   font-size: 9px;
   overflow: hidden;
-  position: relative;
-  height: 47px;
-  max-height: 47px;
-  border: green solid 0.5px;
-  border-left: none;
-  margin-top: 0px;
   width: 17.5px;
   padding-left: 2.5px;
   padding-right: 0px;
   cursor: pointer;
   text-align: center;
-
   height: 44px;
-  /* background-color: red; */
+  max-height: 44px;
   position: absolute;
   margin-left: -21px;
   margin-top: 2px;
-  border: none;
   border: none;
 }
 
@@ -644,7 +611,6 @@
 
 .loadingMessageContainer {
   opacity: 0.5;
-  /* border: orange dotted 1pt; */
   margin-bottom: 40px;
   height: 80px;
 }
@@ -664,7 +630,6 @@
   font-size: 14px;
 }
 
-/* Slideshow container */
 .slideshowContainer {
   margin-left: 15px;
   margin-right: auto;
@@ -677,7 +642,6 @@
 
 .slide {
   cursor: pointer;
-  /* border: black dotted 1pt; */
   position: absolute;
   transition: 0.25s;
   width: 135px;
@@ -685,30 +649,12 @@
   overflow: hidden;
   height: 97.5%;
   position: absolute;
-  /* border-radius: 50px; */
   background-color: rgba(0, 0, 0, 0.01);
 }
 
 .slide:hover {
   background-color: rgba(0, 189, 9, 0.2);
 }
-
-/* #s0,
-#s3,
-#s6 {
-  background-color: rgba(0, 0, 0, 0.02);
-}
-
-#s1,
-#s4,
-#s7 {
-  background-color: rgba(0, 0, 0, 0.01);
-}
-#s2,
-#s5,
-#s8 {
-  background-color: rgba(0, 0, 0, 0.015);
-} */
 
 .carouselItemA {
   margin-left: 0px;
@@ -744,11 +690,8 @@
 
 .slideImage {
   width: 50%;
-  /* height: 70px;
-  height: 75px; */
   filter: none;
   z-index: 0;
-  /* margin-top: 25px; */
   margin-left: auto;
   margin-right: auto;
   margin-top: auto;
@@ -759,15 +702,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  /* margin-top: 0px; */
-  /* border: white dotted 2pt; */
   height: 60%;
-  /* max-height: 80px; */
-  /* display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-content: center;
-  text-align: center; */
   padding-top: 10px;
 }
 
@@ -775,10 +710,12 @@
   filter: brightness(5%) invert(100%);
 }
 
-/* Next & previous buttons */
+.slightlyGrayedOut {
+  opacity: 0.5;
+}
+
 .slidePrev,
 .slideNext {
-  /* background-color: thistle; */
   cursor: pointer;
   position: absolute;
   top: 90px;
@@ -804,14 +741,11 @@
   padding-left: 7.5px;
 }
 
-/* Position the "next button" to the right */
 .slideNext {
   right: -20px;
-  /* padding-left: 12px; */
   padding-right: 7.5px;
 }
 
-/* On hover, add a black background color with a little bit see-through */
 .slidePrev:hover,
 .slideNext:hover {
   background-color: var(--green-shad);
@@ -829,30 +763,13 @@
   margin-top: 16px;
 }
 
-/* ipad
-@media only screen and (min-device-width: 568px) and (max-device-width: 1024px) {
-  .box {
-    background-color: fuchsia;
-  }
-} */
-
-/* phone */
 @media only screen and (min-device-width: 320px) and (max-device-width: 568px) {
-  .box {
-    /* width: 400px;
-    min-width: 400px; */
-  }
-
   .grid {
     width: 450px;
   }
 
   .main {
     width: 450px;
-  }
-
-  .boxLayerB {
-    /* display: none; */
   }
 
   .crocSep {

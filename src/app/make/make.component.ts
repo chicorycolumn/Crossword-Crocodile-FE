@@ -3,13 +3,11 @@ import { FormBuilder, Validators } from '@angular/forms';
 
 import { SocketioService } from '../services/socketio.service';
 import * as Util from '../shared/utils';
-import { TooltipComponent } from 'ng2-tooltip-directive';
 
-let DEV_allToTrue = 0; // dev switch
-let DEV_deactivateSocket = 0; // dev switch
-let DEV_onlyShowResultBox = 0; // dev switch
-let DEV_padWithExampleResults = 0; // dev switch
-let DEV_timeOfBuild = '814'; // dev note
+let DEV_allToTrue = 0;
+let DEV_deactivateSocket = 0;
+let DEV_onlyShowResultBox = 0;
+let DEV_padWithExampleResults = 0;
 
 @Component({
   selector: 'app-make',
@@ -27,7 +25,6 @@ export class MakeComponent implements OnInit {
   resultsMargin = { value: 1 };
   DEV_onlyShowResultBox = DEV_allToTrue || DEV_onlyShowResultBox;
   DEV_deactivateSocket = DEV_allToTrue || DEV_deactivateSocket;
-  DEV_timeOfBuild = DEV_timeOfBuild;
   startButtonActive = { value: false };
   DEV_socketUsingLocal = { value: false };
   DEV_hard9x5 = { value: false };
@@ -42,7 +39,7 @@ export class MakeComponent implements OnInit {
   };
 
   tooltipData = {
-    keys: ['download', 'copy', 'report', 'editor'],
+    keys: ['download', 'copy', 'editor', 'report'],
     download: {
       text: 'Download all results',
       image: '../../assets/download icon ZEUS.png',
@@ -96,7 +93,7 @@ export class MakeComponent implements OnInit {
             'invisibleTextarea'
           ) as HTMLInputElement;
           el.select();
-          el.setSelectionRange(0, 99999); /*For mobile devices*/
+          el.setSelectionRange(0, 99999);
           document.execCommand('copy');
         }, 500);
 
@@ -109,6 +106,13 @@ export class MakeComponent implements OnInit {
         }, 750);
       },
     },
+    editor: {
+      text: 'Open in editor',
+      image: '../../assets/editor icon ZEUS.png',
+      function: () => {
+        alert('Editor feature pending');
+      },
+    },
     report: {
       text: 'Report a problem',
       image: '../../assets/report icon ZEUS.png',
@@ -117,13 +121,6 @@ export class MakeComponent implements OnInit {
           'mailto:c.matus.contact@gmail.com?subject=Crossword Feedback',
           '_blank'
         );
-      },
-    },
-    editor: {
-      text: 'Open in editor',
-      image: '../../assets/editor icon ZEUS.png',
-      function: () => {
-        alert('Editor feature pending');
       },
     },
   };
@@ -169,8 +166,8 @@ export class MakeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.startButtonActive.value = false; //delete?
-    this.serverIsIndeedWorking.value = false; //delete?
+    this.startButtonActive.value = false;
+    this.serverIsIndeedWorking.value = false;
 
     this.slidesData.forEach((slideObj) => {
       slideObj.checked = slideObj.value === '5x5';
@@ -212,9 +209,7 @@ export class MakeComponent implements OnInit {
         this.socketIsReady,
         this.disconnectedByServer,
         this.shrinkTextIfOverflowing,
-        this.firstResultsAreIn,
-        this.transparentResults,
-        document
+        this.transparentResults
       );
     }
     setInterval(() => {
@@ -260,10 +255,8 @@ export class MakeComponent implements OnInit {
   }
 
   devEvent() {
-    console.log('devEvent()');
     console.log(this.millionPermsRecord);
-
-    // this.socketService.verifyOff();
+    this.socketService.verifyOff();
   }
 
   clearInputBox(id) {
@@ -289,9 +282,7 @@ export class MakeComponent implements OnInit {
         this.socketIsReady,
         this.disconnectedByServer,
         this.shrinkTextIfOverflowing,
-        this.firstResultsAreIn,
-        this.transparentResults,
-        document
+        this.transparentResults
       );
       this.DEV_socketUsingLocal.value = true;
     }
@@ -355,8 +346,6 @@ export class MakeComponent implements OnInit {
 
   changeResultsIndex(direction) {
     if (this.results.array.length) {
-      // this.resultsMargin.value = 1;
-
       if (direction === 'up' && this.results.index > 0) {
         this.results.index--;
         if (this.results.array[this.results.index].marginUnset) {
@@ -390,13 +379,6 @@ export class MakeComponent implements OnInit {
   }
 
   socketStop() {
-    console.log(
-      'MCT STOP says serverIsIndeedWorking.value is',
-      this.serverIsIndeedWorking.value,
-      'and startButtonActive.value is',
-      this.startButtonActive.value
-    );
-
     let timestamp = Date.now() / 1000;
 
     !this.DEV_deactivateSocket &&
@@ -437,7 +419,6 @@ export class MakeComponent implements OnInit {
   wheelEvent(e, results) {
     if (results.array.length && this.selectedElements['resultRightie']) {
       e.preventDefault();
-      console.log(e.deltaY);
 
       if (e.deltaY < 0) {
         this.changeResultsIndex('up');
@@ -475,15 +456,6 @@ export class MakeComponent implements OnInit {
   socketEmit() {
     this.disconnectedByServer.value = false;
 
-    console.log(
-      'MCT EMIT says serverIsIndeedWorking.value is',
-      this.serverIsIndeedWorking.value,
-      'and startButtonActive.value is',
-      this.startButtonActive.value
-    );
-
-    // document.removeEventListener('keydown');
-
     Util.socketEmit(
       this.helpDisplay,
       this.makeCrosswordForm,
@@ -505,11 +477,6 @@ export class MakeComponent implements OnInit {
       results.array.pop();
     }
     results.index = 0;
-  }
-
-  verifyOff() {
-    console.log('verifyOff()');
-    this.socketService.verifyOff();
   }
 
   formChanged() {

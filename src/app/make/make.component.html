@@ -10,9 +10,7 @@
         width: 100px;
         height: 25px;
       "
-    >
-      {{ this.DEV_timeOfBuild }}
-    </div>
+    ></div>
     <button
       (click)="devEvent()"
       style="position: fixed; z-index: 5; margin-top: -30px;"
@@ -499,11 +497,14 @@
               *ngFor="let key of tooltipData.keys"
               tooltip="{{ tooltipData[key].text }}"
               placement="top"
-              [show-delay]="0"
+              [show-delay]="isMobile ? 2000 : 0"
               [hide-delay]="0"
             >
               <img
                 class="tinyIcon"
+                [class.slightlyGrayedOut]="
+                  key !== 'report' && !results.array.length
+                "
                 src="{{ tooltipData[key].image }}"
                 (click)="tooltipData[key].function()"
               />

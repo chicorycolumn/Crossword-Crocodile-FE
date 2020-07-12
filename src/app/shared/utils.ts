@@ -11,8 +11,6 @@ export function socketEmit(
   DEV_hard9x5,
   millionPermsRecord
 ) {
-  console.log('UTIL SOCKET EMIT!!!!');
-
   Object.keys(helpDisplay).forEach((key) => {
     if (key !== 'current') {
       helpDisplay[key].show = false;
@@ -327,10 +325,6 @@ export const gridSpecsKey = {
   bann: 'banned_words',
   time: 'time',
 };
-
-export function sayHi() {
-  console.log('hi from util');
-}
 
 export let helpDisplay = {
   MandLeng: {

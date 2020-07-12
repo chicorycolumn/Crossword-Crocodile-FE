@@ -23,9 +23,7 @@ export class SocketioService {
     socketIsReady,
     disconnectedByServer,
     shrinkTextIfOverflowing,
-    firstResultsAreIn,
-    transparentResults,
-    document
+    transparentResults
   ) {
     this.socket = socketIOClient(
       shouldEndpointBeHeroku
@@ -42,14 +40,9 @@ export class SocketioService {
     });
 
     this.socket.on('disconnect', () => {
-      console.log(
-        'HEY LAD DISCONNECT OCCURRED',
-        Date.now() / 1000 - 1593360000
-      );
       if (startButtonActive.value) {
         if (Date.now() < this.timestampOfLatestRequest + 30000) {
           serverIsIndeedWorking.value = false;
-          console.log('GONNA TRY AGAIN');
           this.emitGridSpecs(this.latestGridSpecs, false, null);
         } else {
           disconnectedByServer.value = true;
@@ -63,11 +56,6 @@ export class SocketioService {
 
     this.socket.on('server sent message', (data) => {
       if (Object.keys(data).includes('million_perms_processed')) {
-        console.log(
-          'gonna set MPP to ',
-          parseFloat(data['million_perms_processed'])
-        );
-
         this.millionPermsRecord.value = parseFloat(
           data['million_perms_processed']
         );
@@ -78,41 +66,21 @@ export class SocketioService {
 
     this.socket.on('connection confirmed', (data) => {
       console.log(
-        'Server connexed, and sent ',
+        'Server connected, and sent ',
         data,
         Date.now() / 1000 - 1593360000
       );
-      // this.turnOffButtons(); //screw?
       socketIsReady.value = true;
     });
 
     this.socket.on('started', (data) => {
-      console.log('---');
-      console.log(
-        'SERVER STARTED!!!!!!!!!!!!!!!!!',
-        Date.now() / 1000 - 1593360000
-      );
-      console.log(
-        'SERVICE says serverIsIndeedWorking.value is',
-        serverIsIndeedWorking.value,
-        'and startButtonActive.value is',
-        startButtonActive.value
-      );
       if (!startButtonActive.value) {
-        console.log(
-          'WOAH SALLY, STARTBUTTON INACTIVE BUT SERVER SENT A STARTED MSG.'
-        );
         this.stop(
           "Client requests disconnect, because startbutton inactive but server had sent a 'started' event."
         );
       } else if (!serverIsIndeedWorking.value) {
         setTimeout(() => {
           serverIsIndeedWorking.value = true;
-          console.log(
-            'serverIsIndeedWorking.value',
-            serverIsIndeedWorking.value
-          );
-          console.log('---');
         }, 100);
       }
     });
@@ -125,17 +93,12 @@ export class SocketioService {
     this.socket.on('produced grid', (data) => {
       if (startButtonActive.value) {
         if (!results.array.length) {
-          console.log('5555555555555555555');
           shrinkTextIfOverflowing(transparentResults, results);
         }
         data['result']['margin'] = 1;
         data['result']['marginUnset'] = true;
         results.array.push(data['result']);
-        console.log(data['result']);
       } else {
-        console.log(
-          'WOAH NELLY, STARTBUTTON INACTIVE BUT SERVER SENT A RESULT.'
-        );
         this.stop(
           'Client requests disconnect, because startbutton inactive but server had sent a result.'
         );
@@ -161,11 +124,7 @@ export class SocketioService {
   }
 
   stop(message) {
-    console.log(
-      'gonna ask to stop for this reason: ',
-      message,
-      Date.now() / 1000 - 1593360000
-    );
+    console.log(message, Date.now() / 1000 - 1593360000);
     this.socket.emit('please terminate', { message: message });
   }
 
@@ -180,14 +139,12 @@ export class SocketioService {
   }
 
   message() {
-    console.log('gonna message', Date.now() / 1000 - 1593360000);
     this.socket.emit('client sent message', {
       message: 'I am the client, I am trying to connect to server.',
     });
   }
 
   verifyOff() {
-    console.log('gonna verify off', Date.now() / 1000 - 1593360000);
     this.socket.emit('verify off', {});
   }
 }
