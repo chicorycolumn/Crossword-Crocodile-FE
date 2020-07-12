@@ -3,6 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 
 import { SocketioService } from '../services/socketio.service';
 import * as Util from '../shared/utils';
+import { TooltipComponent } from 'ng2-tooltip-directive';
 
 let DEV_allToTrue = 0; // dev switch
 let DEV_deactivateSocket = 0; // dev switch
@@ -21,6 +22,7 @@ export class MakeComponent implements OnInit {
   devButtonsShowing = { value: false };
   disconnectedByServer = { value: false };
   transparentResults = { value: false };
+  copyNotification = { value: false };
   selectedElements = {};
   resultsMargin = { value: 1 };
   DEV_onlyShowResultBox = DEV_allToTrue || DEV_onlyShowResultBox;
@@ -35,6 +37,107 @@ export class MakeComponent implements OnInit {
   invisibleTextarea = { value: '' };
   millionPermsRecord = { value: 0.00666 };
   elementToFlash = { resultLeftie: false };
+  pseudoTooltip = {
+    current: 0,
+  };
+
+  tooltipData = {
+    keys: ['download', 'copy', 'report'],
+    download: {
+      text: 'Download all results',
+      image: '../../assets/download icon ZEUS.png',
+      function: () => {
+        if (!this.results.array.length) {
+          return;
+        }
+
+        let border = '------------------------';
+
+        let resultsTxt = Util.formatResultsForCopyingOrDownloading(
+          this.results,
+          border,
+          false
+        );
+
+        resultsTxt = Util.asciiArt + '\n\n' + resultsTxt;
+
+        let myblob = new Blob([resultsTxt], {
+          type: 'text/plain',
+        });
+
+        const url = URL.createObjectURL(myblob);
+        const link = document.createElement('a');
+        link.download = `Grid-Results-${Date.now()}.txt`;
+        link.href = url;
+        link.click();
+      },
+      highlight: false,
+    },
+    copy: {
+      text: 'Copy current result',
+      image: '../../assets/copy icon ZEUS.png',
+      function: () => {
+        if (!this.results.array.length) {
+          return;
+        }
+
+        this.invisibleTextarea.value = Util.formatResultsForCopyingOrDownloading(
+          this.results,
+          '',
+          true
+        );
+
+        this.elementToFlash.resultLeftie = true;
+        setTimeout(() => {
+          this.copyNotification.value = true;
+        }, 100);
+
+        setTimeout(() => {
+          let el = document.getElementById(
+            'invisibleTextarea'
+          ) as HTMLInputElement;
+          el.select();
+          el.setSelectionRange(0, 99999); /*For mobile devices*/
+          document.execCommand('copy');
+        }, 500);
+
+        setTimeout(() => {
+          this.elementToFlash.resultLeftie = false;
+        }, 1000);
+
+        setTimeout(() => {
+          this.copyNotification.value = false;
+        }, 750);
+      },
+      highlight: false,
+    },
+    report: {
+      text: 'Report a problem',
+      image: '../../assets/report icon ZEUS.png',
+      function: () => {
+        window.open(
+          'mailto:c.matus.contact@gmail.com?subject=Crossword Feedback',
+          '_blank'
+        );
+      },
+      highlight: false,
+    },
+  };
+
+  loadingText = {
+    sorry: {
+      text: 'Sorry, none yet, but please try again!',
+      image: '../../assets/croc-book.png',
+    },
+    sending: {
+      text: 'Sending to server...',
+      image: '../../assets/sending icon ZEUS.png',
+    },
+    working: {
+      text: null,
+      image: '../../assets/working icon ZEUS.png',
+    },
+  };
   results = {
     index: 0,
     array:
@@ -110,6 +213,13 @@ export class MakeComponent implements OnInit {
         document
       );
     }
+    setInterval(() => {
+      if (this.pseudoTooltip.current > 2) {
+        this.pseudoTooltip.current = 0;
+      } else {
+        this.pseudoTooltip.current++;
+      }
+    }, 3000);
   }
 
   rotateCarousel(direction) {
@@ -124,27 +234,6 @@ export class MakeComponent implements OnInit {
         element.getBoundingClientRect().top + window.pageYOffset + yOffset;
       window.scrollTo({ top: y, behavior: 'smooth' });
     }, 100);
-  }
-
-  clickToCopyCurrent() {
-    this.invisibleTextarea.value = Util.formatResultsForCopyingOrDownloading(
-      this.results,
-      '',
-      true
-    );
-
-    this.elementToFlash.resultLeftie = true;
-
-    setTimeout(() => {
-      let el = document.getElementById('invisibleTextarea') as HTMLInputElement;
-      el.select();
-      el.setSelectionRange(0, 99999); /*For mobile devices*/
-      document.execCommand('copy');
-    }, 500);
-
-    setTimeout(() => {
-      this.elementToFlash.resultLeftie = false;
-    }, 1000);
   }
 
   checkShapeRadio(id) {
@@ -169,6 +258,7 @@ export class MakeComponent implements OnInit {
   devEvent() {
     console.log('devEvent()');
     console.log(this.millionPermsRecord);
+
     // this.socketService.verifyOff();
   }
 
@@ -209,34 +299,6 @@ export class MakeComponent implements OnInit {
       marks: 'eg "SPOKE" part of a wheel. "azure" - Shade of blue.',
     };
     this.desiPlaceholderText = ref[sepName];
-  }
-
-  clickToDownload() {
-    let border = '------------------------';
-
-    let resultsTxt = Util.formatResultsForCopyingOrDownloading(
-      this.results,
-      border,
-      false
-    );
-
-    resultsTxt = Util.asciiArt + '\n\n' + resultsTxt;
-
-    let myblob = new Blob([resultsTxt], {
-      type: 'text/plain',
-    });
-
-    const url = URL.createObjectURL(myblob);
-    const link = document.createElement('a');
-    link.download = `Grid-Results-${Date.now()}.txt`;
-    link.href = url;
-    link.click();
-  }
-  clickToReport() {
-    window.open(
-      'mailto:c.matus.contact@gmail.com?subject=Crossword Feedback',
-      '_blank'
-    );
   }
 
   desiInputLostFocus() {

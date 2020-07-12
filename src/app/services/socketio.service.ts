@@ -170,13 +170,11 @@ export class SocketioService {
   }
 
   emitGridSpecs(data, thisIsFirstTimeRequest, millionPermsRecord) {
-    console.log('gonna emit', Date.now() / 1000 - 1593360000);
     if (thisIsFirstTimeRequest) {
       this.timestampOfLatestRequest = Date.now();
       this.millionPermsRecord = millionPermsRecord;
-    } else {
-      this.millionPermsRecord.value = 0;
     }
+    this.millionPermsRecord.value = 0;
     this.latestGridSpecs = data;
     this.socket.emit('grid specs', data);
   }

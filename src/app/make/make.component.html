@@ -17,7 +17,7 @@
       (click)="devEvent()"
       style="position: fixed; z-index: 5; margin-top: -30px;"
     >
-      CHECK PERMS
+      DEV EVENT
     </button>
     <button
       (click)="socketToLocalHost()"
@@ -156,7 +156,10 @@
               (keypress)="formChanged()"
             ></textarea>
             <span (click)="clearInputBox('mand')" class="clearButton">
-              C
+              <img
+                class="tinyExitSymbol"
+                src="../../assets/red x in circle.png"
+              />
             </span>
           </label>
           <label>
@@ -170,7 +173,10 @@
               (keypress)="formChanged()"
             ></textarea>
             <span (click)="clearInputBox('bann')" class="clearButton">
-              C
+              <img
+                class="tinyExitSymbol"
+                src="../../assets/red x in circle.png"
+              />
             </span>
           </label>
         </div>
@@ -239,7 +245,7 @@
           (keypress)="formChanged()"
         ></textarea>
         <span (click)="clearInputBox('desi')" class="clearButton">
-          C
+          <img class="tinyExitSymbol" src="../../assets/red x in circle.png" />
         </span>
         <div class="desiButtonHolder">
           <div>
@@ -400,7 +406,13 @@
               : "connecting..."
           }}
         </button>
-        <div *ngIf="results.array.length">
+
+        <div *ngIf="results.array.length && copyNotification.value">
+          <p style="font-style: italic;">
+            Copied!
+          </p>
+        </div>
+        <div *ngIf="results.array.length && !copyNotification.value">
           <p
             *ngFor="let line of results.array[results.index].summary"
             class="gridRender"
@@ -414,9 +426,9 @@
             class="loadingMessageContainer"
             style="margin-bottom: 55px;"
           >
-            <img class="loadingIconLarge" src="../../assets/croc-book.png" />
+            <img class="loadingIconLarge" src="{{ loadingText.sorry.image }}" />
             <p class="loadingText">
-              Sorry, none yet, but please try again!
+              {{ loadingText.sorry.text }}
             </p>
           </div>
           <div
@@ -427,8 +439,10 @@
             "
             class="loadingMessageContainer"
           >
-            <img class="loadingIcon" src="../../assets/sending icon ZEUS.png" />
-            <p class="loadingText">Sending to server...</p>
+            <img class="loadingIcon" src="{{ loadingText.sending.image }}" />
+            <p class="loadingText">
+              {{ loadingText.sending.text }}
+            </p>
           </div>
           <div
             *ngIf="
@@ -438,7 +452,7 @@
             "
             class="loadingMessageContainer"
           >
-            <img class="loadingIcon" src="../../assets/working icon ZEUS.png" />
+            <img class="loadingIcon" src="{{ loadingText.working.image }}" />
             <p class="loadingText">
               {{
                 millionPermsRecord.value > 0.14
@@ -452,41 +466,49 @@
             </p>
           </div>
 
+          <div
+            *ngIf="
+              !startButtonActive.value &&
+              !this.results.array.length &&
+              pseudoTooltip.current < tooltipData.keys.length
+            "
+            class="loadingMessageContainer"
+            style="margin-bottom: 30px;"
+          >
+            <img
+              class="loadingIcon"
+              src="{{
+                tooltipData[tooltipData.keys[pseudoTooltip.current]].image
+              }}"
+            />
+            <p class="loadingText">
+              {{ tooltipData[tooltipData.keys[pseudoTooltip.current]].text }}
+            </p>
+          </div>
+
           <div class="tinyIconContainer">
             <span
-              tooltip="Download all results"
-              placement="bottom"
+              *ngFor="let key of tooltipData.keys"
+              tooltip="{{ tooltipData[key].text }}"
+              placement="top"
               [show-delay]="0"
               [hide-delay]="0"
             >
               <img
                 class="tinyIcon"
-                src="../../assets/download icon ZEUS.png"
-                (click)="results.array.length && clickToDownload()"
-            /></span>
-            <span
-              tooltip="Copy this result"
-              placement="bottom"
-              [show-delay]="0"
-              [hide-delay]="0"
-            >
+                src="{{ tooltipData[key].image }}"
+                (click)="tooltipData[key].function()"
+              />
               <img
-                class="tinyIcon"
-                src="../../assets/copy icon ZEUS.png"
-                (click)="results.array.length && clickToCopyCurrent()"
-            /></span>
-
-            <span
-              tooltip="Report problems"
-              placement="bottom"
-              [show-delay]="0"
-              [hide-delay]="0"
-            >
-              <img
-                class="tinyIcon"
-                src="../../assets/report icon ZEUS.png"
-                (click)="clickToReport()"
-            /></span>
+                *ngIf="
+                  tooltipData.keys[pseudoTooltip.current] === key &&
+                  !startButtonActive.value &&
+                  !this.results.array.length
+                "
+                src="../../assets/circle2.png"
+                class="highlightCircle"
+              />
+            </span>
           </div>
         </div>
         <div class="indexDisplay">
