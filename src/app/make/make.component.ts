@@ -43,6 +43,7 @@ export class MakeComponent implements OnInit {
   tooltipData = {
     keys: ['download', 'copy', 'editor', 'report'],
     download: {
+      alt: 'A download icon',
       text: 'Download all results',
       image: '../../assets/download icon ZEUS.png',
       function: () => {
@@ -72,6 +73,7 @@ export class MakeComponent implements OnInit {
       },
     },
     copy: {
+      alt: 'A copy icon',
       text: 'Copy current result',
       image: '../../assets/copy icon ZEUS.png',
       function: () => {
@@ -109,6 +111,7 @@ export class MakeComponent implements OnInit {
       },
     },
     editor: {
+      alt: 'An editor icon',
       text: 'Open in editor',
       image: '../../assets/editor icon ZEUS.png',
       function: () => {
@@ -116,6 +119,7 @@ export class MakeComponent implements OnInit {
       },
     },
     report: {
+      alt: 'A report problem icon',
       text: 'Report a problem',
       image: '../../assets/report icon ZEUS.png',
       function: () => {
@@ -129,14 +133,17 @@ export class MakeComponent implements OnInit {
 
   loadingText = {
     sorry: {
+      alt: 'A cartoon crocodile holding a book',
       text: 'Sorry, none yet, but please try again!',
       image: '../../assets/croc-book.png',
     },
     sending: {
+      alt: 'An icon to indicate sending',
       text: 'Sending to server...',
       image: '../../assets/sending icon ZEUS.png',
     },
     working: {
+      alt: 'An icon to indicate working',
       text: null,
       image: '../../assets/working icon ZEUS.png',
     },

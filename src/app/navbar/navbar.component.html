@@ -9,6 +9,7 @@
           ? '../../assets/CrossCroc logo1.png'
           : '../../assets/CrossCroc logo1 reverse.png'
       }}"
+      alt="The Crossword Crocodile logo"
     />
     <img
       class="titleGraphic"
@@ -17,6 +18,7 @@
           ? '../../assets/CrossCroc title1 iceberg tall.png'
           : '../../assets/CrossCroc title1 iceberg.png'
       }}"
+      alt="Text that says Crossword Crocodile"
     />
   </div>
 
@@ -27,6 +29,11 @@
           currentUrl === '/make' || currentUrl === '/'
             ? '../../assets/square0.png'
             : '../../assets/square1.png'
+        "
+        [alt]="
+          currentUrl === '/make' || currentUrl === '/'
+            ? 'A selected navigation icon that links to the current page'
+            : 'A navigation icon that links to the page called Make'
         "
         class="navButtonImage"
       />
@@ -39,6 +46,11 @@
           currentUrl === '/play'
             ? '../../assets/square0.png'
             : '../../assets/square2.png'
+        "
+        [alt]="
+          currentUrl === '/play'
+            ? 'A selected navigation icon that links to the current page'
+            : 'A navigation icon that links to the page called Play'
         "
         class="navButtonImage"
       />
@@ -54,6 +66,11 @@
           currentUrl === '/mail'
             ? '../../assets/square0.png'
             : '../../assets/square3.png'
+        "
+        [alt]="
+          currentUrl === '/mail'
+            ? 'A selected navigation icon that links to the current page'
+            : 'A navigation icon that links to the page called Mail'
         "
         class="navButtonImage"
       />
