@@ -1,27 +1,31 @@
-# CCW
+## Instructions
+
+This application is live on [Netlify](https://crossword-crocodile.netlify.app/), but you can also download this repository and run the project locally by following these steps:
+
+1. Clone this repository with `git clone https://github.com/chicorycolumn/Crossword-Crocodile-FE`
+   <br/>
+   If you are unsure what this means, instructions can be found [here](https://www.wikihow.com/Clone-a-Repository-on-Github) or [here](https://www.howtogeek.com/451360/how-to-clone-a-github-repository/).
+
+2. Open the project in a code editor, and run `npm install` to install necessary packages.
+
+3. Run `ng serve --open` to open the project in development mode.
+   <br/>
+   Open [http://localhost:4200](http://localhost:4200) to view it in the browser.
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.7.
 
-## Development server
+## Description
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+A custom crossword creator. After entering your words into an elegant and verdant interface, millions of calculations rearrange your specified words and check against a word bank of thousands to create complete crossword grids to your specifications.
 
-## Code scaffolding
+I took this opportunity to learn a new programming language for the backend - Python - and a new framework for the frontend - Angular. I chose Python for being one of the most widely used languages in data science, as well as further diversification of my coding knowledge. Its extensive range of modules and libraries would also come in useful.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Challenges
 
-## Build
+The first was the wonderful puzzle of determining the most time-efficient method of crunching the millions of permutations of words that the app has to perform. I experimented with radically different approaches, based around 'for loops', 'recursion', and 'yield'. I finally rewrote the backend from scratch to use a Python module called itertools, and fixed the app to switch between two itertoools methods ('permutations' and 'product'), which my testing revealed to ultimately yield the fastest response times.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+A key feature I wanted was for the user to receives the results in real-time, rather than waiting for a set interval and then receiving them all at once. After many setbacks and spikes, it certainly seemed that the easier path was to just accept the less optimal user experience, but through determined research and testing, I succeeded in creating a RESTful backend server delivering real-time results, which I accomplished with Flask (a web framework used by sites such as Pinterest and LinkedIn) and Flask-SocketIO.
 
-## Running unit tests
+## What I learned
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+It was really interesting to learn Angular, working within a different project structure style to what I was familiar with in React. As a first impression I found it more fiddly in Angular to connect up the Components, Services, and Modules, though I can see how this lends itself to having more expandable modularity with regard to different people working on different sections of the project, suggesting that Angular is better suited to heavyweight applications than are React and Vue.

@@ -36,7 +36,7 @@ export class SocketioService {
     this.serverIsIndeedWorking = serverIsIndeedWorking;
 
     this.socket.on('connect', () => {
-      console.log('Connected!', Date.now() / 1000 - 1593360000);
+      console.log('Connected!', Date.now() / 1000);
     });
 
     this.socket.on('disconnect', () => {
@@ -61,15 +61,11 @@ export class SocketioService {
         );
       }
 
-      console.log('Server sent ', data, Date.now() / 1000 - 1593360000);
+      console.log('Server sent ', data, Date.now() / 1000);
     });
 
     this.socket.on('connection confirmed', (data) => {
-      console.log(
-        'Server connected, and sent ',
-        data,
-        Date.now() / 1000 - 1593360000
-      );
+      console.log('Server connected, and sent ', data, Date.now() / 1000);
       socketIsReady.value = true;
     });
 
@@ -86,7 +82,7 @@ export class SocketioService {
     });
 
     this.socket.on('terminated', (data) => {
-      console.log('Server says terminated.', Date.now() / 1000 - 1593360000);
+      console.log('Server says terminated.', Date.now() / 1000);
       this.turnOffButtons();
     });
 
@@ -124,7 +120,7 @@ export class SocketioService {
   }
 
   stop(message) {
-    console.log(message, Date.now() / 1000 - 1593360000);
+    console.log(message, Date.now() / 1000);
     this.socket.emit('please terminate', { message: message });
   }
 

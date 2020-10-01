@@ -99,7 +99,7 @@ export function socketEmit(
     Object.keys(gridSpecs).forEach(
       (key) => (gridSpecsFormatted[gridSpecsKey[key]] = gridSpecs[key])
     );
-    console.log(gridSpecsFormatted, Date.now() / 1000 - 1593360000);
+    console.log(gridSpecsFormatted, Date.now() / 1000);
 
     if (DEV_hard9x5.value) {
       gridSpecsFormatted['grid_width'] = 9;
