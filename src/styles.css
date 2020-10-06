@@ -25,7 +25,7 @@ body {
 
 .shroud {
   z-index: -2;
-  background-color: rgba(158, 255, 109);
+  background-color: rgb(180, 248, 145);
   height: 100%;
   width: 100%;
   position: fixed;
