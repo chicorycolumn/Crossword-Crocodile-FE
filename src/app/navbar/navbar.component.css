@@ -49,11 +49,8 @@
 }
 
 .logo {
-  margin-top: 10px;
-  margin-left: 5px;
-  margin-bottom: 0px;
   height: 45px;
-  margin-right: 5px;
+  margin: 10px 5px 0px;
 }
 
 .navLeftHolder {
@@ -70,10 +67,7 @@
     margin-right: 20px;
   }
   .logo {
-    margin-top: auto;
-    margin-bottom: 9.5px;
-    margin-right: 0px;
-    margin-left: 0px;
+    margin: auto 0px 9.5px;
     height: 40px;
   }
 

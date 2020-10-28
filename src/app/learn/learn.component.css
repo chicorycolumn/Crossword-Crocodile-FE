@@ -6,7 +6,6 @@
 }
 
 .side-panel-holder {
-  /* border: red dotted 2pt; */
   position: fixed;
   display: flex;
   flex-direction: column;
@@ -15,7 +14,6 @@
 }
 
 .side-panel {
-  /* border: blue dotted 1pt; */
   display: flex;
   flex-direction: column;
   justify-content: space-around;
