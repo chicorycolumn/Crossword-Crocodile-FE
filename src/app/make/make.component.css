@@ -45,8 +45,19 @@
 }
 
 .flashingBox {
+  -webkit-animation-name: shimmerBox;
+  -webkit-animation-duration: 1s;
   animation-name: shimmerBox;
   animation-duration: 1s;
+}
+
+@-webkit-keyframes shimmerBox {
+  20% {
+    background-color: white;
+  }
+  50% {
+    background-color: white;
+  }
 }
 
 @keyframes shimmerBox {
@@ -333,9 +344,12 @@
   background-color: rgba(255, 255, 255, 0.1);
   position: fixed;
   left: 51%;
-  transform: translate(-50%, 0%);
   margin-top: 272.5px;
   padding: 15px 15px 15px 15px;
+
+  -webkit-transform: translate(-50%, 0%);
+  -ms-transform: translate(-50%, 0%);
+  transform: translate(-50%, 0%);
 }
 
 .centralButton {
@@ -368,6 +382,9 @@
 .ready:active {
   background-color: #3e8e41;
   box-shadow: 0 5px #666;
+
+  -webkit-transform: translateY(4px);
+  -ms-transform: translateY(4px);
   transform: translateY(4px);
 }
 
@@ -399,6 +416,9 @@
 .started:active {
   background-color: #3e8e41;
   box-shadow: 0 5px #666;
+
+  -webkit-transform: translateY(4px);
+  -ms-transform: translateY(4px);
   transform: translateY(4px);
 }
 
@@ -460,9 +480,8 @@
 }
 
 .flipHorizontal {
-  -moz-transform: scale(-1, 1);
-  -o-transform: scale(-1, 1);
   -webkit-transform: scale(-1, 1);
+  -ms-transform: scale(-1, 1);
   transform: scale(-1, 1);
 }
 
